@@ -10,6 +10,12 @@
 		2E12E65A16C5BD6D00BC0814 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E12E65916C5BD6D00BC0814 /* Foundation.framework */; };
 		2E12E65C16C5BD6D00BC0814 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E12E65B16C5BD6D00BC0814 /* UIKit.framework */; };
 		2E12E66716C5BD6D00BC0814 /* NCMusicGesturesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E12E66616C5BD6D00BC0814 /* NCMusicGesturesController.m */; };
+		2E12E67716C5BF7400BC0814 /* NSMusicGesturesView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E12E67516C5BF7400BC0814 /* NSMusicGesturesView.h */; };
+		2E12E67816C5BF7400BC0814 /* NSMusicGesturesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E12E67616C5BF7400BC0814 /* NSMusicGesturesView.m */; };
+		2E12E67B16C5BF8400BC0814 /* UIView+UIViewExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E12E67916C5BF8400BC0814 /* UIView+UIViewExtensions.h */; };
+		2E12E67C16C5BF8400BC0814 /* UIView+UIViewExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E12E67A16C5BF8400BC0814 /* UIView+UIViewExtensions.m */; };
+		2E12E68416C5C03300BC0814 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E12E68216C5C00400BC0814 /* CoreGraphics.framework */; };
+		2E12E68516C5C03C00BC0814 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E12E68016C5BFFA00BC0814 /* MediaPlayer.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +32,13 @@
 		2E12E66D16C5BD6D00BC0814 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/InfoPlist.strings; sourceTree = "<group>"; };
 		2E12E66E16C5BD6D00BC0814 /* WeeAppBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WeeAppBackground@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/WeeAppBackground@2x.png"; sourceTree = "<group>"; };
 		2E12E66F16C5BD6D00BC0814 /* WeeAppBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WeeAppBackground.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/WeeAppBackground.png; sourceTree = "<group>"; };
+		2E12E67516C5BF7400BC0814 /* NSMusicGesturesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMusicGesturesView.h; sourceTree = "<group>"; };
+		2E12E67616C5BF7400BC0814 /* NSMusicGesturesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMusicGesturesView.m; sourceTree = "<group>"; };
+		2E12E67916C5BF8400BC0814 /* UIView+UIViewExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+UIViewExtensions.h"; sourceTree = "<group>"; };
+		2E12E67A16C5BF8400BC0814 /* UIView+UIViewExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+UIViewExtensions.m"; sourceTree = "<group>"; };
+		2E12E67D16C5BFAE00BC0814 /* blankalbumart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blankalbumart.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/blankalbumart.png; sourceTree = "<group>"; };
+		2E12E68016C5BFFA00BC0814 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		2E12E68216C5C00400BC0814 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +46,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E12E68516C5C03C00BC0814 /* MediaPlayer.framework in Frameworks */,
+				2E12E68416C5C03300BC0814 /* CoreGraphics.framework in Frameworks */,
 				2E12E65A16C5BD6D00BC0814 /* Foundation.framework in Frameworks */,
 				2E12E65C16C5BD6D00BC0814 /* UIKit.framework in Frameworks */,
 			);
@@ -63,6 +78,8 @@
 			children = (
 				2E12E65916C5BD6D00BC0814 /* Foundation.framework */,
 				2E12E65B16C5BD6D00BC0814 /* UIKit.framework */,
+				2E12E68216C5C00400BC0814 /* CoreGraphics.framework */,
+				2E12E68016C5BFFA00BC0814 /* MediaPlayer.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -72,6 +89,10 @@
 			children = (
 				2E12E66516C5BD6D00BC0814 /* NCMusicGesturesController.h */,
 				2E12E66616C5BD6D00BC0814 /* NCMusicGesturesController.m */,
+				2E12E67516C5BF7400BC0814 /* NSMusicGesturesView.h */,
+				2E12E67616C5BF7400BC0814 /* NSMusicGesturesView.m */,
+				2E12E67916C5BF8400BC0814 /* UIView+UIViewExtensions.h */,
+				2E12E67A16C5BF8400BC0814 /* UIView+UIViewExtensions.m */,
 				2E12E65E16C5BD6D00BC0814 /* Package */,
 				2E12E66216C5BD6D00BC0814 /* Supporting Files */,
 			);
@@ -132,6 +153,7 @@
 		2E12E66B16C5BD6D00BC0814 /* ___PACKAGENAME___ */ = {
 			isa = PBXGroup;
 			children = (
+				2E12E67D16C5BFAE00BC0814 /* blankalbumart.png */,
 				2E12E66C16C5BD6D00BC0814 /* Info.plist */,
 				2E12E66D16C5BD6D00BC0814 /* InfoPlist.strings */,
 				2E12E66E16C5BD6D00BC0814 /* WeeAppBackground@2x.png */,
@@ -147,6 +169,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E12E67716C5BF7400BC0814 /* NSMusicGesturesView.h in Headers */,
+				2E12E67B16C5BF8400BC0814 /* UIView+UIViewExtensions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +242,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E12E66716C5BD6D00BC0814 /* NCMusicGesturesController.m in Sources */,
+				2E12E67816C5BF7400BC0814 /* NSMusicGesturesView.m in Sources */,
+				2E12E67C16C5BF8400BC0814 /* UIView+UIViewExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,17 +307,23 @@
 		2E12E67316C5BD6D00BC0814 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pat Sluth (L7N9VK63RC)";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_EXTENSION = "";
 				EXECUTABLE_NAME = NCMusicGestures;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NCMusicGestures/NCMusicGestures-Prefix.pch";
 				INSTALL_PATH = /System/Library/WeeAppPlugins/NCMusicGestures.bundle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "E2E49DEF-12AB-458C-A4DA-02C8AD221D64";
 				iOSOpenDevBuildPackageOnAnyBuild = NO;
 				iOSOpenDevCopyOnBuild = NO;
-				iOSOpenDevDevice = "";
+				iOSOpenDevDevice = 192.168.0.12;
 				iOSOpenDevInstallOnAnyBuild = NO;
 				iOSOpenDevInstallOnProfiling = YES;
 				iOSOpenDevRespringOnInstall = YES;
@@ -302,17 +334,23 @@
 		2E12E67416C5BD6D00BC0814 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pat Sluth (L7N9VK63RC)";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_EXTENSION = "";
 				EXECUTABLE_NAME = NCMusicGestures;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NCMusicGestures/NCMusicGestures-Prefix.pch";
 				INSTALL_PATH = /System/Library/WeeAppPlugins/NCMusicGestures.bundle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "E2E49DEF-12AB-458C-A4DA-02C8AD221D64";
 				iOSOpenDevBuildPackageOnAnyBuild = NO;
 				iOSOpenDevCopyOnBuild = NO;
-				iOSOpenDevDevice = "";
+				iOSOpenDevDevice = 192.168.0.12;
 				iOSOpenDevInstallOnAnyBuild = NO;
 				iOSOpenDevInstallOnProfiling = YES;
 				iOSOpenDevRespringOnInstall = YES;

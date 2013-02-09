@@ -10,6 +10,9 @@
 #import <UIKit/UIKit.h>
 #import "SpringBoard/BBWeeAppController.h"
 
+#define VIEW_HEADER_HEIGHT 50
+#define VIEW_HEIGHT 100
+
 @interface NCMusicGesturesController : NSObject <BBWeeAppController>
 {
     UIView *_view;

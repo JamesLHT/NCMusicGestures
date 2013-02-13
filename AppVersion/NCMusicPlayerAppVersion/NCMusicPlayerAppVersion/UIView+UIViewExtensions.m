@@ -25,6 +25,11 @@
     v.frame = CGRectMake(newOrigin - v.frame.size.width, v.frame.origin.y, v.frame.size.width, v.frame.size.height);
 }
 
++ (void)setLowerRightOriginX:(UIView *)v newOrigin:(CGFloat)newOrigin
+{
+    v.frame = CGRectMake(v.frame.origin.x, newOrigin - v.frame.size.height, v.frame.size.width, v.frame.size.height);
+}
+
 + (void)setOriginY:(UIView *)v newOrigin:(CGFloat)newOrigin
 {
     v.frame = CGRectMake(v.frame.origin.x, newOrigin, v.frame.size.width, v.frame.size.height);

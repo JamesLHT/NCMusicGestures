@@ -3,7 +3,7 @@
 //  FoxSports
 //
 //  Created by Pat Sluth on 2012-11-12.
-//  Copyright (c) 2012 Übermind. All rights reserved.
+//  Copyright (c) 2012 ;. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -13,6 +13,7 @@
 + (void)setOrigin:(UIView *)v newOrigin:(CGPoint)newOrigin;
 + (void)setOriginX:(UIView *)v newOrigin:(CGFloat)newOrigin;
 + (void)setUpperRightOriginX:(UIView *)v newOrigin:(CGFloat)newOrigin;
++ (void)setLowerRightOriginX:(UIView *)v newOrigin:(CGFloat)newOrigin;
 + (void)setOriginY:(UIView *)v newOrigin:(CGFloat)newOrigin;
 + (void)setSize:(UIView *)v newSize:(CGSize)newSize;
 + (void)setSizeX:(UIView *)v newSize:(CGFloat)newSize;

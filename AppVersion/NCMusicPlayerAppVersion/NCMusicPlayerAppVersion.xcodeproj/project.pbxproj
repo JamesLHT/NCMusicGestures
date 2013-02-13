@@ -152,7 +152,6 @@
 		2E8E63AF16C8786300B47EE9 = {
 			isa = PBXGroup;
 			children = (
-				2E7C29E516C9DCD7008B117F /* Social.framework */,
 				2E8E63C116C8786300B47EE9 /* NCMusicPlayerAppVersion */,
 				2E8E640316C8797C00B47EE9 /* Images */,
 				2E8E63E816C8786300B47EE9 /* NCMusicPlayerAppVersionTests */,
@@ -173,6 +172,7 @@
 		2E8E63BA16C8786300B47EE9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2E7C29E516C9DCD7008B117F /* Social.framework */,
 				2E8E63F916C8787F00B47EE9 /* MediaPlayer.framework */,
 				2E8E63BB16C8786300B47EE9 /* UIKit.framework */,
 				2E8E63BD16C8786300B47EE9 /* Foundation.framework */,
@@ -497,11 +497,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Pat Sluth (P5B3H5K98V)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NCMusicPlayerAppVersion/NCMusicPlayerAppVersion-Prefix.pch";
 				INFOPLIST_FILE = "NCMusicPlayerAppVersion/NCMusicPlayerAppVersion-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3D82358B-696C-4139-8476-B0BF15BF044F";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -510,11 +512,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Pat Sluth (P5B3H5K98V)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NCMusicPlayerAppVersion/NCMusicPlayerAppVersion-Prefix.pch";
 				INFOPLIST_FILE = "NCMusicPlayerAppVersion/NCMusicPlayerAppVersion-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3D82358B-696C-4139-8476-B0BF15BF044F";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

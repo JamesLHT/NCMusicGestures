@@ -7,6 +7,7 @@
 //
 
 #import "NCMusicGesturesHeaderPageOne.h"
+#import "NCMusicGesturesView.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "UIView+UIViewExtensions.h"
 #import "StringFormatter.h"
@@ -16,8 +17,6 @@
 #define TIMELINE_SCRUBBER_X_PADDING 5
 
 @interface NCMusicGesturesHeaderPageOne()
-
-@property (readonly, nonatomic) MPMusicPlayerController *ipod;
 
 @property (strong, nonatomic) UILabel *songCurrentTime;
 @property (strong, nonatomic) UISliderCustom *timelineScrubber;
@@ -62,18 +61,13 @@
     return self;
 }
 
-- (MPMusicPlayerController *)ipod
-{
-    return [MPMusicPlayerController iPodMusicPlayer];
-}
-
 - (void)onTimelineValueChange:(UISlider *)slider
 {
-    NSInteger currentItemLength = [[self.ipod.nowPlayingItem valueForProperty:MPMediaItemPropertyPlaybackDuration] integerValue];
+    NSInteger currentItemLength = [[[NCMusicGesturesView ipod].nowPlayingItem valueForProperty:MPMediaItemPropertyPlaybackDuration] integerValue];
     NSInteger newPlaybackTime = currentItemLength * slider.value;
     
-    if (newPlaybackTime != self.ipod.currentPlaybackTime){
-        self.ipod.currentPlaybackTime = newPlaybackTime;
+    if (newPlaybackTime != [NCMusicGesturesView ipod].currentPlaybackTime){
+        [NCMusicGesturesView ipod].currentPlaybackTime = newPlaybackTime;
         self.songCurrentTime.text = [StringFormatter formattedStringForDurationHMS:newPlaybackTime];
     }
 }
@@ -104,14 +98,14 @@
         return;
     }
     
-    if (self.ipod.currentPlaybackTime <= 0){
+    if ([NCMusicGesturesView ipod].currentPlaybackTime <= 0){
         self.songCurrentTime.text = @"0:00";
     } else {
-        self.songCurrentTime.text = [StringFormatter formattedStringForDurationHMS:self.ipod.currentPlaybackTime];
+        self.songCurrentTime.text = [StringFormatter formattedStringForDurationHMS:[NCMusicGesturesView ipod].currentPlaybackTime];
     }
     
-    NSInteger currentItemLength = [[self.ipod.nowPlayingItem valueForProperty:MPMediaItemPropertyPlaybackDuration] integerValue];
-    float currentPlaybackPercentage = self.ipod.currentPlaybackTime / currentItemLength;
+    NSInteger currentItemLength = [[[NCMusicGesturesView ipod].nowPlayingItem valueForProperty:MPMediaItemPropertyPlaybackDuration] integerValue];
+    float currentPlaybackPercentage = [NCMusicGesturesView ipod].currentPlaybackTime / currentItemLength;
     self.timelineScrubber.value = currentPlaybackPercentage;
 }
 

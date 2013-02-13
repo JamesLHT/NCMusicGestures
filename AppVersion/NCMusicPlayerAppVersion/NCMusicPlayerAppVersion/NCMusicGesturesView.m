@@ -13,6 +13,7 @@
 #import "StringFormatter.h"
 
 #define BACKGROUND_CAP_VALUE 5
+#define CONTENT_OFFSET_NEEDED_TO_SKIP_SONG 50
 
 #define VIEW_X_OFFSET 2
 #define TOTAL_VIEW_HEIGHT (VIEW_HEADER_HEIGHT + VIEW_HEIGHT)
@@ -20,6 +21,7 @@
 #define ALBUM_ART_ANIM_TIME 0.5
 #define ALBUM_ART_PADDING 10
 #define ALBUM_ART_SIZE 85
+#define ICLOUD_IMAGE_SIZE 25
 
 #define DEFAULT_ARTWORK_IMAGE [UIImage imageNamed:@"blankalbumart"]
 
@@ -41,6 +43,7 @@ typedef enum  {
 @property (strong, nonatomic) UIScrollView *scrollView;
 
 @property (strong, nonatomic) UIImageView *albumArt;
+@property (strong, nonatomic) UIImageView *albumIsOniCloud;
 @property (strong, nonatomic) UILabel *songTitle;
 @property (strong, nonatomic) UILabel *songArtist;
 @property (strong, nonatomic) UILabel *songAlbum;
@@ -48,8 +51,6 @@ typedef enum  {
 @property (strong, nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
 
 @property (strong, nonatomic) NCMusicGesturesHeader *header;
-
-//@property (strong, nonatomic) UIButton
 
 @end
 
@@ -88,10 +89,6 @@ typedef enum  {
 
 - (void)onTap:(UITapGestureRecognizer *)tap
 {
-    //if (self.scrollView.isDragging){
-    //    return;
-    //}
-    
     if (tap.state == UIGestureRecognizerStateEnded){
         if ([NCMusicGesturesView ipod].playbackState == MPMusicPlaybackStatePaused ||
             [NCMusicGesturesView ipod].playbackState == MPMusicPlaybackStateStopped){
@@ -150,7 +147,11 @@ typedef enum  {
         self.songAlbum.text = [item valueForProperty:MPMediaItemPropertyAlbumTitle];
         
         MPMediaItemArtwork *itemArtwork = [item valueForProperty:MPMediaItemPropertyArtwork];
-        [self setAlbumArtToNewImage:[itemArtwork imageWithSize:self.albumArt.bounds.size] animated:animated];
+        [self setAlbumArtToNewImage:[itemArtwork imageWithSize:self.albumArt.bounds.size]
+                           animated:animated
+                     halfCompletion:^{
+                         self.albumIsOniCloud.hidden = ![[item valueForProperty:MPMediaItemPropertyIsCloudItem] boolValue];
+                     }];
         
     } else {
         
@@ -160,11 +161,15 @@ typedef enum  {
         self.songArtist.text = @"";
         self.songAlbum.text = @"";
         
-        [self setAlbumArtToNewImage:nil animated:animated];
+        [self setAlbumArtToNewImage:nil
+                           animated:animated
+                     halfCompletion:^{
+                         self.albumIsOniCloud.hidden = ![[item valueForProperty:MPMediaItemPropertyIsCloudItem] boolValue];
+                     }];
     }
 }
 
-- (void)setAlbumArtToNewImage:(UIImage *)image animated:(BOOL)animated
+- (void)setAlbumArtToNewImage:(UIImage *)image animated:(BOOL)animated halfCompletion:(void (^)())halfCompletion
 {
     UIImage *newAlbumArtImage = (image) ? image : DEFAULT_ARTWORK_IMAGE;
     
@@ -172,6 +177,11 @@ typedef enum  {
         [UIView animateWithDuration:ALBUM_ART_ANIM_TIME / 2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
             self.albumArt.transform = CGAffineTransformMakeScale(0.8, 0.8);
         }completion:^(BOOL finished){
+            
+            if (halfCompletion){
+                halfCompletion();
+            }
+            
             [UIView animateWithDuration:ALBUM_ART_ANIM_TIME / 2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
                 self.albumArt.transform = CGAffineTransformMakeScale(1.0, 1.0);
             }completion:nil];
@@ -192,9 +202,9 @@ typedef enum  {
 {
     if (!self.scrollView.isDecelerating){
         
-        if (self.scrollView.contentOffset.x >= 40) { //in skip position
+        if (self.scrollView.contentOffset.x >= CONTENT_OFFSET_NEEDED_TO_SKIP_SONG) { //in skip position
             self.ipodActionToPerformOnScrollViewDeceleration = SkipToNext;
-        } else if (self.scrollView.contentOffset.x <= -40 ) { //in skip position
+        } else if (self.scrollView.contentOffset.x <= -CONTENT_OFFSET_NEEDED_TO_SKIP_SONG ) { //in skip position
             self.ipodActionToPerformOnScrollViewDeceleration = SkipToPrevious;
         } else {
             self.ipodActionToPerformOnScrollViewDeceleration = None;
@@ -204,11 +214,6 @@ typedef enum  {
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    //self.rightActionLabel.text = @"";
-    //self.leftActionLabel.text = @"";
-    
-    //if (!self.didSeekOnLastScrollViewTouch){
-    
     if ([NCMusicGesturesView ipod].playbackState == MPMusicPlaybackStatePlaying ||
         [NCMusicGesturesView ipod].playbackState == MPMusicPlaybackStatePaused){
         switch (self.ipodActionToPerformOnScrollViewDeceleration) {
@@ -229,11 +234,6 @@ typedef enum  {
         }
     }
     
-    
-    
-    //}
-    
-    //self.didSeekOnLastScrollViewTouch = NO;
     self.ipodActionToPerformOnScrollViewDeceleration = None;
 }
 
@@ -261,6 +261,14 @@ typedef enum  {
     self.albumArt.contentMode = UIViewContentModeScaleToFill;
     [UIView setSize:self.albumArt newSize:CGSizeMake(ALBUM_ART_SIZE, ALBUM_ART_SIZE)];
     [UIView setOriginX:self.albumArt newOrigin:ALBUM_ART_PADDING];
+    
+    self.albumIsOniCloud = [[UIImageView alloc] init];
+    self.albumIsOniCloud.backgroundColor = [UIColor redColor];
+    [UIView setSize:self.albumIsOniCloud newSize:CGSizeMake(ICLOUD_IMAGE_SIZE, ICLOUD_IMAGE_SIZE)];
+    self.albumIsOniCloud.hidden = YES;
+    [self.albumArt addSubview:self.albumIsOniCloud];
+    [UIView setUpperRightOriginX:self.albumIsOniCloud newOrigin:self.albumArt.frame.size.width];
+    [UIView setLowerRightOriginX:self.albumIsOniCloud newOrigin:self.albumArt.frame.size.height];
 }
 
 - (void)setupScrollViewLabels
@@ -282,7 +290,7 @@ typedef enum  {
                                                             self.songTitle.frame.origin.y
                                                             + self.songTitle.frame.size.height)];
     
-    //song albym
+    //song album
     self.songAlbum = [self createScrollViewLabel];
     [UIView setSize:self.songAlbum newSize:self.songArtist.frame.size];
     [UIView setOrigin:self.songAlbum newOrigin:CGPointMake(self.songArtist.frame.origin.x,
@@ -349,6 +357,7 @@ typedef enum  {
     [self.tapGestureRecognizer release];
     
     [self.albumArt release];
+    [self.albumIsOniCloud release];
     [self.songTitle release];
     [self.songArtist release];
     [self.songAlbum release];

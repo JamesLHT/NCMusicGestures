@@ -1,12 +1,12 @@
 //
-//  NSMusicGesturesView.m
+//  NCMusicGesturesView.m
 //  NCMusicGestures
 //
 //  Created by Pat Sluth on 2013-02-08.
 //
 //
 
-#import "NSMusicGesturesView.h"
+#import "NCMusicGesturesView.h"
 #import "NCMusicGesturesController.h"
 #import "UIView+UIViewExtensions.h"
 #import <MediaPlayer/MediaPlayer.h>
@@ -17,7 +17,7 @@
 
 #define DEFAULT_ARTWORK_IMAGE [UIImage imageWithContentsOfFile:@"/System/Library/WeeAppPlugins/NCMusicGestures.bundle/blankalbumart.png"]
 
-@interface NSMusicGesturesView()
+@interface NCMusicGesturesView()
 
 typedef enum  {
     None,
@@ -46,7 +46,7 @@ typedef enum  {
 
 @end
 
-@implementation NSMusicGesturesView
+@implementation NCMusicGesturesView
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -283,7 +283,6 @@ typedef enum  {
     [self.scrollView addSubview:self.albumArt];
     self.albumArt.contentMode = UIViewContentModeScaleToFill;
     [UIView setSize:self.albumArt newSize:CGSizeMake(ALBUM_ART_SIZE, ALBUM_ART_SIZE)];
-    [UIView setOriginY:self.albumArt newOrigin:0];
     [UIView setOriginX:self.albumArt newOrigin:ALBUM_ART_PADDING];
 }
 

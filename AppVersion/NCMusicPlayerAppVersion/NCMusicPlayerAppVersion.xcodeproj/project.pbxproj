@@ -1,0 +1,589 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2E7C29D616C9CA73008B117F /* NCMusicGesturesHeaderPageOne.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C29D516C9CA73008B117F /* NCMusicGesturesHeaderPageOne.m */; };
+		2E7C29D916C9CDEF008B117F /* StringFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C29D816C9CDEF008B117F /* StringFormatter.m */; };
+		2E7C29DC16C9D1D4008B117F /* UISliderCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C29DB16C9D1D4008B117F /* UISliderCustom.m */; };
+		2E7C29DF16C9D6D7008B117F /* NCMusicGesturesHeaderPageTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C29DE16C9D6D7008B117F /* NCMusicGesturesHeaderPageTwo.m */; };
+		2E7C29E616C9DCD7008B117F /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7C29E516C9DCD7008B117F /* Social.framework */; };
+		2E7C29EB16CA2DA2008B117F /* NCMusicGesturesHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C29EA16CA2DA1008B117F /* NCMusicGesturesHeader.m */; };
+		2E8E63BC16C8786300B47EE9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8E63BB16C8786300B47EE9 /* UIKit.framework */; };
+		2E8E63BE16C8786300B47EE9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8E63BD16C8786300B47EE9 /* Foundation.framework */; };
+		2E8E63C016C8786300B47EE9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8E63BF16C8786300B47EE9 /* CoreGraphics.framework */; };
+		2E8E63C616C8786300B47EE9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2E8E63C416C8786300B47EE9 /* InfoPlist.strings */; };
+		2E8E63C816C8786300B47EE9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8E63C716C8786300B47EE9 /* main.m */; };
+		2E8E63CC16C8786300B47EE9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8E63CB16C8786300B47EE9 /* AppDelegate.m */; };
+		2E8E63CE16C8786300B47EE9 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E8E63CD16C8786300B47EE9 /* Default.png */; };
+		2E8E63D016C8786300B47EE9 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E8E63CF16C8786300B47EE9 /* Default@2x.png */; };
+		2E8E63D216C8786300B47EE9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E8E63D116C8786300B47EE9 /* Default-568h@2x.png */; };
+		2E8E63D516C8786300B47EE9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8E63D416C8786300B47EE9 /* ViewController.m */; };
+		2E8E63D816C8786300B47EE9 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E8E63D616C8786300B47EE9 /* ViewController_iPhone.xib */; };
+		2E8E63DB16C8786300B47EE9 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E8E63D916C8786300B47EE9 /* ViewController_iPad.xib */; };
+		2E8E63E316C8786300B47EE9 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8E63E216C8786300B47EE9 /* SenTestingKit.framework */; };
+		2E8E63E416C8786300B47EE9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8E63BB16C8786300B47EE9 /* UIKit.framework */; };
+		2E8E63E516C8786300B47EE9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8E63BD16C8786300B47EE9 /* Foundation.framework */; };
+		2E8E63ED16C8786300B47EE9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2E8E63EB16C8786300B47EE9 /* InfoPlist.strings */; };
+		2E8E63F016C8786300B47EE9 /* NCMusicPlayerAppVersionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8E63EF16C8786300B47EE9 /* NCMusicPlayerAppVersionTests.m */; };
+		2E8E63FB16C8788A00B47EE9 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8E63F916C8787F00B47EE9 /* MediaPlayer.framework */; };
+		2E8E63FF16C878A900B47EE9 /* NCMusicGesturesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8E63FE16C878A900B47EE9 /* NCMusicGesturesView.m */; };
+		2E8E641016C879DA00B47EE9 /* blankalbumart.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E8E640D16C879DA00B47EE9 /* blankalbumart.png */; };
+		2E8E641116C879DA00B47EE9 /* WeeAppBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E8E640E16C879DA00B47EE9 /* WeeAppBackground.png */; };
+		2E8E641216C879DA00B47EE9 /* WeeAppBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E8E640F16C879DA00B47EE9 /* WeeAppBackground@2x.png */; };
+		2E8E641B16C87F2100B47EE9 /* UIView+UIViewExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8E641A16C87F2100B47EE9 /* UIView+UIViewExtensions.m */; };
+		2E8E641C16C87F2100B47EE9 /* UIView+UIViewExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8E641A16C87F2100B47EE9 /* UIView+UIViewExtensions.m */; };
+		2E9E01AF16C8878700EDCA67 /* blankalbumart.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E8E640D16C879DA00B47EE9 /* blankalbumart.png */; };
+		2E9E01B016C8878B00EDCA67 /* WeeAppBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E8E640E16C879DA00B47EE9 /* WeeAppBackground.png */; };
+		2E9E01B116C8878D00EDCA67 /* WeeAppBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E8E640F16C879DA00B47EE9 /* WeeAppBackground@2x.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2E8E63E616C8786300B47EE9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2E8E63B016C8786300B47EE9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E8E63B716C8786300B47EE9;
+			remoteInfo = NCMusicPlayerAppVersion;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2E7C29D416C9CA73008B117F /* NCMusicGesturesHeaderPageOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCMusicGesturesHeaderPageOne.h; sourceTree = "<group>"; };
+		2E7C29D516C9CA73008B117F /* NCMusicGesturesHeaderPageOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCMusicGesturesHeaderPageOne.m; sourceTree = "<group>"; };
+		2E7C29D716C9CDEF008B117F /* StringFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringFormatter.h; sourceTree = "<group>"; };
+		2E7C29D816C9CDEF008B117F /* StringFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringFormatter.m; sourceTree = "<group>"; };
+		2E7C29DA16C9D1D3008B117F /* UISliderCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISliderCustom.h; sourceTree = "<group>"; };
+		2E7C29DB16C9D1D4008B117F /* UISliderCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UISliderCustom.m; sourceTree = "<group>"; };
+		2E7C29DD16C9D6D7008B117F /* NCMusicGesturesHeaderPageTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCMusicGesturesHeaderPageTwo.h; sourceTree = "<group>"; };
+		2E7C29DE16C9D6D7008B117F /* NCMusicGesturesHeaderPageTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCMusicGesturesHeaderPageTwo.m; sourceTree = "<group>"; };
+		2E7C29E516C9DCD7008B117F /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		2E7C29E916CA2DA1008B117F /* NCMusicGesturesHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCMusicGesturesHeader.h; sourceTree = "<group>"; };
+		2E7C29EA16CA2DA1008B117F /* NCMusicGesturesHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCMusicGesturesHeader.m; sourceTree = "<group>"; };
+		2E8E63B816C8786300B47EE9 /* NCMusicPlayerAppVersion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NCMusicPlayerAppVersion.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E8E63BB16C8786300B47EE9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2E8E63BD16C8786300B47EE9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		2E8E63BF16C8786300B47EE9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2E8E63C316C8786300B47EE9 /* NCMusicPlayerAppVersion-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NCMusicPlayerAppVersion-Info.plist"; sourceTree = "<group>"; };
+		2E8E63C516C8786300B47EE9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2E8E63C716C8786300B47EE9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2E8E63C916C8786300B47EE9 /* NCMusicPlayerAppVersion-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NCMusicPlayerAppVersion-Prefix.pch"; sourceTree = "<group>"; };
+		2E8E63CA16C8786300B47EE9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		2E8E63CB16C8786300B47EE9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		2E8E63CD16C8786300B47EE9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		2E8E63CF16C8786300B47EE9 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		2E8E63D116C8786300B47EE9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		2E8E63D316C8786300B47EE9 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		2E8E63D416C8786300B47EE9 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		2E8E63D716C8786300B47EE9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
+		2E8E63DA16C8786300B47EE9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
+		2E8E63E116C8786300B47EE9 /* NCMusicPlayerAppVersionTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NCMusicPlayerAppVersionTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E8E63E216C8786300B47EE9 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		2E8E63EA16C8786300B47EE9 /* NCMusicPlayerAppVersionTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NCMusicPlayerAppVersionTests-Info.plist"; sourceTree = "<group>"; };
+		2E8E63EC16C8786300B47EE9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2E8E63EE16C8786300B47EE9 /* NCMusicPlayerAppVersionTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NCMusicPlayerAppVersionTests.h; sourceTree = "<group>"; };
+		2E8E63EF16C8786300B47EE9 /* NCMusicPlayerAppVersionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NCMusicPlayerAppVersionTests.m; sourceTree = "<group>"; };
+		2E8E63F916C8787F00B47EE9 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		2E8E63FD16C878A900B47EE9 /* NCMusicGesturesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCMusicGesturesView.h; sourceTree = "<group>"; };
+		2E8E63FE16C878A900B47EE9 /* NCMusicGesturesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCMusicGesturesView.m; sourceTree = "<group>"; };
+		2E8E640D16C879DA00B47EE9 /* blankalbumart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blankalbumart.png; sourceTree = "<group>"; };
+		2E8E640E16C879DA00B47EE9 /* WeeAppBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WeeAppBackground.png; sourceTree = "<group>"; };
+		2E8E640F16C879DA00B47EE9 /* WeeAppBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeeAppBackground@2x.png"; sourceTree = "<group>"; };
+		2E8E641916C87F2100B47EE9 /* UIView+UIViewExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+UIViewExtensions.h"; sourceTree = "<group>"; };
+		2E8E641A16C87F2100B47EE9 /* UIView+UIViewExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+UIViewExtensions.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2E8E63B516C8786300B47EE9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E7C29E616C9DCD7008B117F /* Social.framework in Frameworks */,
+				2E8E63FB16C8788A00B47EE9 /* MediaPlayer.framework in Frameworks */,
+				2E8E63BC16C8786300B47EE9 /* UIKit.framework in Frameworks */,
+				2E8E63BE16C8786300B47EE9 /* Foundation.framework in Frameworks */,
+				2E8E63C016C8786300B47EE9 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E8E63DD16C8786300B47EE9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E8E63E316C8786300B47EE9 /* SenTestingKit.framework in Frameworks */,
+				2E8E63E416C8786300B47EE9 /* UIKit.framework in Frameworks */,
+				2E8E63E516C8786300B47EE9 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2E7C29EC16CA2DA9008B117F /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				2E7C29E916CA2DA1008B117F /* NCMusicGesturesHeader.h */,
+				2E7C29EA16CA2DA1008B117F /* NCMusicGesturesHeader.m */,
+				2E7C29D416C9CA73008B117F /* NCMusicGesturesHeaderPageOne.h */,
+				2E7C29D516C9CA73008B117F /* NCMusicGesturesHeaderPageOne.m */,
+				2E7C29DD16C9D6D7008B117F /* NCMusicGesturesHeaderPageTwo.h */,
+				2E7C29DE16C9D6D7008B117F /* NCMusicGesturesHeaderPageTwo.m */,
+			);
+			name = Header;
+			sourceTree = "<group>";
+		};
+		2E7C29ED16CA2DC0008B117F /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				2E8E641916C87F2100B47EE9 /* UIView+UIViewExtensions.h */,
+				2E8E641A16C87F2100B47EE9 /* UIView+UIViewExtensions.m */,
+				2E7C29D716C9CDEF008B117F /* StringFormatter.h */,
+				2E7C29D816C9CDEF008B117F /* StringFormatter.m */,
+				2E7C29DA16C9D1D3008B117F /* UISliderCustom.h */,
+				2E7C29DB16C9D1D4008B117F /* UISliderCustom.m */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
+		2E8E63AF16C8786300B47EE9 = {
+			isa = PBXGroup;
+			children = (
+				2E7C29E516C9DCD7008B117F /* Social.framework */,
+				2E8E63C116C8786300B47EE9 /* NCMusicPlayerAppVersion */,
+				2E8E640316C8797C00B47EE9 /* Images */,
+				2E8E63E816C8786300B47EE9 /* NCMusicPlayerAppVersionTests */,
+				2E8E63BA16C8786300B47EE9 /* Frameworks */,
+				2E8E63B916C8786300B47EE9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2E8E63B916C8786300B47EE9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2E8E63B816C8786300B47EE9 /* NCMusicPlayerAppVersion.app */,
+				2E8E63E116C8786300B47EE9 /* NCMusicPlayerAppVersionTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2E8E63BA16C8786300B47EE9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2E8E63F916C8787F00B47EE9 /* MediaPlayer.framework */,
+				2E8E63BB16C8786300B47EE9 /* UIKit.framework */,
+				2E8E63BD16C8786300B47EE9 /* Foundation.framework */,
+				2E8E63BF16C8786300B47EE9 /* CoreGraphics.framework */,
+				2E8E63E216C8786300B47EE9 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2E8E63C116C8786300B47EE9 /* NCMusicPlayerAppVersion */ = {
+			isa = PBXGroup;
+			children = (
+				2E8E63CA16C8786300B47EE9 /* AppDelegate.h */,
+				2E8E63CB16C8786300B47EE9 /* AppDelegate.m */,
+				2E8E63D316C8786300B47EE9 /* ViewController.h */,
+				2E8E63D416C8786300B47EE9 /* ViewController.m */,
+				2E8E63D616C8786300B47EE9 /* ViewController_iPhone.xib */,
+				2E8E63D916C8786300B47EE9 /* ViewController_iPad.xib */,
+				2E8E63FC16C8789A00B47EE9 /* Custom */,
+				2E8E63C216C8786300B47EE9 /* Supporting Files */,
+			);
+			path = NCMusicPlayerAppVersion;
+			sourceTree = "<group>";
+		};
+		2E8E63C216C8786300B47EE9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2E8E63C316C8786300B47EE9 /* NCMusicPlayerAppVersion-Info.plist */,
+				2E8E63C416C8786300B47EE9 /* InfoPlist.strings */,
+				2E8E63C716C8786300B47EE9 /* main.m */,
+				2E8E63C916C8786300B47EE9 /* NCMusicPlayerAppVersion-Prefix.pch */,
+				2E8E63CD16C8786300B47EE9 /* Default.png */,
+				2E8E63CF16C8786300B47EE9 /* Default@2x.png */,
+				2E8E63D116C8786300B47EE9 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2E8E63E816C8786300B47EE9 /* NCMusicPlayerAppVersionTests */ = {
+			isa = PBXGroup;
+			children = (
+				2E8E63EE16C8786300B47EE9 /* NCMusicPlayerAppVersionTests.h */,
+				2E8E63EF16C8786300B47EE9 /* NCMusicPlayerAppVersionTests.m */,
+				2E8E63E916C8786300B47EE9 /* Supporting Files */,
+			);
+			path = NCMusicPlayerAppVersionTests;
+			sourceTree = "<group>";
+		};
+		2E8E63E916C8786300B47EE9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2E8E63EA16C8786300B47EE9 /* NCMusicPlayerAppVersionTests-Info.plist */,
+				2E8E63EB16C8786300B47EE9 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2E8E63FC16C8789A00B47EE9 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				2E8E63FD16C878A900B47EE9 /* NCMusicGesturesView.h */,
+				2E8E63FE16C878A900B47EE9 /* NCMusicGesturesView.m */,
+				2E7C29EC16CA2DA9008B117F /* Header */,
+				2E7C29ED16CA2DC0008B117F /* Helper */,
+			);
+			name = Custom;
+			sourceTree = "<group>";
+		};
+		2E8E640316C8797C00B47EE9 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				2E8E640D16C879DA00B47EE9 /* blankalbumart.png */,
+				2E8E640E16C879DA00B47EE9 /* WeeAppBackground.png */,
+				2E8E640F16C879DA00B47EE9 /* WeeAppBackground@2x.png */,
+			);
+			name = Images;
+			path = NCMusicPlayerAppVersion;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2E8E63B716C8786300B47EE9 /* NCMusicPlayerAppVersion */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2E8E63F316C8786300B47EE9 /* Build configuration list for PBXNativeTarget "NCMusicPlayerAppVersion" */;
+			buildPhases = (
+				2E8E63B416C8786300B47EE9 /* Sources */,
+				2E8E63B516C8786300B47EE9 /* Frameworks */,
+				2E8E63B616C8786300B47EE9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NCMusicPlayerAppVersion;
+			productName = NCMusicPlayerAppVersion;
+			productReference = 2E8E63B816C8786300B47EE9 /* NCMusicPlayerAppVersion.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2E8E63E016C8786300B47EE9 /* NCMusicPlayerAppVersionTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2E8E63F616C8786300B47EE9 /* Build configuration list for PBXNativeTarget "NCMusicPlayerAppVersionTests" */;
+			buildPhases = (
+				2E8E63DC16C8786300B47EE9 /* Sources */,
+				2E8E63DD16C8786300B47EE9 /* Frameworks */,
+				2E8E63DE16C8786300B47EE9 /* Resources */,
+				2E8E63DF16C8786300B47EE9 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2E8E63E716C8786300B47EE9 /* PBXTargetDependency */,
+			);
+			name = NCMusicPlayerAppVersionTests;
+			productName = NCMusicPlayerAppVersionTests;
+			productReference = 2E8E63E116C8786300B47EE9 /* NCMusicPlayerAppVersionTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2E8E63B016C8786300B47EE9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Pat Sluth";
+			};
+			buildConfigurationList = 2E8E63B316C8786300B47EE9 /* Build configuration list for PBXProject "NCMusicPlayerAppVersion" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 2E8E63AF16C8786300B47EE9;
+			productRefGroup = 2E8E63B916C8786300B47EE9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2E8E63B716C8786300B47EE9 /* NCMusicPlayerAppVersion */,
+				2E8E63E016C8786300B47EE9 /* NCMusicPlayerAppVersionTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2E8E63B616C8786300B47EE9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E8E63C616C8786300B47EE9 /* InfoPlist.strings in Resources */,
+				2E8E63CE16C8786300B47EE9 /* Default.png in Resources */,
+				2E8E63D016C8786300B47EE9 /* Default@2x.png in Resources */,
+				2E8E63D216C8786300B47EE9 /* Default-568h@2x.png in Resources */,
+				2E8E63D816C8786300B47EE9 /* ViewController_iPhone.xib in Resources */,
+				2E8E63DB16C8786300B47EE9 /* ViewController_iPad.xib in Resources */,
+				2E9E01AF16C8878700EDCA67 /* blankalbumart.png in Resources */,
+				2E9E01B016C8878B00EDCA67 /* WeeAppBackground.png in Resources */,
+				2E9E01B116C8878D00EDCA67 /* WeeAppBackground@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E8E63DE16C8786300B47EE9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E8E63ED16C8786300B47EE9 /* InfoPlist.strings in Resources */,
+				2E8E641016C879DA00B47EE9 /* blankalbumart.png in Resources */,
+				2E8E641116C879DA00B47EE9 /* WeeAppBackground.png in Resources */,
+				2E8E641216C879DA00B47EE9 /* WeeAppBackground@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2E8E63DF16C8786300B47EE9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2E8E63B416C8786300B47EE9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E8E63C816C8786300B47EE9 /* main.m in Sources */,
+				2E8E63CC16C8786300B47EE9 /* AppDelegate.m in Sources */,
+				2E8E63D516C8786300B47EE9 /* ViewController.m in Sources */,
+				2E8E63FF16C878A900B47EE9 /* NCMusicGesturesView.m in Sources */,
+				2E8E641B16C87F2100B47EE9 /* UIView+UIViewExtensions.m in Sources */,
+				2E7C29D616C9CA73008B117F /* NCMusicGesturesHeaderPageOne.m in Sources */,
+				2E7C29D916C9CDEF008B117F /* StringFormatter.m in Sources */,
+				2E7C29DC16C9D1D4008B117F /* UISliderCustom.m in Sources */,
+				2E7C29DF16C9D6D7008B117F /* NCMusicGesturesHeaderPageTwo.m in Sources */,
+				2E7C29EB16CA2DA2008B117F /* NCMusicGesturesHeader.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E8E63DC16C8786300B47EE9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E8E63F016C8786300B47EE9 /* NCMusicPlayerAppVersionTests.m in Sources */,
+				2E8E641C16C87F2100B47EE9 /* UIView+UIViewExtensions.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2E8E63E716C8786300B47EE9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2E8E63B716C8786300B47EE9 /* NCMusicPlayerAppVersion */;
+			targetProxy = 2E8E63E616C8786300B47EE9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2E8E63C416C8786300B47EE9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2E8E63C516C8786300B47EE9 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		2E8E63D616C8786300B47EE9 /* ViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2E8E63D716C8786300B47EE9 /* en */,
+			);
+			name = ViewController_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		2E8E63D916C8786300B47EE9 /* ViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2E8E63DA16C8786300B47EE9 /* en */,
+			);
+			name = ViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+		2E8E63EB16C8786300B47EE9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2E8E63EC16C8786300B47EE9 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2E8E63F116C8786300B47EE9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2E8E63F216C8786300B47EE9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2E8E63F416C8786300B47EE9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pat Sluth (P5B3H5K98V)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NCMusicPlayerAppVersion/NCMusicPlayerAppVersion-Prefix.pch";
+				INFOPLIST_FILE = "NCMusicPlayerAppVersion/NCMusicPlayerAppVersion-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "3D82358B-696C-4139-8476-B0BF15BF044F";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		2E8E63F516C8786300B47EE9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pat Sluth (P5B3H5K98V)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NCMusicPlayerAppVersion/NCMusicPlayerAppVersion-Prefix.pch";
+				INFOPLIST_FILE = "NCMusicPlayerAppVersion/NCMusicPlayerAppVersion-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "3D82358B-696C-4139-8476-B0BF15BF044F";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		2E8E63F716C8786300B47EE9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NCMusicPlayerAppVersion.app/NCMusicPlayerAppVersion";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NCMusicPlayerAppVersion/NCMusicPlayerAppVersion-Prefix.pch";
+				INFOPLIST_FILE = "NCMusicPlayerAppVersionTests/NCMusicPlayerAppVersionTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		2E8E63F816C8786300B47EE9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/NCMusicPlayerAppVersion.app/NCMusicPlayerAppVersion";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NCMusicPlayerAppVersion/NCMusicPlayerAppVersion-Prefix.pch";
+				INFOPLIST_FILE = "NCMusicPlayerAppVersionTests/NCMusicPlayerAppVersionTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2E8E63B316C8786300B47EE9 /* Build configuration list for PBXProject "NCMusicPlayerAppVersion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2E8E63F116C8786300B47EE9 /* Debug */,
+				2E8E63F216C8786300B47EE9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2E8E63F316C8786300B47EE9 /* Build configuration list for PBXNativeTarget "NCMusicPlayerAppVersion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2E8E63F416C8786300B47EE9 /* Debug */,
+				2E8E63F516C8786300B47EE9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2E8E63F616C8786300B47EE9 /* Build configuration list for PBXNativeTarget "NCMusicPlayerAppVersionTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2E8E63F716C8786300B47EE9 /* Debug */,
+				2E8E63F816C8786300B47EE9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2E8E63B016C8786300B47EE9 /* Project object */;
+}

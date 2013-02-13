@@ -7,7 +7,7 @@
 //
 
 #import "NCMusicGesturesController.h"
-#import "NSMusicGesturesView.h"
+#import "NCMusicGesturesView.h"
 #import "UIView+UIViewExtensions.h"
 
 #define BACKGROUND_CAP_VALUE 5
@@ -18,7 +18,7 @@
 
 @interface NCMusicGesturesController()
 
-@property (readwrite, nonatomic) NSMusicGesturesView *musicController;
+@property (readwrite, nonatomic) NCMusicGesturesView *musicController;
 
 @end
 
@@ -58,10 +58,10 @@
 	return _view;
 }
 
-- (NSMusicGesturesView *)musicController
+- (NCMusicGesturesView *)musicController
 {
     if (!_musicController){
-        _musicController = [[NSMusicGesturesView alloc] initWithFrame:_view.frame];
+        _musicController = [[NCMusicGesturesView alloc] initWithFrame:_view.frame];
         [_view addSubview:_musicController];
         [UIView setOrigin:_musicController newOrigin:CGPointZero];
     }

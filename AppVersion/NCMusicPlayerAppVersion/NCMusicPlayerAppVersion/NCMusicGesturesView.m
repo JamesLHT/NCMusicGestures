@@ -21,9 +21,10 @@
 #define ALBUM_ART_ANIM_TIME 0.5
 #define ALBUM_ART_PADDING 10
 #define ALBUM_ART_SIZE 85
-#define ICLOUD_IMAGE_SIZE 25
+#define ICLOUD_IMAGE_SIZE 20
 
-#define DEFAULT_ARTWORK_IMAGE [UIImage imageNamed:@"blankalbumart"]
+#define IMAGE_DISC [UIImage imageNamed:@"cddisc"]
+#define IMAGE_CLOUD [UIImage imageNamed:@"white_cloud"]
 
 @interface NCMusicGesturesView()
 
@@ -104,7 +105,7 @@ typedef enum  {
 - (void)performPlayPauseAnimation
 {
     [UIView animateWithDuration:0.1 animations:^{
-        self.scrollView.transform = CGAffineTransformMakeScale(0.90, 0.90);
+        self.scrollView.transform = CGAffineTransformMakeScale(0.9, 0.9);
     } completion:^(BOOL finished){
         [UIView animateWithDuration:0.1 animations:^{
             self.scrollView.transform = CGAffineTransformMakeScale(1.0, 1.0);
@@ -121,6 +122,8 @@ typedef enum  {
 
 - (void)oniPodItemChanged:(NSNotification *)notification
 {
+    self.albumIsOniCloud.hidden = YES;
+    
     MPMusicPlayerController *mp = notification.object;
     MPMediaItem *item = mp.nowPlayingItem;
     
@@ -149,9 +152,10 @@ typedef enum  {
         MPMediaItemArtwork *itemArtwork = [item valueForProperty:MPMediaItemPropertyArtwork];
         [self setAlbumArtToNewImage:[itemArtwork imageWithSize:self.albumArt.bounds.size]
                            animated:animated
-                     halfCompletion:^{
-                         self.albumIsOniCloud.hidden = ![[item valueForProperty:MPMediaItemPropertyIsCloudItem] boolValue];
-                     }];
+                     halfCompletion:nil
+                         completion:^{
+                             self.albumIsOniCloud.hidden = ![[item valueForProperty:MPMediaItemPropertyIsCloudItem] boolValue];
+                         }];
         
     } else {
         
@@ -163,17 +167,20 @@ typedef enum  {
         
         [self setAlbumArtToNewImage:nil
                            animated:animated
-                     halfCompletion:^{
-                         self.albumIsOniCloud.hidden = ![[item valueForProperty:MPMediaItemPropertyIsCloudItem] boolValue];
-                     }];
+                     halfCompletion:nil
+                         completion:nil];
     }
 }
 
-- (void)setAlbumArtToNewImage:(UIImage *)image animated:(BOOL)animated halfCompletion:(void (^)())halfCompletion
+- (void)setAlbumArtToNewImage:(UIImage *)image
+                     animated:(BOOL)animated
+               halfCompletion:(void (^)())halfCompletion
+                   completion:(void (^)())completion
 {
-    UIImage *newAlbumArtImage = (image) ? image : DEFAULT_ARTWORK_IMAGE;
+    UIImage *newAlbumArtImage = (image) ? image : IMAGE_DISC;
     
     if (animated){
+        
         [UIView animateWithDuration:ALBUM_ART_ANIM_TIME / 2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
             self.albumArt.transform = CGAffineTransformMakeScale(0.8, 0.8);
         }completion:^(BOOL finished){
@@ -184,7 +191,11 @@ typedef enum  {
             
             [UIView animateWithDuration:ALBUM_ART_ANIM_TIME / 2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
                 self.albumArt.transform = CGAffineTransformMakeScale(1.0, 1.0);
-            }completion:nil];
+            }completion:^(BOOL finished){
+                if (completion){
+                    completion();
+                }
+            }];
         }];
         
         [UIView transitionWithView:self.albumArt duration:ALBUM_ART_ANIM_TIME options:UIViewAnimationOptionTransitionFlipFromRight
@@ -256,19 +267,23 @@ typedef enum  {
 
 - (void)setupAlbumArtworkView
 {
-    self.albumArt = [[UIImageView alloc] initWithImage:DEFAULT_ARTWORK_IMAGE];
+    self.albumArt = [[UIImageView alloc] initWithImage:IMAGE_DISC];
+    
     [self.scrollView addSubview:self.albumArt];
     self.albumArt.contentMode = UIViewContentModeScaleToFill;
     [UIView setSize:self.albumArt newSize:CGSizeMake(ALBUM_ART_SIZE, ALBUM_ART_SIZE)];
     [UIView setOriginX:self.albumArt newOrigin:ALBUM_ART_PADDING];
     
-    self.albumIsOniCloud = [[UIImageView alloc] init];
-    self.albumIsOniCloud.backgroundColor = [UIColor redColor];
-    [UIView setSize:self.albumIsOniCloud newSize:CGSizeMake(ICLOUD_IMAGE_SIZE, ICLOUD_IMAGE_SIZE)];
+    self.albumIsOniCloud = [[UIImageView alloc] initWithImage:IMAGE_CLOUD];
+    [UIView setSize:self.albumIsOniCloud
+            newSize:CGSizeMake(ICLOUD_IMAGE_SIZE, ICLOUD_IMAGE_SIZE)];
     self.albumIsOniCloud.hidden = YES;
     [self.albumArt addSubview:self.albumIsOniCloud];
-    [UIView setUpperRightOriginX:self.albumIsOniCloud newOrigin:self.albumArt.frame.size.width];
-    [UIView setLowerRightOriginX:self.albumIsOniCloud newOrigin:self.albumArt.frame.size.height];
+    //[UIView setUpperRightOriginX:self.albumIsOniCloud newOrigin:self.albumArt.frame.size.width];
+    //[UIView setOriginY:self.albumIsOniCloud
+         //    newOrigin:self.albumArt.frame.size.height - self.albumIsOniCloud.frame.size.height];
+    
+    [self.albumIsOniCloud setCenter:CGPointMake(self.albumArt.frame.size.width, self.albumArt.frame.size.height)];
 }
 
 - (void)setupScrollViewLabels

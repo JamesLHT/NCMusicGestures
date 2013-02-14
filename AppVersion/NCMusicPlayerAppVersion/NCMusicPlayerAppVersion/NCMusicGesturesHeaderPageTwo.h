@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NCMusicGesturesHeaderPageTwo : UIView
+@interface NCMusicGesturesHeaderPageTwo : UIView <UIAlertViewDelegate>
 
 @end

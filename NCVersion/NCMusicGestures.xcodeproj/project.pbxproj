@@ -10,12 +10,25 @@
 		2E12E65A16C5BD6D00BC0814 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E12E65916C5BD6D00BC0814 /* Foundation.framework */; };
 		2E12E65C16C5BD6D00BC0814 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E12E65B16C5BD6D00BC0814 /* UIKit.framework */; };
 		2E12E66716C5BD6D00BC0814 /* NCMusicGesturesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E12E66616C5BD6D00BC0814 /* NCMusicGesturesController.m */; };
-		2E12E67716C5BF7400BC0814 /* NCMusicGesturesView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E12E67516C5BF7400BC0814 /* NCMusicGesturesView.h */; };
-		2E12E67816C5BF7400BC0814 /* NCMusicGesturesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E12E67616C5BF7400BC0814 /* NCMusicGesturesView.m */; };
 		2E12E68416C5C03300BC0814 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E12E68216C5C00400BC0814 /* CoreGraphics.framework */; };
 		2E12E68516C5C03C00BC0814 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E12E68016C5BFFA00BC0814 /* MediaPlayer.framework */; };
-		2E8E641716C87F1100B47EE9 /* UIView+UIViewExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E8E641516C87F1100B47EE9 /* UIView+UIViewExtensions.h */; };
-		2E8E641816C87F1100B47EE9 /* UIView+UIViewExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8E641616C87F1100B47EE9 /* UIView+UIViewExtensions.m */; };
+		2E550CB716CDB394008D9F31 /* StringFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E550CB116CDB394008D9F31 /* StringFormatter.h */; };
+		2E550CB816CDB394008D9F31 /* StringFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E550CB216CDB394008D9F31 /* StringFormatter.m */; };
+		2E550CB916CDB394008D9F31 /* UISliderCustom.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E550CB316CDB394008D9F31 /* UISliderCustom.h */; };
+		2E550CBA16CDB394008D9F31 /* UISliderCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E550CB416CDB394008D9F31 /* UISliderCustom.m */; };
+		2E550CBB16CDB394008D9F31 /* UIView+UIViewExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E550CB516CDB394008D9F31 /* UIView+UIViewExtensions.h */; };
+		2E550CBC16CDB394008D9F31 /* UIView+UIViewExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E550CB616CDB394008D9F31 /* UIView+UIViewExtensions.m */; };
+		2E550CC316CDB3A3008D9F31 /* NCMusicGesturesHeader.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E550CBD16CDB3A3008D9F31 /* NCMusicGesturesHeader.h */; };
+		2E550CC416CDB3A3008D9F31 /* NCMusicGesturesHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E550CBE16CDB3A3008D9F31 /* NCMusicGesturesHeader.m */; };
+		2E550CC516CDB3A3008D9F31 /* NCMusicGesturesHeaderPageOne.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E550CBF16CDB3A3008D9F31 /* NCMusicGesturesHeaderPageOne.h */; };
+		2E550CC616CDB3A3008D9F31 /* NCMusicGesturesHeaderPageOne.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E550CC016CDB3A3008D9F31 /* NCMusicGesturesHeaderPageOne.m */; };
+		2E550CC716CDB3A3008D9F31 /* NCMusicGesturesHeaderPageTwo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E550CC116CDB3A3008D9F31 /* NCMusicGesturesHeaderPageTwo.h */; };
+		2E550CC816CDB3A3008D9F31 /* NCMusicGesturesHeaderPageTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E550CC216CDB3A3008D9F31 /* NCMusicGesturesHeaderPageTwo.m */; };
+		2E550CCB16CDB3B3008D9F31 /* NCMusicGesturesView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E550CC916CDB3B3008D9F31 /* NCMusicGesturesView.h */; };
+		2E550CCC16CDB3B3008D9F31 /* NCMusicGesturesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E550CCA16CDB3B3008D9F31 /* NCMusicGesturesView.m */; };
+		2E550CCF16CDB4EF008D9F31 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E550CCD16CDB4E7008D9F31 /* Social.framework */; };
+		2E550CD216CDB638008D9F31 /* UIImage+UIImageExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E550CD016CDB638008D9F31 /* UIImage+UIImageExtensions.h */; };
+		2E550CD316CDB638008D9F31 /* UIImage+UIImageExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E550CD116CDB638008D9F31 /* UIImage+UIImageExtensions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,15 +43,51 @@
 		2E12E66616C5BD6D00BC0814 /* NCMusicGesturesController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NCMusicGesturesController.m; sourceTree = "<group>"; };
 		2E12E66C16C5BD6D00BC0814 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/Info.plist; sourceTree = "<group>"; };
 		2E12E66D16C5BD6D00BC0814 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/InfoPlist.strings; sourceTree = "<group>"; };
-		2E12E67516C5BF7400BC0814 /* NCMusicGesturesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCMusicGesturesView.h; sourceTree = "<group>"; };
-		2E12E67616C5BF7400BC0814 /* NCMusicGesturesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCMusicGesturesView.m; sourceTree = "<group>"; };
 		2E12E68016C5BFFA00BC0814 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		2E12E68216C5C00400BC0814 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		2E8E640A16C879CD00B47EE9 /* blankalbumart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blankalbumart.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/blankalbumart.png; sourceTree = "<group>"; };
-		2E8E640B16C879CD00B47EE9 /* WeeAppBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WeeAppBackground.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/WeeAppBackground.png; sourceTree = "<group>"; };
-		2E8E640C16C879CD00B47EE9 /* WeeAppBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WeeAppBackground@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/WeeAppBackground@2x.png"; sourceTree = "<group>"; };
-		2E8E641516C87F1100B47EE9 /* UIView+UIViewExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+UIViewExtensions.h"; sourceTree = "<group>"; };
-		2E8E641616C87F1100B47EE9 /* UIView+UIViewExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+UIViewExtensions.m"; sourceTree = "<group>"; };
+		2E550C9416CDB2AA008D9F31 /* cddisc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cddisc.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/cddisc.png; sourceTree = "<group>"; };
+		2E550C9516CDB2AA008D9F31 /* cddisc@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cddisc@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/cddisc@2x.png"; sourceTree = "<group>"; };
+		2E550C9616CDB2AA008D9F31 /* grey_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grey_facebook.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/grey_facebook.png; sourceTree = "<group>"; };
+		2E550C9716CDB2AA008D9F31 /* grey_facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "grey_facebook@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/grey_facebook@2x.png"; sourceTree = "<group>"; };
+		2E550C9816CDB2AA008D9F31 /* grey_repeat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grey_repeat.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/grey_repeat.png; sourceTree = "<group>"; };
+		2E550C9916CDB2AA008D9F31 /* grey_repeat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "grey_repeat@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/grey_repeat@2x.png"; sourceTree = "<group>"; };
+		2E550C9A16CDB2AA008D9F31 /* grey_shuffle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grey_shuffle.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/grey_shuffle.png; sourceTree = "<group>"; };
+		2E550C9B16CDB2AA008D9F31 /* grey_shuffle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "grey_shuffle@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/grey_shuffle@2x.png"; sourceTree = "<group>"; };
+		2E550C9C16CDB2AA008D9F31 /* grey_twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grey_twitter.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/grey_twitter.png; sourceTree = "<group>"; };
+		2E550C9D16CDB2AA008D9F31 /* grey_twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "grey_twitter@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/grey_twitter@2x.png"; sourceTree = "<group>"; };
+		2E550C9E16CDB2AA008D9F31 /* WeeAppBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WeeAppBackground.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/WeeAppBackground.png; sourceTree = "<group>"; };
+		2E550C9F16CDB2AA008D9F31 /* WeeAppBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WeeAppBackground@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/WeeAppBackground@2x.png"; sourceTree = "<group>"; };
+		2E550CA016CDB2AA008D9F31 /* white_cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = white_cloud.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/white_cloud.png; sourceTree = "<group>"; };
+		2E550CA116CDB2AA008D9F31 /* white_cloud@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "white_cloud@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/white_cloud@2x.png"; sourceTree = "<group>"; };
+		2E550CA216CDB2AA008D9F31 /* white_donate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = white_donate.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/white_donate.png; sourceTree = "<group>"; };
+		2E550CA316CDB2AA008D9F31 /* white_donate@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "white_donate@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/white_donate@2x.png"; sourceTree = "<group>"; };
+		2E550CA416CDB2AA008D9F31 /* white_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = white_facebook.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/white_facebook.png; sourceTree = "<group>"; };
+		2E550CA516CDB2AA008D9F31 /* white_facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "white_facebook@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/white_facebook@2x.png"; sourceTree = "<group>"; };
+		2E550CA616CDB2AA008D9F31 /* white_repeat_one.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = white_repeat_one.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/white_repeat_one.png; sourceTree = "<group>"; };
+		2E550CA716CDB2AA008D9F31 /* white_repeat_one@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "white_repeat_one@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/white_repeat_one@2x.png"; sourceTree = "<group>"; };
+		2E550CA816CDB2AA008D9F31 /* white_repeat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = white_repeat.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/white_repeat.png; sourceTree = "<group>"; };
+		2E550CA916CDB2AA008D9F31 /* white_repeat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "white_repeat@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/white_repeat@2x.png"; sourceTree = "<group>"; };
+		2E550CAA16CDB2AA008D9F31 /* white_shuffle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = white_shuffle.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/white_shuffle.png; sourceTree = "<group>"; };
+		2E550CAB16CDB2AA008D9F31 /* white_shuffle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "white_shuffle@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/white_shuffle@2x.png"; sourceTree = "<group>"; };
+		2E550CAC16CDB2AA008D9F31 /* white_twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = white_twitter.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/white_twitter.png; sourceTree = "<group>"; };
+		2E550CAD16CDB2AA008D9F31 /* white_twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "white_twitter@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/white_twitter@2x.png"; sourceTree = "<group>"; };
+		2E550CB116CDB394008D9F31 /* StringFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringFormatter.h; sourceTree = "<group>"; };
+		2E550CB216CDB394008D9F31 /* StringFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringFormatter.m; sourceTree = "<group>"; };
+		2E550CB316CDB394008D9F31 /* UISliderCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISliderCustom.h; sourceTree = "<group>"; };
+		2E550CB416CDB394008D9F31 /* UISliderCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UISliderCustom.m; sourceTree = "<group>"; };
+		2E550CB516CDB394008D9F31 /* UIView+UIViewExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+UIViewExtensions.h"; sourceTree = "<group>"; };
+		2E550CB616CDB394008D9F31 /* UIView+UIViewExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+UIViewExtensions.m"; sourceTree = "<group>"; };
+		2E550CBD16CDB3A3008D9F31 /* NCMusicGesturesHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCMusicGesturesHeader.h; sourceTree = "<group>"; };
+		2E550CBE16CDB3A3008D9F31 /* NCMusicGesturesHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCMusicGesturesHeader.m; sourceTree = "<group>"; };
+		2E550CBF16CDB3A3008D9F31 /* NCMusicGesturesHeaderPageOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCMusicGesturesHeaderPageOne.h; sourceTree = "<group>"; };
+		2E550CC016CDB3A3008D9F31 /* NCMusicGesturesHeaderPageOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCMusicGesturesHeaderPageOne.m; sourceTree = "<group>"; };
+		2E550CC116CDB3A3008D9F31 /* NCMusicGesturesHeaderPageTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCMusicGesturesHeaderPageTwo.h; sourceTree = "<group>"; };
+		2E550CC216CDB3A3008D9F31 /* NCMusicGesturesHeaderPageTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCMusicGesturesHeaderPageTwo.m; sourceTree = "<group>"; };
+		2E550CC916CDB3B3008D9F31 /* NCMusicGesturesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCMusicGesturesView.h; sourceTree = "<group>"; };
+		2E550CCA16CDB3B3008D9F31 /* NCMusicGesturesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCMusicGesturesView.m; sourceTree = "<group>"; };
+		2E550CCD16CDB4E7008D9F31 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		2E550CD016CDB638008D9F31 /* UIImage+UIImageExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+UIImageExtensions.h"; sourceTree = "<group>"; };
+		2E550CD116CDB638008D9F31 /* UIImage+UIImageExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+UIImageExtensions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E550CCF16CDB4EF008D9F31 /* Social.framework in Frameworks */,
 				2E12E68516C5C03C00BC0814 /* MediaPlayer.framework in Frameworks */,
 				2E12E68416C5C03300BC0814 /* CoreGraphics.framework in Frameworks */,
 				2E12E65A16C5BD6D00BC0814 /* Foundation.framework in Frameworks */,
@@ -76,6 +126,7 @@
 		2E12E65816C5BD6D00BC0814 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2E550CCD16CDB4E7008D9F31 /* Social.framework */,
 				2E12E65916C5BD6D00BC0814 /* Foundation.framework */,
 				2E12E65B16C5BD6D00BC0814 /* UIKit.framework */,
 				2E12E68216C5C00400BC0814 /* CoreGraphics.framework */,
@@ -87,12 +138,9 @@
 		2E12E65D16C5BD6D00BC0814 /* NCMusicGestures */ = {
 			isa = PBXGroup;
 			children = (
-				2E8E641516C87F1100B47EE9 /* UIView+UIViewExtensions.h */,
-				2E8E641616C87F1100B47EE9 /* UIView+UIViewExtensions.m */,
 				2E12E66516C5BD6D00BC0814 /* NCMusicGesturesController.h */,
 				2E12E66616C5BD6D00BC0814 /* NCMusicGesturesController.m */,
-				2E12E67516C5BF7400BC0814 /* NCMusicGesturesView.h */,
-				2E12E67616C5BF7400BC0814 /* NCMusicGesturesView.m */,
+				2E550CAE16CDB351008D9F31 /* Custom */,
 				2E12E65E16C5BD6D00BC0814 /* Package */,
 				2E12E66216C5BD6D00BC0814 /* Supporting Files */,
 			);
@@ -153,13 +201,75 @@
 		2E12E66B16C5BD6D00BC0814 /* ___PACKAGENAME___ */ = {
 			isa = PBXGroup;
 			children = (
-				2E8E640A16C879CD00B47EE9 /* blankalbumart.png */,
-				2E8E640B16C879CD00B47EE9 /* WeeAppBackground.png */,
-				2E8E640C16C879CD00B47EE9 /* WeeAppBackground@2x.png */,
+				2E550C9416CDB2AA008D9F31 /* cddisc.png */,
+				2E550C9516CDB2AA008D9F31 /* cddisc@2x.png */,
+				2E550C9616CDB2AA008D9F31 /* grey_facebook.png */,
+				2E550C9716CDB2AA008D9F31 /* grey_facebook@2x.png */,
+				2E550C9816CDB2AA008D9F31 /* grey_repeat.png */,
+				2E550C9916CDB2AA008D9F31 /* grey_repeat@2x.png */,
+				2E550C9A16CDB2AA008D9F31 /* grey_shuffle.png */,
+				2E550C9B16CDB2AA008D9F31 /* grey_shuffle@2x.png */,
+				2E550C9C16CDB2AA008D9F31 /* grey_twitter.png */,
+				2E550C9D16CDB2AA008D9F31 /* grey_twitter@2x.png */,
+				2E550C9E16CDB2AA008D9F31 /* WeeAppBackground.png */,
+				2E550C9F16CDB2AA008D9F31 /* WeeAppBackground@2x.png */,
+				2E550CA016CDB2AA008D9F31 /* white_cloud.png */,
+				2E550CA116CDB2AA008D9F31 /* white_cloud@2x.png */,
+				2E550CA216CDB2AA008D9F31 /* white_donate.png */,
+				2E550CA316CDB2AA008D9F31 /* white_donate@2x.png */,
+				2E550CA416CDB2AA008D9F31 /* white_facebook.png */,
+				2E550CA516CDB2AA008D9F31 /* white_facebook@2x.png */,
+				2E550CA616CDB2AA008D9F31 /* white_repeat_one.png */,
+				2E550CA716CDB2AA008D9F31 /* white_repeat_one@2x.png */,
+				2E550CA816CDB2AA008D9F31 /* white_repeat.png */,
+				2E550CA916CDB2AA008D9F31 /* white_repeat@2x.png */,
+				2E550CAA16CDB2AA008D9F31 /* white_shuffle.png */,
+				2E550CAB16CDB2AA008D9F31 /* white_shuffle@2x.png */,
+				2E550CAC16CDB2AA008D9F31 /* white_twitter.png */,
+				2E550CAD16CDB2AA008D9F31 /* white_twitter@2x.png */,
 				2E12E66C16C5BD6D00BC0814 /* Info.plist */,
 				2E12E66D16C5BD6D00BC0814 /* InfoPlist.strings */,
 			);
 			name = "___PACKAGENAME___";
+			sourceTree = "<group>";
+		};
+		2E550CAE16CDB351008D9F31 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				2E550CC916CDB3B3008D9F31 /* NCMusicGesturesView.h */,
+				2E550CCA16CDB3B3008D9F31 /* NCMusicGesturesView.m */,
+				2E550CB016CDB380008D9F31 /* Header */,
+				2E550CAF16CDB360008D9F31 /* Helper */,
+			);
+			name = Custom;
+			sourceTree = "<group>";
+		};
+		2E550CAF16CDB360008D9F31 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				2E550CB116CDB394008D9F31 /* StringFormatter.h */,
+				2E550CB216CDB394008D9F31 /* StringFormatter.m */,
+				2E550CB316CDB394008D9F31 /* UISliderCustom.h */,
+				2E550CB416CDB394008D9F31 /* UISliderCustom.m */,
+				2E550CB516CDB394008D9F31 /* UIView+UIViewExtensions.h */,
+				2E550CB616CDB394008D9F31 /* UIView+UIViewExtensions.m */,
+				2E550CD016CDB638008D9F31 /* UIImage+UIImageExtensions.h */,
+				2E550CD116CDB638008D9F31 /* UIImage+UIImageExtensions.m */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
+		2E550CB016CDB380008D9F31 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				2E550CBD16CDB3A3008D9F31 /* NCMusicGesturesHeader.h */,
+				2E550CBE16CDB3A3008D9F31 /* NCMusicGesturesHeader.m */,
+				2E550CBF16CDB3A3008D9F31 /* NCMusicGesturesHeaderPageOne.h */,
+				2E550CC016CDB3A3008D9F31 /* NCMusicGesturesHeaderPageOne.m */,
+				2E550CC116CDB3A3008D9F31 /* NCMusicGesturesHeaderPageTwo.h */,
+				2E550CC216CDB3A3008D9F31 /* NCMusicGesturesHeaderPageTwo.m */,
+			);
+			name = Header;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,8 +279,14 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E12E67716C5BF7400BC0814 /* NCMusicGesturesView.h in Headers */,
-				2E8E641716C87F1100B47EE9 /* UIView+UIViewExtensions.h in Headers */,
+				2E550CB716CDB394008D9F31 /* StringFormatter.h in Headers */,
+				2E550CB916CDB394008D9F31 /* UISliderCustom.h in Headers */,
+				2E550CBB16CDB394008D9F31 /* UIView+UIViewExtensions.h in Headers */,
+				2E550CC316CDB3A3008D9F31 /* NCMusicGesturesHeader.h in Headers */,
+				2E550CC516CDB3A3008D9F31 /* NCMusicGesturesHeaderPageOne.h in Headers */,
+				2E550CC716CDB3A3008D9F31 /* NCMusicGesturesHeaderPageTwo.h in Headers */,
+				2E550CCB16CDB3B3008D9F31 /* NCMusicGesturesView.h in Headers */,
+				2E550CD216CDB638008D9F31 /* UIImage+UIImageExtensions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,8 +358,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E12E66716C5BD6D00BC0814 /* NCMusicGesturesController.m in Sources */,
-				2E12E67816C5BF7400BC0814 /* NCMusicGesturesView.m in Sources */,
-				2E8E641816C87F1100B47EE9 /* UIView+UIViewExtensions.m in Sources */,
+				2E550CB816CDB394008D9F31 /* StringFormatter.m in Sources */,
+				2E550CBA16CDB394008D9F31 /* UISliderCustom.m in Sources */,
+				2E550CBC16CDB394008D9F31 /* UIView+UIViewExtensions.m in Sources */,
+				2E550CC416CDB3A3008D9F31 /* NCMusicGesturesHeader.m in Sources */,
+				2E550CC616CDB3A3008D9F31 /* NCMusicGesturesHeaderPageOne.m in Sources */,
+				2E550CC816CDB3A3008D9F31 /* NCMusicGesturesHeaderPageTwo.m in Sources */,
+				2E550CCC16CDB3B3008D9F31 /* NCMusicGesturesView.m in Sources */,
+				2E550CD316CDB638008D9F31 /* UIImage+UIImageExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,7 +429,7 @@
 		2E12E67316C5BD6D00BC0814 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Pat Sluth (L7N9VK63RC)";
+				CODE_SIGN_IDENTITY = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_EXTENSION = "";
@@ -320,7 +442,6 @@
 				GCC_PREFIX_HEADER = "NCMusicGestures/NCMusicGestures-Prefix.pch";
 				INSTALL_PATH = /System/Library/WeeAppPlugins/NCMusicGestures.bundle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "E2E49DEF-12AB-458C-A4DA-02C8AD221D64";
 				iOSOpenDevBuildPackageOnAnyBuild = NO;
 				iOSOpenDevCopyOnBuild = NO;
 				iOSOpenDevDevice = 192.168.0.12;
@@ -334,7 +455,7 @@
 		2E12E67416C5BD6D00BC0814 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Pat Sluth (L7N9VK63RC)";
+				CODE_SIGN_IDENTITY = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_EXTENSION = "";
@@ -347,7 +468,6 @@
 				GCC_PREFIX_HEADER = "NCMusicGestures/NCMusicGestures-Prefix.pch";
 				INSTALL_PATH = /System/Library/WeeAppPlugins/NCMusicGestures.bundle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "E2E49DEF-12AB-458C-A4DA-02C8AD221D64";
 				iOSOpenDevBuildPackageOnAnyBuild = NO;
 				iOSOpenDevCopyOnBuild = NO;
 				iOSOpenDevDevice = 192.168.0.12;

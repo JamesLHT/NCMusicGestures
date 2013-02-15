@@ -41,6 +41,7 @@ typedef enum  {
 
 @property (readwrite, nonatomic) IPOD_ACTION_TO_PERFORM ipodActionToPerformOnScrollViewDeceleration;
 
+@property (strong, nonatomic) UIImageView *background;
 @property (strong, nonatomic) UIScrollView *scrollView;
 
 @property (strong, nonatomic) UIImageView *albumArt;
@@ -61,15 +62,14 @@ typedef enum  {
 {
     self = [super init];
     if (self) {
-        self.frame = CGRectMake(VIEW_X_OFFSET, 0, VIEW_WIDTH, TOTAL_VIEW_HEIGHT);
+        self.frame = CGRectMake(VIEW_X_OFFSET, 0, VIEW_WIDTH_PORTRAIT, TOTAL_VIEW_HEIGHT);
         
         
         UIImage *bg = [[UIImage imageNamed:@"WeeAppBackground"]
                        stretchableImageWithLeftCapWidth:BACKGROUND_CAP_VALUE topCapHeight:BACKGROUND_CAP_VALUE];
-		UIImageView *bgView = [[UIImageView alloc] initWithImage:bg];
-		bgView.frame = CGRectMake(0, 0, VIEW_WIDTH, TOTAL_VIEW_HEIGHT);
-		[self addSubview:bgView];
-		[bgView release];
+		self.background = [[UIImageView alloc] initWithImage:bg];
+		self.background.frame = CGRectMake(0, 0, VIEW_WIDTH_PORTRAIT, TOTAL_VIEW_HEIGHT);
+		[self addSubview:self.background];
         
         self.ipodActionToPerformOnScrollViewDeceleration = None;
         
@@ -82,8 +82,26 @@ typedef enum  {
         [self setupiPodListeners];
         
         [self setupHeader];
+        
+        [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDeviceOrientationChange)
+                                                     name:UIDeviceOrientationDidChangeNotification object:nil];
     }
     return self;
+}
+
+- (void)onDeviceOrientationChange
+{
+    //[UIView setSizeX:self newSize:VIEW_WIDTH_PORTRAIT];
+    return;
+    
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    
+    if (UIDeviceOrientationIsPortrait(orientation)){
+        [UIView setSizeX:self.background newSize:self.window.frame.size.width];
+    } else if (UIDeviceOrientationIsLandscape(orientation)){
+        [UIView setSizeX:self.background newSize:self.window.frame.size.height];
+    }
 }
 
 #pragma mark Gesture Recognizer
@@ -354,7 +372,7 @@ typedef enum  {
 
 - (void)setupHeader
 {
-    CGRect rect = CGRectMake(0, 0, VIEW_WIDTH, VIEW_HEADER_HEIGHT);
+    CGRect rect = CGRectMake(0, 0, VIEW_WIDTH_PORTRAIT, VIEW_HEADER_HEIGHT);
     self.header = [[NCMusicGesturesHeader alloc] initWithFrame:rect];
     [self addSubview:self.header];
 }
@@ -368,6 +386,7 @@ typedef enum  {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMusicPlayerControllerPlaybackStateDidChangeNotification object:nil];
     
+    [self.background release];
     [self.scrollView removeGestureRecognizer:self.tapGestureRecognizer];
     [self.tapGestureRecognizer release];
     

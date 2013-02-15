@@ -9,6 +9,12 @@
 #import "ViewController.h"
 #import "NCMusicGesturesView.h"
 
+@interface ViewController()
+
+@property (strong, nonatomic) NCMusicGesturesView *musicGestures;
+
+@end
+
 @interface ViewController ()
 
 @end
@@ -27,15 +33,20 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    NCMusicGesturesView *musicGestures = [[NCMusicGesturesView alloc] init];
-    [self.view addSubview:musicGestures];
-    [musicGestures release];
+    self.musicGestures = [[NCMusicGesturesView alloc] init];
+    [self.view addSubview:self.musicGestures];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc
+{
+    [self.musicGestures release];
+    [super dealloc];
 }
 
 @end

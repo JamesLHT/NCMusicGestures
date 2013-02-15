@@ -108,7 +108,7 @@
 
 - (void)setupScrollView
 {
-    CGRect rect = CGRectMake(0, 0, VIEW_WIDTH_PORTRAIT, VIEW_HEADER_HEIGHT);
+    CGRect rect = CGRectMake(0, 0, 316, VIEW_HEADER_HEIGHT);
     
     self.scrollView = [[UIScrollView alloc] initWithFrame:rect];
     self.scrollView.delegate = self;
@@ -125,7 +125,7 @@
     self.scrollViewPageControl.numberOfPages = 2;
     [self insertSubview:self.scrollViewPageControl belowSubview:self.scrollView];
     
-    CGRect rectTwo = CGRectMake(0, 0, VIEW_WIDTH_PORTRAIT, VIEW_HEADER_HEIGHT - 15);
+    CGRect rectTwo = CGRectMake(0, 0, 316, VIEW_HEADER_HEIGHT - 15);
     
     self.headerPageOne = [[NCMusicGesturesHeaderPageOne alloc] initWithFrame:rectTwo];
     [self.scrollView addSubview:self.headerPageOne];

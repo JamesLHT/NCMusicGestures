@@ -18,7 +18,7 @@
 
 @interface NCMusicGesturesController()
 
-@property (readwrite, nonatomic) NCMusicGesturesView *musicController;
+@property (readwrite, nonatomic) NCMusicGesturesView *musicGestures;
 
 @end
 
@@ -35,8 +35,8 @@
 
 -(void)dealloc
 {
+    [_musicGestures release];
 	[_view release];
-    [_musicController release];
 	[super dealloc];
 }
 
@@ -45,28 +45,12 @@
 	if (_view == nil)
 	{
 		_view = [[UIView alloc] initWithFrame:CGRectMake(VIEW_X_OFFSET, 0, VIEW_WIDTH, TOTAL_VIEW_HEIGHT)];
-		UIImage *bg = [[UIImage imageWithContentsOfFile:@"/System/Library/WeeAppPlugins/NCMusicGestures.bundle/WeeAppBackground.png"]
-                       stretchableImageWithLeftCapWidth:BACKGROUND_CAP_VALUE topCapHeight:BACKGROUND_CAP_VALUE];
-		UIImageView *bgView = [[UIImageView alloc] initWithImage:bg];
-		bgView.frame = CGRectMake(0, 0, VIEW_WIDTH, TOTAL_VIEW_HEIGHT);
-		[_view addSubview:bgView];
-		[bgView release];
         
-        self.musicController.hidden = NO;
+        self.musicGestures = [[NCMusicGesturesView alloc] initWithFrame:_view.frame];
+        [self.view addSubview:self.musicGestures];
 	}
 
 	return _view;
-}
-
-- (NCMusicGesturesView *)musicController
-{
-    if (!_musicController){
-        _musicController = [[NCMusicGesturesView alloc] initWithFrame:_view.frame];
-        [_view addSubview:_musicController];
-        [UIView setOrigin:_musicController newOrigin:CGPointZero];
-    }
-    
-    return _musicController;
 }
 
 - (float)viewHeight

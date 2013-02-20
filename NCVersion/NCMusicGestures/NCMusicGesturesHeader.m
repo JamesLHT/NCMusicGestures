@@ -22,6 +22,8 @@
 @property (strong, nonatomic) NCMusicGesturesHeaderPageOne *headerPageOne;
 @property (strong, nonatomic) NCMusicGesturesHeaderPageTwo *headerPageTwo;
 
+@property (assign, nonatomic) MPMusicPlayerController *ipod;
+
 @end
 
 @implementation NCMusicGesturesHeader
@@ -38,9 +40,17 @@
 
 #pragma mark iPod
 
+- (MPMusicPlayerController *)ipod
+{
+    if (!_ipod){
+        _ipod = [MPMusicPlayerController iPodMusicPlayer];
+    }
+    return _ipod;
+}
+
 - (void)oniPodStateChanged:(NSNotification *)notification
 {
-    switch ([NCMusicGesturesView ipod].playbackState) {
+    switch (self.ipod.playbackState) {
         case MPMusicPlaybackStateStopped:
             [self.headerPageOne stopUpdateSongPlaybackTimeTimer];
             break;
@@ -77,7 +87,7 @@
 
 - (void)setInfoFromMPMediaItem:(MPMediaItem *)item animated:(BOOL)animated
 {
-    NSInteger currentItemLength = [[[NCMusicGesturesView ipod].nowPlayingItem valueForProperty:MPMediaItemPropertyPlaybackDuration] integerValue];
+    NSInteger currentItemLength = [[self.ipod.nowPlayingItem valueForProperty:MPMediaItemPropertyPlaybackDuration] integerValue];
     self.headerPageOne.songTotalTime.text = [StringFormatter formattedStringForDurationHMS:currentItemLength];
 }
 
@@ -114,6 +124,7 @@
     self.scrollView.delegate = self;
     self.scrollView.pagingEnabled = YES;
     self.scrollView.delaysContentTouches = NO;
+    self.scrollView.canCancelContentTouches = YES;
     self.scrollView.contentSize = CGSizeMake(rect.size.width * 2, rect.size.height);
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
@@ -147,7 +158,7 @@
                                                  name:MPMusicPlayerControllerPlaybackStateDidChangeNotification
                                                object:nil];
     
-    [[NCMusicGesturesView ipod] beginGeneratingPlaybackNotifications];
+    [self.ipod beginGeneratingPlaybackNotifications];
 }
 
 #pragma mark Cleanup
@@ -159,8 +170,6 @@
 
 - (void)dealloc
 {
-    [[NCMusicGesturesView ipod] endGeneratingPlaybackNotifications];
-    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMusicPlayerControllerPlaybackStateDidChangeNotification object:nil];
     
@@ -168,6 +177,8 @@
     [self.headerPageTwo release];
     [self.scrollView release];
     [self.scrollViewPageControl release];
+    
+    [self.ipod release];
     
     [super dealloc];
 }

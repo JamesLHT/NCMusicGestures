@@ -31,13 +31,15 @@
 
 @interface NCMusicGesturesHeaderPageTwo()
 
-//@property (readonly, nonatomic) ViewController *mainViewController;
+@property (strong, nonatomic) UIViewController *shareViewController;
 
 @property (strong, nonatomic) UIButton *shuffleButton;
 @property (strong, nonatomic) UIButton *repeatButton;
 @property (strong, nonatomic) UIButton *twitterButton;
 @property (strong, nonatomic) UIButton *facebookButton;
 @property (strong, nonatomic) UIButton *donateButton;
+
+@property (assign, nonatomic) MPMusicPlayerController *ipod;
 
 @end
 
@@ -47,10 +49,16 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        
+        self.shareViewController = [[UIViewController alloc] init];
+        self.shareViewController.view = self;
+        
         [self setupButtons];
         
         [self updateTwitterButton];
         [self updateFacbookButton];
+        
+        [self.ipod beginGeneratingPlaybackNotifications];
         
         [self updateShuffleButtonToCurrentState];
         [self updateRepeateButtonToCurrentState];
@@ -60,23 +68,31 @@
 
 #pragma mark iPod
 
+- (MPMusicPlayerController *)ipod
+{
+    if (!_ipod){
+        _ipod = [MPMusicPlayerController iPodMusicPlayer];
+    }
+    return _ipod;
+}
+
 - (void)shuffleButtonClicked
 {
-    switch ([NCMusicGesturesView ipod].shuffleMode) {
+    switch ([self.ipod shuffleMode]) {
         case MPMusicShuffleModeOff:
-            [[NCMusicGesturesView ipod] setShuffleMode:MPMusicShuffleModeSongs];
+            [self.ipod setShuffleMode:MPMusicShuffleModeSongs];
             break;
             
         case MPMusicShuffleModeSongs:
-            [[NCMusicGesturesView ipod] setShuffleMode:MPMusicShuffleModeOff];
+            [self.ipod setShuffleMode:MPMusicShuffleModeOff];
             break;
             
         case MPMusicShuffleModeDefault:
-            [[NCMusicGesturesView ipod] setShuffleMode:MPMusicShuffleModeOff];
+            [self.ipod setShuffleMode:MPMusicShuffleModeOff];
             break;
             
         case MPMusicShuffleModeAlbums:
-            [[NCMusicGesturesView ipod] setShuffleMode:MPMusicShuffleModeOff];
+            [self.ipod setShuffleMode:MPMusicShuffleModeOff];
             break;
             
         default:
@@ -88,7 +104,7 @@
 
 - (void)updateShuffleButtonToCurrentState
 {
-    switch ([NCMusicGesturesView ipod].shuffleMode) {
+    switch ([self.ipod shuffleMode]) {
         case MPMusicShuffleModeOff:
             [self.shuffleButton setImage:IMAGE_SHUFFLE_OFF forState:UIControlStateNormal];
             break;
@@ -104,21 +120,21 @@
 
 - (void)repeateButtonClicked
 {
-    switch ([NCMusicGesturesView ipod].repeatMode) {
+    switch ([self.ipod repeatMode]) {
         case MPMusicRepeatModeNone:
-            [[NCMusicGesturesView ipod] setRepeatMode:MPMusicRepeatModeAll];
+            [self.ipod setRepeatMode:MPMusicRepeatModeAll];
             break;
             
         case MPMusicRepeatModeAll:
-            [[NCMusicGesturesView ipod] setRepeatMode:MPMusicRepeatModeOne];
+            [self.ipod setRepeatMode:MPMusicRepeatModeOne];
             break;
             
         case MPMusicRepeatModeOne:
-            [[NCMusicGesturesView ipod] setRepeatMode:MPMusicRepeatModeNone];
+            [self.ipod setRepeatMode:MPMusicRepeatModeNone];
             break;
             
         case MPMusicShuffleModeDefault:
-            [[NCMusicGesturesView ipod] setRepeatMode:MPMusicRepeatModeNone];
+            [self.ipod setRepeatMode:MPMusicRepeatModeNone];
             break;
             
         default:
@@ -126,12 +142,11 @@
     }
     
     [self updateRepeateButtonToCurrentState];
-
 }
 
 - (void)updateRepeateButtonToCurrentState
 {
-    switch ([NCMusicGesturesView ipod].repeatMode) {
+    switch ([self.ipod repeatMode]) {
         case MPMusicRepeatModeNone:
             [self.repeatButton setImage:IMAGE_REPEAT_OFF forState:UIControlStateNormal];
             break;
@@ -146,13 +161,7 @@
         default:
             break;
     }
-
 }
-
-//- (ViewController *)mainViewController
-//{
-//    return [ViewController mainViewController];
-//}
 
 - (void)twitterButtonClicked
 {
@@ -186,9 +195,9 @@
 
 - (void)shareCurentSongWithServiceType:(NSString *)serviceType
 {
-    /*if ([SLComposeViewController isAvailableForServiceType:serviceType])
+    if ([SLComposeViewController isAvailableForServiceType:serviceType])
     {
-        MPMediaItem *item = [NCMusicGesturesView ipod].nowPlayingItem;
+        MPMediaItem *item = self.ipod.nowPlayingItem;
         
         if (item){
             NSString *songTitle = [item valueForProperty:MPMediaItemPropertyTitle];
@@ -203,7 +212,7 @@
                 [composeViewController addImage:albumArtImage];
             }
             
-            [self.mainViewController presentViewController:composeViewController animated:YES completion:nil];
+            [self.shareViewController presentViewController:composeViewController animated:YES completion:nil];
         }
     }
     else
@@ -225,7 +234,7 @@
                                                 otherButtonTitles:nil];
         [alert show];
         [alert release];
-    }*/
+    }
 }
 
 - (void)donateButtonClicked
@@ -323,6 +332,8 @@
 
 - (void)dealloc
 {
+    [self.shareViewController release];
+    
     [self.shuffleButton removeTarget:self action:@selector(shuffleButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.shuffleButton release];
     
@@ -337,6 +348,8 @@
     
     [self.donateButton removeTarget:self action:@selector(donateButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.donateButton release];
+    
+    [self.ipod release];
     
     [super dealloc];
 }

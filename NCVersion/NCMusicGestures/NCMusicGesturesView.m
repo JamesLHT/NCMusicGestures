@@ -56,6 +56,8 @@ typedef enum  {
 
 @property (strong, nonatomic) NCMusicGesturesHeader *header;
 
+@property (assign, nonatomic) MPMusicPlayerController *ipod;
+
 @end
 
 @implementation NCMusicGesturesView
@@ -81,12 +83,14 @@ typedef enum  {
         [self setupiPodListeners];
         
         [self setupHeader];
-        return self;
         
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDeviceOrientationChange)
-                                                     name:UIDeviceOrientationDidChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(onDeviceOrientationChange)
+                                                     name:UIDeviceOrientationDidChangeNotification
+                                                   object:nil];
     }
+    
     return self;
 }
 
@@ -109,12 +113,12 @@ typedef enum  {
 - (void)onTap:(UITapGestureRecognizer *)tap
 {
     if (tap.state == UIGestureRecognizerStateEnded){
-        if ([NCMusicGesturesView ipod].playbackState == MPMusicPlaybackStatePaused ||
-            [NCMusicGesturesView ipod].playbackState == MPMusicPlaybackStateStopped){
-            [[NCMusicGesturesView ipod] play];
+        if (self.ipod.playbackState == MPMusicPlaybackStatePaused ||
+            self.ipod.playbackState == MPMusicPlaybackStateStopped){
+            [self.ipod play];
             [self performPlayPauseAnimation];
-        } else if ([NCMusicGesturesView ipod].playbackState == MPMusicPlaybackStatePlaying){
-            [[NCMusicGesturesView ipod] pause];
+        } else if (self.ipod.playbackState == MPMusicPlaybackStatePlaying){
+            [self.ipod pause];
             [self performPlayPauseAnimation];
         }
     }
@@ -133,9 +137,12 @@ typedef enum  {
 
 #pragma mark iPod
 
-+ (MPMusicPlayerController *)ipod
+- (MPMusicPlayerController *)ipod
 {
-    return [MPMusicPlayerController iPodMusicPlayer];
+    if (!_ipod){
+        _ipod = [MPMusicPlayerController iPodMusicPlayer];
+    }
+    return _ipod;
 }
 
 - (void)oniPodItemChanged:(NSNotification *)notification
@@ -147,7 +154,7 @@ typedef enum  {
     
     if (!item){
         MPMediaQuery *everything = [[MPMediaQuery alloc] init];
-        [[NCMusicGesturesView ipod] setQueueWithQuery:everything];
+        [self.ipod setQueueWithQuery:everything];
     }
     
     [self setInfoFromMPMediaItem:item animated:YES];
@@ -243,18 +250,18 @@ typedef enum  {
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    if ([NCMusicGesturesView ipod].playbackState == MPMusicPlaybackStatePlaying ||
-        [NCMusicGesturesView ipod].playbackState == MPMusicPlaybackStatePaused){
+    if (self.ipod.playbackState == MPMusicPlaybackStatePlaying ||
+        self.ipod.playbackState == MPMusicPlaybackStatePaused){
         switch (self.ipodActionToPerformOnScrollViewDeceleration) {
             case SkipToNext:
                 
-                [[NCMusicGesturesView ipod] skipToNextItem];
+                [self.ipod skipToNextItem];
                 
                 break;
                 
             case SkipToPrevious:
                 
-                [[NCMusicGesturesView ipod] skipToPreviousItem];
+                [self.ipod skipToPreviousItem];
                 
                 break;
                 
@@ -367,7 +374,7 @@ typedef enum  {
                                                  name:MPMusicPlayerControllerPlaybackStateDidChangeNotification
                                                object:nil];
     
-    [[NCMusicGesturesView ipod] beginGeneratingPlaybackNotifications];
+    [self.ipod beginGeneratingPlaybackNotifications];
 }
 
 - (void)setupHeader
@@ -381,7 +388,7 @@ typedef enum  {
 
 - (void)dealloc
 {
-    [[NCMusicGesturesView ipod] endGeneratingPlaybackNotifications];
+    [self.ipod endGeneratingPlaybackNotifications];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMusicPlayerControllerPlaybackStateDidChangeNotification object:nil];
@@ -399,6 +406,8 @@ typedef enum  {
     [self.scrollView release];
     
     [self.header release];
+    
+    [self.ipod release];
     
     [super dealloc];
 }

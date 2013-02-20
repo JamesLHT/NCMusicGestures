@@ -14,6 +14,4 @@
 
 @interface NCMusicGesturesView : UIView <UIScrollViewDelegate>
 
-+ (MPMusicPlayerController *)ipod;
-
 @end

@@ -24,6 +24,18 @@
 
 @implementation NCMusicGesturesController
 
+/*
+ + (MediaPlayerManager*)sharedManager
+ {
+ static MediaPlayerManager *sharedSingleton;
+ 
+ if( !sharedSingleton )
+ sharedSingleton = [[MediaPlayerManager alloc] init];
+ 
+ return sharedSingleton;
+ }
+ */
+
 -(id)init
 {
 	if ((self = [super init]))
@@ -51,6 +63,16 @@
 	}
 
 	return _view;
+}
+
+- (void)viewDidAppear
+{
+    
+}
+
+- (void)viewWillDisappear
+{
+    
 }
 
 - (float)viewHeight

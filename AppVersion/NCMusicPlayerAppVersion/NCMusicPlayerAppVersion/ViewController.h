@@ -11,6 +11,4 @@
 
 @interface ViewController : UIViewController
 
-+ (ViewController *)mainViewController;
-
 @end

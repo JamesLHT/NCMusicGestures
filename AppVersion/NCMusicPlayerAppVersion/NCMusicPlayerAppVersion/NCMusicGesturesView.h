@@ -14,8 +14,8 @@
 #define VIEW_WIDTH_LANDSCAPE [[UIScreen mainScreen] bounds].size.height
 #define VIEW_HEIGHT 100
 
-@interface NCMusicGesturesView : UIView <UIScrollViewDelegate, UIAlertViewDelegate>
+@interface NCMusicGesturesView : UIViewController <UIScrollViewDelegate, UIAlertViewDelegate>
 
-+ (MPMusicPlayerController *)ipod;
++ (MPMusicPlayerController *)ipodController;
 
 @end

@@ -63,11 +63,11 @@
 
 - (void)onTimelineValueChange:(UISlider *)slider
 {
-    NSInteger currentItemLength = [[[NCMusicGesturesView ipod].nowPlayingItem valueForProperty:MPMediaItemPropertyPlaybackDuration] integerValue];
+    NSInteger currentItemLength = [[[NCMusicGesturesView ipodController].nowPlayingItem valueForProperty:MPMediaItemPropertyPlaybackDuration] integerValue];
     NSInteger newPlaybackTime = currentItemLength * slider.value;
     
-    if (newPlaybackTime != [NCMusicGesturesView ipod].currentPlaybackTime){
-        [NCMusicGesturesView ipod].currentPlaybackTime = newPlaybackTime;
+    if (newPlaybackTime != [NCMusicGesturesView ipodController].currentPlaybackTime){
+        [NCMusicGesturesView ipodController].currentPlaybackTime = newPlaybackTime;
         self.songCurrentTime.text = [StringFormatter formattedStringForDurationHMS:newPlaybackTime];
     }
 }
@@ -98,14 +98,14 @@
         return;
     }
     
-    if ([NCMusicGesturesView ipod].currentPlaybackTime <= 0){
+    if ([NCMusicGesturesView ipodController].currentPlaybackTime <= 0){
         self.songCurrentTime.text = @"0:00";
     } else {
-        self.songCurrentTime.text = [StringFormatter formattedStringForDurationHMS:[NCMusicGesturesView ipod].currentPlaybackTime];
+        self.songCurrentTime.text = [StringFormatter formattedStringForDurationHMS:[NCMusicGesturesView ipodController].currentPlaybackTime];
     }
     
-    NSInteger currentItemLength = [[[NCMusicGesturesView ipod].nowPlayingItem valueForProperty:MPMediaItemPropertyPlaybackDuration] integerValue];
-    float currentPlaybackPercentage = [NCMusicGesturesView ipod].currentPlaybackTime / currentItemLength;
+    NSInteger currentItemLength = [[[NCMusicGesturesView ipodController].nowPlayingItem valueForProperty:MPMediaItemPropertyPlaybackDuration] integerValue];
+    float currentPlaybackPercentage = [NCMusicGesturesView ipodController].currentPlaybackTime / currentItemLength;
     self.timelineScrubber.value = currentPlaybackPercentage;
 }
 

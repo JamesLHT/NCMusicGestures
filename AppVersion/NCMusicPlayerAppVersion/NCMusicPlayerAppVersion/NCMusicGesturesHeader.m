@@ -40,7 +40,7 @@
 
 - (void)oniPodStateChanged:(NSNotification *)notification
 {
-    switch ([NCMusicGesturesView ipod].playbackState) {
+    switch ([NCMusicGesturesView ipodController].playbackState) {
         case MPMusicPlaybackStateStopped:
             [self.headerPageOne stopUpdateSongPlaybackTimeTimer];
             break;
@@ -77,7 +77,8 @@
 
 - (void)setInfoFromMPMediaItem:(MPMediaItem *)item animated:(BOOL)animated
 {
-    NSInteger currentItemLength = [[[NCMusicGesturesView ipod].nowPlayingItem valueForProperty:MPMediaItemPropertyPlaybackDuration] integerValue];
+    NSInteger currentItemLength = [[[NCMusicGesturesView ipodController].nowPlayingItem
+                                    valueForProperty:MPMediaItemPropertyPlaybackDuration] integerValue];
     self.headerPageOne.songTotalTime.text = [StringFormatter formattedStringForDurationHMS:currentItemLength];
 }
 

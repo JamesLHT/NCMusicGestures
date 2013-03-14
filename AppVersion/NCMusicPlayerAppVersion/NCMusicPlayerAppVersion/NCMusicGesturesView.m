@@ -7,15 +7,19 @@
 //
 
 #import "NCMusicGesturesView.h"
+#import "ViewController.h"
+
 #import "UIView+UIViewExtensions.h"
-#import <MediaPlayer/MediaPlayer.h>
-#import <Social/Social.h>
-#import "NCMusicGesturesHeader.h"
 #import "StringFormatter.h"
 #import "UISliderCustom.h"
+#import "MarqueeLabel.h"
+
+#import <MediaPlayer/MediaPlayer.h>
+#import <Social/Social.h>
+
+
 
 #define BACKGROUND_CAP_VALUE 5
-#define CONTENT_OFFSET_NEEDED_TO_SKIP_SONG 50
 
 #define VIEW_X_OFFSET 2
 #define TOTAL_VIEW_HEIGHT (VIEW_HEADER_HEIGHT + VIEW_HEIGHT)
@@ -30,7 +34,7 @@
 
 //header
 //header timeline view
-#define HEADER_SONG_TIME_LABEL_WIDTH 60
+#define HEADER_SONG_TIME_LABEL_WIDTH 65
 #define HEADER_TIMELINE_SCRUBBER_X_PADDING 5
 #define HEADER_PAGE_DOT_INDICATOR_OFFSET 6
 
@@ -49,8 +53,6 @@
 #define IMAGE_FACEBOOK_ON [UIImage imageNamed:@"white_facebook"]
 
 #define IMAGE_DONATE [UIImage imageNamed:@"white_donate"]
-
-static NCMusicGesturesView *staticSelf;
 
 @interface NCMusicGesturesView()
 
@@ -74,9 +76,9 @@ typedef enum  {
 
 @property (strong, nonatomic) UIImageView *albumArt;
 @property (strong, nonatomic) UIImageView *albumIsOniCloud;
-@property (strong, nonatomic) UILabel *songTitle;
-@property (strong, nonatomic) UILabel *songArtist;
-@property (strong, nonatomic) UILabel *songAlbum;
+@property (strong, nonatomic) MarqueeLabel *songTitle;
+@property (strong, nonatomic) MarqueeLabel *songArtist;
+@property (strong, nonatomic) MarqueeLabel *songAlbum;
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
 
@@ -97,7 +99,7 @@ typedef enum  {
 @property (strong, nonatomic) UIButton *facebookButton;
 @property (strong, nonatomic) UIButton *donateButton;
 
-@property (strong, nonatomic) MPMusicPlayerController *ipod;
+@property (retain, nonatomic) MPMusicPlayerController *ipod;
 
 @end
 
@@ -107,14 +109,12 @@ typedef enum  {
 {
     self = [super init];
     if (self) {
-        staticSelf = self;
         
-        self.view.frame = CGRectMake(VIEW_X_OFFSET, 0, VIEW_WIDTH_PORTRAIT, TOTAL_VIEW_HEIGHT);
+        self.view.clipsToBounds = YES;
         
         UIImage *bg = [[UIImage imageNamed:@"WeeAppBackground"]
                        stretchableImageWithLeftCapWidth:BACKGROUND_CAP_VALUE topCapHeight:BACKGROUND_CAP_VALUE];
 		self.background = [[UIImageView alloc] initWithImage:bg];
-		self.background.frame = CGRectMake(0, 0, VIEW_WIDTH_PORTRAIT, TOTAL_VIEW_HEIGHT);
 		[self.view addSubview:self.background];
         
         self.ipodActionToPerformOnScrollViewDeceleration = None;
@@ -126,33 +126,65 @@ typedef enum  {
         
         
         [self setupiPodListeners];
+        
+        [self updateToOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     }
     return self;
 }
+
+#pragma mark Orientation Methods
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                 duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [self updateToOrientation:toInterfaceOrientation];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    [self updateToOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
 }
 
-- (void)onDeviceOrientationChange
+- (void)updateToOrientation:(UIInterfaceOrientation)orientation
 {
-    //[UIView setSizeX:self newSize:VIEW_WIDTH_PORTRAIT];
-   /* return;
+    if ([ViewController mainViewController]){
+        
+        CGFloat newWidth = [self getWidthForCurrentOrientation];
+        
+        self.view.frame = CGRectMake(VIEW_X_OFFSET, 0,newWidth -
+                                     (VIEW_X_OFFSET * 2), TOTAL_VIEW_HEIGHT);
+        
+        [UIView setSizeX:self.background newSize:newWidth];
+        self.background.frame = self.view.frame;
+        [UIView setOrigin:self.background newOrigin:CGPointZero];
+        
+        [self setupBase];
+        
+        NSInteger currentPage = self.headerScrollViewPageControl.currentPage;
+        
+        [self setupHeader];
+        
+        self.headerScrollView.contentOffset = CGPointMake(self.headerScrollView.frame.size.width * (currentPage), 0);
+    }
+}
+
+- (CGFloat)getWidthForCurrentOrientation
+{
+    if ([ViewController mainViewController]){
+        
+        UIInterfaceOrientation current = [[UIApplication sharedApplication] statusBarOrientation];
+        CGSize mainViewSize = [ViewController mainViewController].view.frame.size;
+        
+        if (UIDeviceOrientationIsPortrait(current)){
+            return mainViewSize.width;
+        } else if (UIDeviceOrientationIsLandscape(current)){
+            return mainViewSize.height;
+        }
+    }
     
-    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
-    
-    if (UIDeviceOrientationIsPortrait(orientation)){
-        [UIView setSizeX:self.background newSize:self.frame.size.width];
-    } else if (UIDeviceOrientationIsLandscape(orientation)){
-        [UIView setSizeX:self.background newSize:self.frame.size.height];
-    }*/
+    return 0;
 }
 
 #pragma mark Gesture Recognizer
@@ -190,11 +222,6 @@ typedef enum  {
         _ipod = [MPMusicPlayerController iPodMusicPlayer];
     }
     return _ipod;
-}
-
-+ (MPMusicPlayerController *)ipodController
-{
-    return staticSelf.ipod;
 }
 
 - (void)oniPodItemChanged:(id)notification
@@ -322,6 +349,13 @@ typedef enum  {
     if (newPlaybackTime != self.ipod.currentPlaybackTime){
         self.ipod.currentPlaybackTime = newPlaybackTime;
         self.songCurrentTime.text = [StringFormatter formattedStringForDurationHMS:newPlaybackTime];
+        NSInteger songTimeLeft = currentItemLength - newPlaybackTime;
+        
+        if (songTimeLeft < 0){
+            songTimeLeft = 0;
+        }
+        
+        self.songTotalTime.text = [StringFormatter formattedStringForDurationHMS:songTimeLeft];
     }
 }
 
@@ -347,21 +381,51 @@ typedef enum  {
 
 - (void)checkSongTime
 {
-    if (self.timelineScrubber.isTracking || self.ipod.playbackState != MPMusicPlaybackStatePlaying){
+    if (self.timelineScrubber.isTracking){
         return;
     }
     
-    if (self.ipod.currentPlaybackTime <= 0){
-        self.songCurrentTime.text = @"0:00";
+    MPMediaItem *current = self.ipod.nowPlayingItem;
+    
+    if (current){
+        NSNumber *songTime = (NSNumber *)[current valueForKey:MPMediaItemPropertyPlaybackDuration];
+        NSInteger songTimeLeft = [songTime integerValue] - self.ipod.currentPlaybackTime;
+        
+        if (songTimeLeft < 0){
+            songTimeLeft = 0;
+        }
+        
+        if (songTime){
+            self.songTotalTime.text = [StringFormatter
+                                       formattedStringForDurationHMS:songTimeLeft];
+        } else {
+            self.songTotalTime.text = @"0:00";
+        }
     } else {
-        self.songCurrentTime.text = [StringFormatter
-                                     formattedStringForDurationHMS:self.ipod.currentPlaybackTime];
+        self.songTotalTime.text = @"0:00";
     }
     
-    NSInteger currentItemLength = [[self.ipod.nowPlayingItem
-                                    valueForProperty:MPMediaItemPropertyPlaybackDuration] integerValue];
-    float currentPlaybackPercentage = self.ipod.currentPlaybackTime / currentItemLength;
-    self.timelineScrubber.value = currentPlaybackPercentage;
+    if (self.ipod.playbackState == MPMusicPlaybackStatePlaying ||
+        self.ipod.playbackState == MPMusicPlaybackStateSeekingBackward ||
+        self.ipod.playbackState == MPMusicPlaybackStateSeekingForward){
+        
+        NSInteger time = self.ipod.currentPlaybackTime;
+        
+        if (time < 0){
+            time = 0;
+        }
+        
+        self.songCurrentTime.text = [StringFormatter formattedStringForDurationHMS:time];
+        
+        NSInteger currentItemLength = [[self.ipod.nowPlayingItem
+                                        valueForProperty:MPMediaItemPropertyPlaybackDuration] integerValue];
+        float currentPlaybackPercentage = self.ipod.currentPlaybackTime / currentItemLength;
+        self.timelineScrubber.value = currentPlaybackPercentage;
+        
+    } else {
+        self.songCurrentTime.text = @"0:00";
+        self.timelineScrubber.value = 0.0;
+    }
 }
 
 - (void)shuffleButtonClicked
@@ -408,13 +472,13 @@ typedef enum  {
 
 - (void)repeateButtonClicked
 {
-    switch (self.ipod.repeatMode) {
+   switch (self.ipod.repeatMode) {
         case MPMusicRepeatModeNone:
             [self.ipod setRepeatMode:MPMusicRepeatModeAll];
             break;
             
         case MPMusicRepeatModeAll:
-            [self.ipod setRepeatMode:MPMusicRepeatModeOne];
+            [self.ipod setRepeatMode:MPMusicRepeatModeNone];
             break;
             
         case MPMusicRepeatModeOne:
@@ -502,8 +566,15 @@ typedef enum  {
             SLComposeViewController *composeVC = [SLComposeViewController
                                                               composeViewControllerForServiceType:serviceType];
             
-            [composeVC setInitialText:[NSString stringWithFormat:@"%@%@%@%@",
-                                                   @"I am listening to ", songTitle, @" by ", songArtist]];
+            NSMutableString *message = [NSMutableString stringWithFormat:@"%@%@",
+                                        @"I am listening to ", songTitle];
+            
+            if (songArtist){
+                [message appendFormat:@"%@%@", @" by ", songArtist];
+            }
+            
+            [composeVC setInitialText:message];
+            
             if (albumArtImage){
                 [composeVC addImage:albumArtImage];
             }
@@ -590,9 +661,12 @@ typedef enum  {
 {
     if (!self.baseScrollView.isDecelerating){
         
-        if (self.baseScrollView.contentOffset.x >= CONTENT_OFFSET_NEEDED_TO_SKIP_SONG) { //in skip position
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSInteger contentOffsetToChangeSong = [defaults integerForKey:@"contentOffsetToSwitchSong"];
+        
+        if (self.baseScrollView.contentOffset.x >= contentOffsetToChangeSong) { //in skip position
             self.ipodActionToPerformOnScrollViewDeceleration = SkipToNext;
-        } else if (self.baseScrollView.contentOffset.x <= -CONTENT_OFFSET_NEEDED_TO_SKIP_SONG ) { //in skip position
+        } else if (self.baseScrollView.contentOffset.x <= -contentOffsetToChangeSong ) { //in skip position
             self.ipodActionToPerformOnScrollViewDeceleration = SkipToPrevious;
         } else {
             self.ipodActionToPerformOnScrollViewDeceleration = None;
@@ -660,7 +734,10 @@ typedef enum  {
 
 - (void)setupBaseScrollView
 {
-    self.baseScrollView = [[UIScrollView alloc] init];
+    if (!self.baseScrollView){
+        self.baseScrollView = [[UIScrollView alloc] init];
+    }
+    
     self.baseScrollView.delegate = self;
     self.baseScrollView.backgroundColor = [UIColor clearColor];
     self.baseScrollView.scrollEnabled = YES;
@@ -669,68 +746,90 @@ typedef enum  {
     self.baseScrollView.showsHorizontalScrollIndicator = NO;
     self.baseScrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:self.baseScrollView];
-    self.baseScrollView.frame = CGRectMake(0, VIEW_HEADER_HEIGHT, self.view.frame.size.width, VIEW_HEIGHT);
+    self.baseScrollView.frame = CGRectMake(0, VIEW_HEADER_HEIGHT, [self getWidthForCurrentOrientation], VIEW_HEIGHT);
     self.baseScrollView.contentSize = self.baseScrollView.frame.size;
 }
 
 - (void)setupBaseTapGestureRecognizer
 {
-    self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTap:)];
-    [self.baseScrollView addGestureRecognizer:self.tapGestureRecognizer];
+    if (!self.tapGestureRecognizer){
+        self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTap:)];
+        [self.baseScrollView addGestureRecognizer:self.tapGestureRecognizer];
+    }
 }
 
 - (void)setupAlbumArtworkView
 {
-    self.albumArt = [[UIImageView alloc] initWithImage:IMAGE_DISC];
+    if (!self.albumArt){
+        self.albumArt = [[UIImageView alloc] initWithImage:IMAGE_DISC];
+    }
     
     [self.baseScrollView addSubview:self.albumArt];
     self.albumArt.contentMode = UIViewContentModeScaleToFill;
     [UIView setSize:self.albumArt newSize:CGSizeMake(ALBUM_ART_SIZE, ALBUM_ART_SIZE)];
     [UIView setOriginX:self.albumArt newOrigin:ALBUM_ART_PADDING];
     
-    self.albumIsOniCloud = [[UIImageView alloc] initWithImage:IMAGE_CLOUD];
+    if (!self.albumIsOniCloud){
+        self.albumIsOniCloud = [[UIImageView alloc] initWithImage:IMAGE_CLOUD];
+    }
+    
     [UIView setSize:self.albumIsOniCloud
             newSize:CGSizeMake(ICLOUD_IMAGE_SIZE, ICLOUD_IMAGE_SIZE)];
     self.albumIsOniCloud.hidden = YES;
-    [self.albumArt addSubview:self.albumIsOniCloud];
-    //[UIView setUpperRightOriginX:self.albumIsOniCloud newOrigin:self.albumArt.frame.size.width];
-    //[UIView setOriginY:self.albumIsOniCloud
-         //    newOrigin:self.albumArt.frame.size.height - self.albumIsOniCloud.frame.size.height];
+    [self.baseScrollView addSubview:self.albumIsOniCloud];
     
-    [self.albumIsOniCloud setCenter:CGPointMake(self.albumArt.frame.size.width, self.albumArt.frame.size.height)];
+    CGPoint icloudPoint = CGPointMake(self.albumArt.frame.size.width, self.albumArt.frame.size.height);
+    [self.albumIsOniCloud setCenter:[self.baseScrollView convertPoint:icloudPoint fromView:self.albumArt]];
 }
 
 - (void)setupBaseScrollViewLabels
 {
     //song title
-    self.songTitle = [self createBaseScrollViewLabel];
+    if (!self.songTitle){
+        self.songTitle = [self createBaseScrollViewLabel];
+    }
+    
     [UIView setOrigin:self.songTitle newOrigin:CGPointMake(self.albumArt.frame.origin.x
                                                            + self.albumArt.frame.size.width
                                                            + ALBUM_ART_PADDING,
                                                            self.albumArt.frame.origin.y)];
-    [UIView setSize:self.songTitle newSize:CGSizeMake(self.view.frame.size.width
+    [UIView setSize:self.songTitle newSize:CGSizeMake([self getWidthForCurrentOrientation]
                                                       - self.songTitle.frame.origin.x,
                                                       self.albumArt.frame.size.height / 3)];
     
+    self.songTitle.text = self.songTitle.text;
+    
     //song artist
-    self.songArtist = [self createBaseScrollViewLabel];
+    if (!self.songArtist){
+        self.songArtist = [self createBaseScrollViewLabel];
+    }
+    
     [UIView setSize:self.songArtist newSize:self.songTitle.frame.size];
     [UIView setOrigin:self.songArtist newOrigin:CGPointMake(self.songTitle.frame.origin.x,
                                                             self.songTitle.frame.origin.y
                                                             + self.songTitle.frame.size.height)];
     
+    self.songArtist.text = self.songArtist.text;
+    
     //song album
-    self.songAlbum = [self createBaseScrollViewLabel];
+    if (!self.songAlbum){
+        self.songAlbum = [self createBaseScrollViewLabel];
+    }
+    
     [UIView setSize:self.songAlbum newSize:self.songArtist.frame.size];
     [UIView setOrigin:self.songAlbum newOrigin:CGPointMake(self.songArtist.frame.origin.x,
                                                            self.songArtist.frame.origin.y
                                                            + self.songArtist.frame.size.height)];
+    
+    self.songAlbum.text = self.songAlbum.text;
 
 }
 
-- (UILabel *)createBaseScrollViewLabel
+- (MarqueeLabel *)createBaseScrollViewLabel
 {
-    UILabel *l = [self createBasicLabel];
+    MarqueeLabel *l = [[MarqueeLabel alloc] initWithFrame:CGRectZero rate:20 andFadeLength:40];
+    l.marqueeType = MLContinuous;
+    l.textColor = [UIColor whiteColor];
     [self.baseScrollView addSubview:l];
     
     return l;
@@ -749,9 +848,13 @@ typedef enum  {
 
 - (void)setupHeaderScrollView
 {
-    CGRect rect = CGRectMake(0, 0, VIEW_WIDTH_PORTRAIT, VIEW_HEADER_HEIGHT);
+    CGRect rect = CGRectMake(0, 0, [self getWidthForCurrentOrientation], VIEW_HEADER_HEIGHT);
     
-    self.headerScrollView = [[UIScrollView alloc] initWithFrame:rect];
+    if (!self.headerButtonView){
+        self.headerScrollView = [[UIScrollView alloc] init];
+    }
+    
+    self.headerScrollView.frame = rect;
     self.headerScrollView.delegate = self;
     self.headerScrollView.pagingEnabled = YES;
     self.headerScrollView.delaysContentTouches = NO;
@@ -760,8 +863,12 @@ typedef enum  {
     self.headerScrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:self.headerScrollView];
     
-    self.headerScrollViewPageControl = [[UIPageControl alloc] initWithFrame:
-                                        CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, 20)];
+    if(!self.headerScrollViewPageControl){
+        self.headerScrollViewPageControl = [[UIPageControl alloc] init];
+    }
+    
+    self.headerScrollViewPageControl.frame = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, 20);
+    
     [UIView setOriginY:self.headerScrollViewPageControl
              newOrigin:(self.headerScrollView.frame.origin.y +
                         self.headerScrollView.frame.size.height) -
@@ -770,40 +877,49 @@ typedef enum  {
     
     self.headerScrollViewPageControl.numberOfPages = 2;
     [self.view insertSubview:self.headerScrollViewPageControl belowSubview:self.headerScrollView];
-    
-    //CGRect rectTwo = CGRectMake(0, 0, VIEW_WIDTH_PORTRAIT, VIEW_HEADER_HEIGHT - 15);
-    
-    //self.headerPageOne = [[NCMusicGesturesHeaderPageOne alloc] initWithFrame:rectTwo];
-    //[self.scrollView addSubview:self.headerPageOne];
-    
-    //self.headerPageTwo = [[NCMusicGesturesHeaderPageTwo alloc] initWithFrame:
-    //   CGRectMake(rectTwo.origin.x + rectTwo.size.width, rectTwo.origin.y, rectTwo.size.width, rectTwo.size.height)];
-    //[self.scrollView addSubview:self.headerPageTwo];
 }
 
 - (void)setupHeaderTimeline
 {
-    self.headerSongTimelineView = [[UIView alloc] initWithFrame:self.headerScrollView.frame];
-    [UIView setOrigin:self.headerSongTimelineView newOrigin:CGPointZero];
+    if (!self.headerSongTimelineView){
+        self.headerSongTimelineView = [[UIView alloc] init];
+    }
     
-    self.songCurrentTime = [self createBasicLabel];
+    self.headerSongTimelineView.frame = self.headerScrollView.frame;
+    [UIView setOrigin:self.headerSongTimelineView newOrigin:CGPointMake(VIEW_X_OFFSET, 0)];
+    
+    if (!self.songCurrentTime){
+        self.songCurrentTime = [self createBasicLabel];
+        [self.headerSongTimelineView addSubview:self.songCurrentTime];
+        self.songCurrentTime.text = @"0:00";
+    }
+    
     self.songCurrentTime.textAlignment = NSTextAlignmentCenter;
     self.songCurrentTime.adjustsFontSizeToFitWidth = YES;
-    [self.headerSongTimelineView addSubview:self.songCurrentTime];
     [UIView setSize:self.songCurrentTime newSize:CGSizeMake(HEADER_SONG_TIME_LABEL_WIDTH,
-                                                            self.headerScrollView.frame.size.height)];
-    self.songCurrentTime.text = @"0:00";
+                                                            25)];
     
-    self.songTotalTime = [self createBasicLabel];
+    if (!self.songTotalTime){
+        self.songTotalTime = [self createBasicLabel];
+        self.songTotalTime.text = @"0:00";
+    }
+    
     self.songTotalTime.textAlignment = NSTextAlignmentCenter;
     self.songTotalTime.adjustsFontSizeToFitWidth = YES;
     [self.headerSongTimelineView addSubview:self.songTotalTime];
     [UIView setSize:self.songTotalTime newSize:CGSizeMake(HEADER_SONG_TIME_LABEL_WIDTH,
-                                                          self.headerScrollView.frame.size.height)];
-    [UIView setUpperRightOriginX:self.songTotalTime newOrigin:self.view.frame.size.width];
-    self.songTotalTime.text = @"0:00";
+                                                          25)];
+    [UIView setUpperRightOriginX:self.songTotalTime newOrigin:self.view.frame.size.width - VIEW_X_OFFSET];
     
-    self.timelineScrubber = [[UISliderCustom alloc] init];
+    
+    
+    if (!self.timelineScrubber){
+        self.timelineScrubber = [[UISliderCustom alloc] init];
+        [self.timelineScrubber addTarget:self action:@selector(onTimelineValueChange:)
+                        forControlEvents:UIControlEventValueChanged];
+        [self.headerScrollView addSubview:self.headerSongTimelineView];
+    }
+    
     self.timelineScrubber.minimumTrackTintColor = [UIColor whiteColor];
     self.timelineScrubber.maximumTrackTintColor = [UIColor grayColor];
     [self.headerSongTimelineView addSubview:self.timelineScrubber];
@@ -811,18 +927,26 @@ typedef enum  {
                                                              (HEADER_SONG_TIME_LABEL_WIDTH * 2) -
                                                              (HEADER_TIMELINE_SCRUBBER_X_PADDING * 2),
                                                              25)];
-    [UIView setOriginX:self.timelineScrubber newOrigin:HEADER_SONG_TIME_LABEL_WIDTH + HEADER_TIMELINE_SCRUBBER_X_PADDING];
+    [UIView setOriginX:self.timelineScrubber
+             newOrigin:HEADER_SONG_TIME_LABEL_WIDTH + HEADER_TIMELINE_SCRUBBER_X_PADDING];
     [UIView setCenterY:self.timelineScrubber newCenter:self.headerSongTimelineView.frame.size.height / 2];
-    [self.timelineScrubber addTarget:self action:@selector(onTimelineValueChange:) forControlEvents:UIControlEventValueChanged];
     
-    [self.headerScrollView addSubview:self.headerSongTimelineView];
+    
+    
+    [UIView setCenterY:self.songTotalTime newCenter:self.timelineScrubber.center.y];
+    [UIView setCenterY:self.songCurrentTime newCenter:self.timelineScrubber.center.y];
 }
 
 #pragma mark Header Button View
 
 - (void)setupHeaderButtonView
 {
-    self.headerButtonView = [[UIView alloc] initWithFrame:self.headerScrollView.frame];
+    if (!self.headerButtonView){
+        self.headerButtonView = [[UIView alloc] init];
+    }
+    
+    self.headerButtonView.frame = self.headerScrollView.frame;
+    
     [UIView setOrigin:self.headerButtonView newOrigin:CGPointMake(self.headerScrollView.frame.origin.x +
                                                                         self.headerScrollView.frame.size.width,
                                                                         self.headerScrollView.frame.origin.y)];
@@ -842,44 +966,75 @@ typedef enum  {
 
 - (void)setupShuffleButton
 {
-    self.shuffleButton = [self createHeaderButtonWithImage:IMAGE_SHUFFLE_ON];
-    [UIView setOrigin:self.shuffleButton newOrigin:CGPointMake(0, 0)];
-    [self.shuffleButton addTarget:self action:@selector(shuffleButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    if (!self.shuffleButton){
+        self.shuffleButton = [self createHeaderButtonWithImage:IMAGE_SHUFFLE_ON];
+    }
+    
+    CGFloat x = (self.headerScrollView.frame.size.width / 5);
+    CGFloat center = (x * 0) + (x / 2);
+    
+    self.shuffleButton.center = CGPointMake(center, self.headerScrollView.frame.size.height / 2);
+    [self.shuffleButton addTarget:self action:@selector(shuffleButtonClicked)
+                 forControlEvents:UIControlEventTouchUpInside];
     
     [self updateShuffleButtonToCurrentState];
 }
 
 - (void)setupRepeatButton
 {
-    self.repeatButton = [self createHeaderButtonWithImage:IMAGE_REPEAT_ALL];
-    [UIView setOrigin:self.repeatButton newOrigin:CGPointMake(self.shuffleButton.frame.origin.x +
-                                                              self.shuffleButton.frame.size.width, 0)];
-    [self.repeatButton addTarget:self action:@selector(repeateButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    if (!self.repeatButton){
+        self.repeatButton = [self createHeaderButtonWithImage:IMAGE_REPEAT_ALL];
+    }
+    
+    CGFloat x = (self.headerScrollView.frame.size.width / 5);
+    CGFloat center = (x * 1) + (x / 2);
+    
+    self.repeatButton.center = CGPointMake(center, self.headerScrollView.frame.size.height / 2);
+    [self.repeatButton addTarget:self action:@selector(repeateButtonClicked)
+                forControlEvents:UIControlEventTouchUpInside];
     [self updateRepeateButtonToCurrentState];
 }
 
 - (void)setupTwitterButton
 {
-    self.twitterButton = [self createHeaderButtonWithImage:IMAGE_TWITTER_ON];
-    [UIView setOrigin:self.twitterButton newOrigin:CGPointMake(self.repeatButton.frame.origin.x +
-                                                               self.repeatButton.frame.size.width, 0)];
-    [self.twitterButton addTarget:self action:@selector(twitterButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    if (!self.twitterButton){
+        self.twitterButton = [self createHeaderButtonWithImage:IMAGE_TWITTER_ON];
+    }
+    
+    CGFloat x = (self.headerScrollView.frame.size.width / 5);
+    CGFloat center = (x * 2) + (x / 2);
+    
+    self.twitterButton.center = CGPointMake(center, self.headerScrollView.frame.size.height / 2);
+    [self.twitterButton addTarget:self action:@selector(twitterButtonClicked)
+                 forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setupFacebookButton
 {
-    self.facebookButton = [self createHeaderButtonWithImage:IMAGE_FACEBOOK_ON];
-    [UIView setOrigin:self.facebookButton newOrigin:CGPointMake(self.twitterButton.frame.origin.x +
-                                                                self.twitterButton.frame.size.width, 0)];
-    [self.facebookButton addTarget:self action:@selector(facebookButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    if (!self.facebookButton){
+        self.facebookButton = [self createHeaderButtonWithImage:IMAGE_FACEBOOK_ON];
+    }
+    
+    CGFloat x = (self.headerScrollView.frame.size.width / 5);
+    CGFloat center = (x * 3) + (x / 2);
+    
+    self.facebookButton.center = CGPointMake(center, self.headerScrollView.frame.size.height / 2);
+    [self.facebookButton addTarget:self action:@selector(facebookButtonClicked)
+                  forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setupDonateButton
 {
-    self.donateButton = [self createHeaderButtonWithImage:IMAGE_DONATE];
-    [UIView setOrigin:self.donateButton newOrigin:CGPointMake(self.facebookButton.frame.origin.x +
-                                                              self.facebookButton.frame.size.width, 0)];
-    [self.donateButton addTarget:self action:@selector(donateButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    if (!self.donateButton){
+        self.donateButton = [self createHeaderButtonWithImage:IMAGE_DONATE];
+    }
+    
+    CGFloat x = (self.headerScrollView.frame.size.width / 5);
+    CGFloat center = (x * 4) + (x / 2);
+    
+    self.donateButton.center = CGPointMake(center, self.headerScrollView.frame.size.height / 2);
+    [self.donateButton addTarget:self action:@selector(donateButtonClicked)
+                forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (UIButton *)createHeaderButtonWithImage:(UIImage *)image
@@ -888,10 +1043,10 @@ typedef enum  {
         return nil;
     }
     
-    NSInteger buttonWidth = (self.headerButtonView.frame.size.width / 5);
+    //NSInteger buttonWidth = image.size.width;//(self.headerButtonView.frame.size.width / 5);
     
     UIButton *returnButton = [[UIButton alloc] init];
-    [UIView setSize:returnButton newSize:CGSizeMake(buttonWidth, self.headerButtonView.frame.size.height)];
+    [UIView setSize:returnButton newSize:CGSizeMake(image.size.width, image.size.height)];
     [returnButton setImage:image forState:UIControlStateNormal];
     [self.headerButtonView addSubview:returnButton];
     

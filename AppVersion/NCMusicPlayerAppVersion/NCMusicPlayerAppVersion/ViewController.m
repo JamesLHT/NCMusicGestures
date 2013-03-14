@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import "NCMusicGesturesView.h"
 
+static ViewController *staticSelf;
+
 @interface ViewController()
 
 @property (strong, nonatomic) NCMusicGesturesView *musicGestures;
@@ -21,10 +23,16 @@
 
 @implementation ViewController
 
++ (UIViewController *)mainViewController
+{
+    return staticSelf;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    staticSelf = self;
     
     self.musicGestures = [[NCMusicGesturesView alloc] init];
     [self.view addSubview:self.musicGestures.view];

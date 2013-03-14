@@ -31,12 +31,13 @@
 		2E51AE3F16CC963300D4EA1C /* grey_facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E51AE3E16CC963300D4EA1C /* grey_facebook@2x.png */; };
 		2E51AE4116CC973E00D4EA1C /* grey_twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E51AE4016CC973E00D4EA1C /* grey_twitter.png */; };
 		2E51AE4316CC974500D4EA1C /* grey_twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E51AE4216CC974500D4EA1C /* grey_twitter@2x.png */; };
-		2E7C29D616C9CA73008B117F /* NCMusicGesturesHeaderPageOne.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C29D516C9CA73008B117F /* NCMusicGesturesHeaderPageOne.m */; };
+		2E6810A916F1982600C8838A /* MarqueeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E6810A816F1982600C8838A /* MarqueeLabel.m */; };
+		2E6810AA16F1982600C8838A /* MarqueeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E6810A816F1982600C8838A /* MarqueeLabel.m */; };
 		2E7C29D916C9CDEF008B117F /* StringFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C29D816C9CDEF008B117F /* StringFormatter.m */; };
 		2E7C29DC16C9D1D4008B117F /* UISliderCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C29DB16C9D1D4008B117F /* UISliderCustom.m */; };
-		2E7C29DF16C9D6D7008B117F /* NCMusicGesturesHeaderPageTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C29DE16C9D6D7008B117F /* NCMusicGesturesHeaderPageTwo.m */; };
 		2E7C29E616C9DCD7008B117F /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7C29E516C9DCD7008B117F /* Social.framework */; };
-		2E7C29EB16CA2DA2008B117F /* NCMusicGesturesHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C29EA16CA2DA1008B117F /* NCMusicGesturesHeader.m */; };
+		2E85E21216F198AF007DD95D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E85E21016F198A5007DD95D /* QuartzCore.framework */; };
+		2E85E21916F1AAA2007DD95D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2E85E21816F1AAA2007DD95D /* Settings.bundle */; };
 		2E8E63BC16C8786300B47EE9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8E63BB16C8786300B47EE9 /* UIKit.framework */; };
 		2E8E63BE16C8786300B47EE9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8E63BD16C8786300B47EE9 /* Foundation.framework */; };
 		2E8E63C016C8786300B47EE9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8E63BF16C8786300B47EE9 /* CoreGraphics.framework */; };
@@ -99,17 +100,15 @@
 		2E51AE3E16CC963300D4EA1C /* grey_facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey_facebook@2x.png"; sourceTree = "<group>"; };
 		2E51AE4016CC973E00D4EA1C /* grey_twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grey_twitter.png; sourceTree = "<group>"; };
 		2E51AE4216CC974500D4EA1C /* grey_twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey_twitter@2x.png"; sourceTree = "<group>"; };
-		2E7C29D416C9CA73008B117F /* NCMusicGesturesHeaderPageOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCMusicGesturesHeaderPageOne.h; sourceTree = "<group>"; };
-		2E7C29D516C9CA73008B117F /* NCMusicGesturesHeaderPageOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCMusicGesturesHeaderPageOne.m; sourceTree = "<group>"; };
+		2E6810A716F1982600C8838A /* MarqueeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarqueeLabel.h; sourceTree = "<group>"; };
+		2E6810A816F1982600C8838A /* MarqueeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarqueeLabel.m; sourceTree = "<group>"; };
 		2E7C29D716C9CDEF008B117F /* StringFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringFormatter.h; sourceTree = "<group>"; };
 		2E7C29D816C9CDEF008B117F /* StringFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringFormatter.m; sourceTree = "<group>"; };
 		2E7C29DA16C9D1D3008B117F /* UISliderCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISliderCustom.h; sourceTree = "<group>"; };
 		2E7C29DB16C9D1D4008B117F /* UISliderCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UISliderCustom.m; sourceTree = "<group>"; };
-		2E7C29DD16C9D6D7008B117F /* NCMusicGesturesHeaderPageTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCMusicGesturesHeaderPageTwo.h; sourceTree = "<group>"; };
-		2E7C29DE16C9D6D7008B117F /* NCMusicGesturesHeaderPageTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCMusicGesturesHeaderPageTwo.m; sourceTree = "<group>"; };
 		2E7C29E516C9DCD7008B117F /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		2E7C29E916CA2DA1008B117F /* NCMusicGesturesHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCMusicGesturesHeader.h; sourceTree = "<group>"; };
-		2E7C29EA16CA2DA1008B117F /* NCMusicGesturesHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCMusicGesturesHeader.m; sourceTree = "<group>"; };
+		2E85E21016F198A5007DD95D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		2E85E21816F1AAA2007DD95D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		2E8E63B816C8786300B47EE9 /* NCMusicPlayerAppVersion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NCMusicPlayerAppVersion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E8E63BB16C8786300B47EE9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2E8E63BD16C8786300B47EE9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -147,6 +146,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E85E21216F198AF007DD95D /* QuartzCore.framework in Frameworks */,
 				2E7C29E616C9DCD7008B117F /* Social.framework in Frameworks */,
 				2E8E63FB16C8788A00B47EE9 /* MediaPlayer.framework in Frameworks */,
 				2E8E63BC16C8786300B47EE9 /* UIKit.framework in Frameworks */,
@@ -211,17 +211,13 @@
 			name = "Non Retina";
 			sourceTree = "<group>";
 		};
-		2E7C29EC16CA2DA9008B117F /* Header */ = {
+		2E6810A216F195E600C8838A /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
-				2E7C29E916CA2DA1008B117F /* NCMusicGesturesHeader.h */,
-				2E7C29EA16CA2DA1008B117F /* NCMusicGesturesHeader.m */,
-				2E7C29D416C9CA73008B117F /* NCMusicGesturesHeaderPageOne.h */,
-				2E7C29D516C9CA73008B117F /* NCMusicGesturesHeaderPageOne.m */,
-				2E7C29DD16C9D6D7008B117F /* NCMusicGesturesHeaderPageTwo.h */,
-				2E7C29DE16C9D6D7008B117F /* NCMusicGesturesHeaderPageTwo.m */,
+				2E6810A716F1982600C8838A /* MarqueeLabel.h */,
+				2E6810A816F1982600C8838A /* MarqueeLabel.m */,
 			);
-			name = Header;
+			name = "Third Party";
 			sourceTree = "<group>";
 		};
 		2E7C29ED16CA2DC0008B117F /* Helper */ = {
@@ -240,7 +236,9 @@
 		2E8E63AF16C8786300B47EE9 = {
 			isa = PBXGroup;
 			children = (
+				2E85E21816F1AAA2007DD95D /* Settings.bundle */,
 				2E8E63C116C8786300B47EE9 /* NCMusicPlayerAppVersion */,
+				2E6810A216F195E600C8838A /* Third Party */,
 				2E8E640316C8797C00B47EE9 /* Images */,
 				2E8E63E816C8786300B47EE9 /* NCMusicPlayerAppVersionTests */,
 				2E8E63BA16C8786300B47EE9 /* Frameworks */,
@@ -260,6 +258,7 @@
 		2E8E63BA16C8786300B47EE9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2E85E21016F198A5007DD95D /* QuartzCore.framework */,
 				2E7C29E516C9DCD7008B117F /* Social.framework */,
 				2E8E63F916C8787F00B47EE9 /* MediaPlayer.framework */,
 				2E8E63BB16C8786300B47EE9 /* UIKit.framework */,
@@ -323,7 +322,6 @@
 			children = (
 				2E8E63FD16C878A900B47EE9 /* NCMusicGesturesView.h */,
 				2E8E63FE16C878A900B47EE9 /* NCMusicGesturesView.m */,
-				2E7C29EC16CA2DA9008B117F /* Header */,
 				2E7C29ED16CA2DC0008B117F /* Helper */,
 			);
 			name = Custom;
@@ -447,6 +445,7 @@
 				2E51AE3F16CC963300D4EA1C /* grey_facebook@2x.png in Resources */,
 				2E51AE4116CC973E00D4EA1C /* grey_twitter.png in Resources */,
 				2E51AE4316CC974500D4EA1C /* grey_twitter@2x.png in Resources */,
+				2E85E21916F1AAA2007DD95D /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,11 +487,9 @@
 				2E8E63D516C8786300B47EE9 /* ViewController.m in Sources */,
 				2E8E63FF16C878A900B47EE9 /* NCMusicGesturesView.m in Sources */,
 				2E8E641B16C87F2100B47EE9 /* UIView+UIViewExtensions.m in Sources */,
-				2E7C29D616C9CA73008B117F /* NCMusicGesturesHeaderPageOne.m in Sources */,
 				2E7C29D916C9CDEF008B117F /* StringFormatter.m in Sources */,
 				2E7C29DC16C9D1D4008B117F /* UISliderCustom.m in Sources */,
-				2E7C29DF16C9D6D7008B117F /* NCMusicGesturesHeaderPageTwo.m in Sources */,
-				2E7C29EB16CA2DA2008B117F /* NCMusicGesturesHeader.m in Sources */,
+				2E6810A916F1982600C8838A /* MarqueeLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,6 +499,7 @@
 			files = (
 				2E8E63F016C8786300B47EE9 /* NCMusicPlayerAppVersionTests.m in Sources */,
 				2E8E641C16C87F2100B47EE9 /* UIView+UIViewExtensions.m in Sources */,
+				2E6810AA16F1982600C8838A /* MarqueeLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

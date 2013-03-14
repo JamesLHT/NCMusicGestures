@@ -10,12 +10,8 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 #define VIEW_HEADER_HEIGHT 50
-#define VIEW_WIDTH_PORTRAIT [[UIScreen mainScreen] bounds].size.width
-#define VIEW_WIDTH_LANDSCAPE [[UIScreen mainScreen] bounds].size.height
 #define VIEW_HEIGHT 100
 
 @interface NCMusicGesturesView : UIViewController <UIScrollViewDelegate, UIAlertViewDelegate>
-
-+ (MPMusicPlayerController *)ipodController;
 
 @end

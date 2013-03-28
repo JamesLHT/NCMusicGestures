@@ -11,6 +11,16 @@
 			<string>Configure</string>
 		</dict>
 		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Album As Background</string>
+			<key>Key</key>
+			<string>useAlbumArtAsBackground</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
 			<key>Titles</key>
 			<array>
 				<string>10</string>

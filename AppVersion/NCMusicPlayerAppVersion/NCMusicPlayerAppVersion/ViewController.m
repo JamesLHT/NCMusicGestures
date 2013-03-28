@@ -13,7 +13,7 @@ static ViewController *staticSelf;
 
 @interface ViewController()
 
-@property (strong, nonatomic) NCMusicGesturesView *musicGestures;
+@property (readwrite, retain) NCMusicGesturesView *musicGestures;
 
 @end
 

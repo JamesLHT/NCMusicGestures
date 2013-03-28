@@ -9,7 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <Social/Social.h>
 
+@class NCMusicGesturesView;
+
 @interface ViewController : UIViewController
+
+@property (readonly, retain) NCMusicGesturesView *musicGestures;
 
 + (UIViewController *)mainViewController;
 

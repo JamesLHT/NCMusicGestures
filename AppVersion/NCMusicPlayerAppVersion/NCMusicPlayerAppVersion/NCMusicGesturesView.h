@@ -14,4 +14,6 @@
 
 @interface NCMusicGesturesView : UIViewController <UIScrollViewDelegate, UIAlertViewDelegate>
 
+- (void)onAppWillEnterForeground;
+
 @end

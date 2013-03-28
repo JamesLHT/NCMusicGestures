@@ -81,6 +81,7 @@ typedef enum  {
 @property (strong, nonatomic) MarqueeLabel *songAlbum;
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
+@property (strong, nonatomic) UILongPressGestureRecognizer *longHoldGestureRecognizer;
 
 //header
 @property (strong, nonatomic) UIScrollView *headerScrollView;
@@ -99,7 +100,7 @@ typedef enum  {
 @property (strong, nonatomic) UIButton *facebookButton;
 @property (strong, nonatomic) UIButton *donateButton;
 
-@property (retain, nonatomic) MPMusicPlayerController *ipod;
+@property (assign, nonatomic) MPMusicPlayerController *ipod;
 
 @end
 
@@ -113,9 +114,10 @@ typedef enum  {
         self.view.clipsToBounds = YES;
         
         UIImage *bg = [[UIImage imageNamed:@"WeeAppBackground"]
-                       stretchableImageWithLeftCapWidth:BACKGROUND_CAP_VALUE topCapHeight:BACKGROUND_CAP_VALUE];
-		self.background = [[UIImageView alloc] initWithImage:bg];
-		[self.view addSubview:self.background];
+                       stretchableImageWithLeftCapWidth:BACKGROUND_CAP_VALUE
+                       topCapHeight:BACKGROUND_CAP_VALUE];
+        
+        [self updateBackgroundImage:bg];
         
         self.ipodActionToPerformOnScrollViewDeceleration = None;
         
@@ -130,6 +132,12 @@ typedef enum  {
         [self updateToOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     }
     return self;
+}
+
+- (void)onAppWillEnterForeground
+{
+    [self updateShuffleButtonToCurrentState];
+    [self updateRepeatButtonToCurrentState];
 }
 
 #pragma mark Orientation Methods
@@ -194,12 +202,23 @@ typedef enum  {
     if (tap.state == UIGestureRecognizerStateEnded){
         if (self.ipod.playbackState == MPMusicPlaybackStatePaused ||
             self.ipod.playbackState == MPMusicPlaybackStateStopped){
-            [self.ipod play];
-            [self performPlayPauseAnimation];
+            if (self.ipod.nowPlayingItem){
+                [self.ipod play];
+                [self performPlayPauseAnimation];
+            } else { //nothing playing, so we will play all
+                [self playAllSongs];
+            }
         } else if (self.ipod.playbackState == MPMusicPlaybackStatePlaying){
             [self.ipod pause];
             [self performPlayPauseAnimation];
         }
+    }
+}
+
+- (void)onLongHold:(UILongPressGestureRecognizer *)hold
+{
+    if (hold.state == UIGestureRecognizerStateBegan){
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"music://"]];
     }
 }
 
@@ -224,16 +243,21 @@ typedef enum  {
     return _ipod;
 }
 
+- (void)playAllSongs
+{
+    MPMediaQuery *everything = [[MPMediaQuery alloc] init];
+    
+    NSArray *itemsFromGenericQuery = [everything items];
+    MPMediaItemCollection *collection = [[MPMediaItemCollection alloc] initWithItems:itemsFromGenericQuery];
+    [self.ipod setQueueWithItemCollection:collection];
+    [self.ipod play];
+}
+
 - (void)oniPodItemChanged:(id)notification
 {
     self.albumIsOniCloud.hidden = YES;
     
     MPMediaItem *item = self.ipod.nowPlayingItem;
-    
-    //if (!item){
-    //    MPMediaQuery *everything = [[MPMediaQuery alloc] init];
-    //    [self.ipod setQueueWithQuery:everything];
-    //}
     
     [self setInfoFromMPMediaItem:item animated:YES];
     [self checkSongTime];
@@ -312,7 +336,10 @@ typedef enum  {
     
     if (animated){
         
-        [UIView animateWithDuration:ALBUM_ART_ANIM_TIME / 2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        [UIView animateWithDuration:ALBUM_ART_ANIM_TIME / 2
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseIn
+                         animations:^{
             self.albumArt.transform = CGAffineTransformMakeScale(0.8, 0.8);
         }completion:^(BOOL finished){
             
@@ -320,7 +347,10 @@ typedef enum  {
                 halfCompletion();
             }
             
-            [UIView animateWithDuration:ALBUM_ART_ANIM_TIME / 2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            [UIView animateWithDuration:ALBUM_ART_ANIM_TIME / 2
+                                  delay:0
+                                options:UIViewAnimationOptionCurveEaseIn
+                             animations:^{
                 self.albumArt.transform = CGAffineTransformMakeScale(1.0, 1.0);
             }completion:^(BOOL finished){
                 if (completion){
@@ -332,9 +362,36 @@ typedef enum  {
         [UIView transitionWithView:self.albumArt duration:ALBUM_ART_ANIM_TIME options:UIViewAnimationOptionTransitionFlipFromRight
                         animations:^{
                             self.albumArt.image = newAlbumArtImage;
+                            [self updateBackgroundImage:newAlbumArtImage];
                         } completion:nil];
     } else {
         self.albumArt.image = newAlbumArtImage;
+    }
+}
+
+- (void)updateBackgroundImage:(UIImage *)image
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL useAlbumArt = [defaults boolForKey:@"useAlbumArtAsBackground"];
+    
+    if (!self.background){
+        self.background = [[UIImageView alloc] initWithFrame:self.view.frame];
+        [UIView setOrigin:self.background newOrigin:CGPointZero];
+		[self.view addSubview:self.background];
+    }
+    
+    if (!useAlbumArt || !image){
+        self.background.backgroundColor = [UIColor clearColor];
+        UIImage *bg = [[UIImage imageNamed:@"WeeAppBackground"]
+                       stretchableImageWithLeftCapWidth:BACKGROUND_CAP_VALUE
+                       topCapHeight:BACKGROUND_CAP_VALUE];
+        self.background.image = bg;
+        
+    } else {
+        self.background.backgroundColor = [UIColor blackColor];
+        self.background.contentMode = UIViewContentModeScaleAspectFill;
+        self.background.image = image;
+        self.background.alpha = 0.4;
     }
 }
 
@@ -478,7 +535,7 @@ typedef enum  {
             break;
             
         case MPMusicRepeatModeAll:
-            [self.ipod setRepeatMode:MPMusicRepeatModeNone];
+            [self.ipod setRepeatMode:MPMusicRepeatModeOne];
             break;
             
         case MPMusicRepeatModeOne:
@@ -493,10 +550,10 @@ typedef enum  {
             break;
     }
     
-    [self updateRepeateButtonToCurrentState];
+    [self updateRepeatButtonToCurrentState];
 }
 
-- (void)updateRepeateButtonToCurrentState
+- (void)updateRepeatButtonToCurrentState
 {
     switch (self.ipod.repeatMode) {
         case MPMusicRepeatModeDefault:
@@ -681,26 +738,22 @@ typedef enum  {
 
 - (void)baseScrollViewDidEndDecelerating
 {
-    if (self.ipod.playbackState == MPMusicPlaybackStatePlaying ||
-        self.ipod.playbackState == MPMusicPlaybackStatePaused){
-        switch (self.ipodActionToPerformOnScrollViewDeceleration) {
-            case SkipToNext:
-                
-                [self.ipod skipToNextItem];
-                
-                break;
-                
-            case SkipToPrevious:
-                
-                [self.ipod skipToPreviousItem];
-                
-                break;
-                
-            default:
-                break;
-        }
+    switch (self.ipodActionToPerformOnScrollViewDeceleration) {
+        case SkipToNext:
+            
+            [self.ipod skipToNextItem];
+            
+            break;
+            
+        case SkipToPrevious:
+            
+            [self.ipod skipToPreviousItem];
+            
+            break;
+            
+        default:
+            break;
     }
-    
     self.ipodActionToPerformOnScrollViewDeceleration = None;
 }
 
@@ -728,6 +781,7 @@ typedef enum  {
 {
     [self setupBaseScrollView];
     [self setupBaseTapGestureRecognizer];
+    [self setupBaseLongHoldGestureRecognizer];
     [self setupAlbumArtworkView];
     [self setupBaseScrollViewLabels];
 }
@@ -755,6 +809,17 @@ typedef enum  {
     if (!self.tapGestureRecognizer){
         self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTap:)];
         [self.baseScrollView addGestureRecognizer:self.tapGestureRecognizer];
+    }
+}
+
+- (void)setupBaseLongHoldGestureRecognizer
+{
+    if (!self.longHoldGestureRecognizer){
+        self.longHoldGestureRecognizer = [[UILongPressGestureRecognizer alloc]
+                                          initWithTarget:self
+                                          action:@selector(onLongHold:)];
+        [self.baseScrollView addGestureRecognizer:self.longHoldGestureRecognizer];
+        self.longHoldGestureRecognizer.minimumPressDuration = 3;
     }
 }
 
@@ -850,7 +915,7 @@ typedef enum  {
 {
     CGRect rect = CGRectMake(0, 0, [self getWidthForCurrentOrientation], VIEW_HEADER_HEIGHT);
     
-    if (!self.headerButtonView){
+    if (!self.headerScrollView){
         self.headerScrollView = [[UIScrollView alloc] init];
     }
     
@@ -992,7 +1057,7 @@ typedef enum  {
     self.repeatButton.center = CGPointMake(center, self.headerScrollView.frame.size.height / 2);
     [self.repeatButton addTarget:self action:@selector(repeateButtonClicked)
                 forControlEvents:UIControlEventTouchUpInside];
-    [self updateRepeateButtonToCurrentState];
+    [self updateRepeatButtonToCurrentState];
 }
 
 - (void)setupTwitterButton
@@ -1099,6 +1164,7 @@ typedef enum  {
     [self.background release];
     [self.baseScrollView removeGestureRecognizer:self.tapGestureRecognizer];
     [self.tapGestureRecognizer release];
+    [self.longHoldGestureRecognizer release];
     
     [self.albumArt release];
     [self.albumIsOniCloud release];

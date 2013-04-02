@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "NCMusicGesturesController.h"
 
 #define VIEW_HEADER_HEIGHT 50
 #define VIEW_HEIGHT 100
 
 @interface NCMusicGesturesView : UIViewController <UIScrollViewDelegate, UIAlertViewDelegate>
+
+@property (assign, nonatomic) NCMusicGesturesController *controller;
 
 - (void)onViewDidAppear;
 - (void)onViewDidDissappear;

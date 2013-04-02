@@ -15,8 +15,11 @@
 #import "UISliderCustom.h"
 #import "MarqueeLabel.h"
 
-#import <MediaPlayer/MediaPlayer.h>
 #import <Social/Social.h>
+
+#import "SBMediaController.h"
+#import "SBApplication.h"
+#import "SBApplicationController.h"
 
 #define ALBUM_ART_ANIM_TIME 0.5
 #define ALBUM_ART_PADDING 10
@@ -35,22 +38,23 @@
 #define HEADER_PAGE_DOT_INDICATOR_OFFSET 6
 
 //header button view
-/*#define IMAGE_SHUFFLE_ON [UIImage imageFromBundleWithName:@"white_shuffle.png"]
+#define IMAGE_SHUFFLE_ON [UIImage imageFromBundleWithName:@"white_shuffle.png"]
 #define IMAGE_SHUFFLE_OFF [UIImage imageFromBundleWithName:@"grey_shuffle.png"]
 
 #define IMAGE_REPEAT_ALL [UIImage imageFromBundleWithName:@"white_repeat.png"]
 #define IMAGE_REPEAT_ONE [UIImage imageFromBundleWithName:@"white_repeat_one.png"]
-#define IMAGE_REPEAT_OFF [UIImage imageFromBundleWithName:@"grey_repeat.png"]*/
+#define IMAGE_REPEAT_OFF [UIImage imageFromBundleWithName:@"grey_repeat.png"]
 
-#define IMAGE_TWITTER_OFF [UIImage imageFromBundleWithName:@"grey_twitter.png"]
 #define IMAGE_TWITTER_ON [UIImage imageFromBundleWithName:@"white_twitter.png"]
 
-#define IMAGE_FACEBOOK_OFF [UIImage imageFromBundleWithName:@"grey_facebook.png"]
 #define IMAGE_FACEBOOK_ON [UIImage imageFromBundleWithName:@"white_facebook.png"]
 
 #define IMAGE_DONATE [UIImage imageFromBundleWithName:@"white_donate.png"]
 
-@interface NCMusicGesturesView()
+@interface NCMusicGesturesView(){
+    MPMusicPlayerController* _ipod;
+    SBMediaController *mediaController;
+}
 
 typedef enum  {
     None,
@@ -90,13 +94,11 @@ typedef enum  {
 @property (retain, nonatomic) NSTimer *updateSongPlaybackTimeTimer;
 
 @property (retain, nonatomic) UIView *headerButtonView;
-//@property (strong, nonatomic) UIButton *shuffleButton;
-//@property (strong, nonatomic) UIButton *repeatButton;
+@property (strong, nonatomic) UIButton *shuffleButton;
+@property (strong, nonatomic) UIButton *repeatButton;
 @property (retain, nonatomic) UIButton *twitterButton;
 @property (retain, nonatomic) UIButton *facebookButton;
 @property (retain, nonatomic) UIButton *donateButton;
-
-@property (assign, nonatomic) MPMusicPlayerController *ipod;
 
 @end
 
@@ -109,11 +111,12 @@ typedef enum  {
         self.view.backgroundColor = [UIColor clearColor];
         self.view.clipsToBounds = YES;
         
-        self.ipod = [MPMusicPlayerController iPodMusicPlayer];
-        //[self.ipod setShuffleMode:MPMusicShuffleModeOff];
-        //[self.ipod setRepeatMode:MPMusicRepeatModeNone];
+        mediaController = [objc_getClass("SBMediaController") sharedInstance];
         
-        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                selector:@selector(oniPodItemChanged)
+                                                     name:@"SBMediaNowPlayingChangedNotification"
+                                                   object:mediaController];
         
         UIImage *bg = [BACKGROUND_IMAGE_DEFAULT
                        stretchableImageWithLeftCapWidth:BACKGROUND_CAP_VALUE
@@ -133,13 +136,6 @@ typedef enum  {
 
 - (void)onViewDidAppear
 {
-    if (![NSThread isMainThread]){
-        [self performSelectorOnMainThread:@selector(onViewDidAppear) withObject:nil waitUntilDone:NO];
-        return;
-    }
-    
-    [self setupiPodListeners];
-    
     self.background.frame = self.view.frame;
     [UIView setOrigin:self.background newOrigin:CGPointZero];
     
@@ -152,17 +148,13 @@ typedef enum  {
     self.headerScrollView.contentOffset = CGPointMake(self.headerScrollView.frame.size.width * (currentPage), 0);
     
     [self startUpdateSongPlaybackTimeTimer];
+    
+    [self updateShuffleButtonToCurrentState];
+    [self updateRepeatButtonToCurrentState];
 }
 
 - (void)onViewDidDissappear
 {
-    if (![NSThread isMainThread]){
-        [self performSelectorOnMainThread:@selector(onViewDidDissappear) withObject:nil waitUntilDone:NO];
-        return;
-    }
-    
-    //[self cleanupiPodListeners];
-    
     [self stopUpdateSongPlaybackTimeTimer];
 }
 
@@ -171,31 +163,23 @@ typedef enum  {
 
 - (void)onTap:(UITapGestureRecognizer *)tap
 {
-    if (![NSThread isMainThread]){
-        [self performSelectorOnMainThread:@selector(onTap:) withObject:tap waitUntilDone:NO];
-        return;
-    }
-    
     if (tap.state == UIGestureRecognizerStateEnded){
-        if (self.ipod.playbackState == MPMusicPlaybackStatePaused ||
-            self.ipod.playbackState == MPMusicPlaybackStateStopped){
-            if (self.ipod.nowPlayingItem){
-                [self.ipod play];
-                [self performPlayPauseAnimation];
-            } else { //nothing playing, so we will play all
-                [self playAllSongs];
-            }
-        } else if (self.ipod.playbackState == MPMusicPlaybackStatePlaying){
-            [self.ipod pause];
-            [self performPlayPauseAnimation];
-        }
+        [mediaController togglePlayPause];
+        [self performPlayPauseAnimation];
     }
 }
 
 - (void)onLongHold:(UILongPressGestureRecognizer *)hold
 {
     if (hold.state == UIGestureRecognizerStateBegan){
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"music://"]];
+        
+        SBApplication *currentApp = [mediaController nowPlayingApplication];
+        
+        if (currentApp){
+            [[objc_getClass("SBUIController") sharedInstance] activateApplicationFromSwitcher:currentApp];
+        } else {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"music://"]];
+        }
     }
 }
 
@@ -212,102 +196,42 @@ typedef enum  {
 
 #pragma mark iPod
 
-- (void)playAllSongs
+- (void)oniPodItemChanged
 {
-    if (![NSThread isMainThread]){
-        [self performSelectorOnMainThread:@selector(playAllSongs) withObject:nil waitUntilDone:NO];
-        return;
-    }
+    [self updateShuffleButtonToCurrentState];
+    [self updateRepeatButtonToCurrentState];
     
-    MPMediaQuery *everything = [[MPMediaQuery alloc] init];
+    NSString *songTitle = [[mediaController _nowPlayingInfo] objectForKey:@"title"];
+    NSString *songArtist = [[mediaController _nowPlayingInfo] objectForKey:@"artist"];
+    NSString *songAlbum =[[mediaController _nowPlayingInfo] objectForKey:@"album"];
     
-    NSArray *itemsFromGenericQuery = [everything items];
-    MPMediaItemCollection *collection = [[MPMediaItemCollection alloc] initWithItems:itemsFromGenericQuery];
-    [self.ipod setQueueWithItemCollection:collection];
-    [self.ipod play];
-}
+    self.songTitle.text = songTitle;
+    self.songArtist.text = songArtist;
+    self.songAlbum.text = songAlbum;
 
-- (void)oniPodItemChanged:(id)notification
-{
-    if (![NSThread isMainThread]){
-        [self performSelectorOnMainThread:@selector(oniPodItemChanged) withObject:notification waitUntilDone:NO];
-        return;
-    }
-    
     self.albumIsOniCloud.hidden = YES;
     
-    MPMediaItem *item = self.ipod.nowPlayingItem;
-    
-    [self setInfoFromMPMediaItem:item animated:YES];
-    [self checkSongTime];
-}
-
-- (void)oniPodStateChanged:(id)notification
-{
-    if (![NSThread isMainThread]){
-        [self performSelectorOnMainThread:@selector(oniPodStateChanged) withObject:notification waitUntilDone:NO];
-        return;
+    if ([mediaController trackIsBeingPlayedByMusicApp]){
+        MPMusicPlayerController *ipod = [MPMusicPlayerController iPodMusicPlayer];
+        
+        if (ipod){
+            MPMediaItem *currentItem = ipod.nowPlayingItem;
+            
+            if (currentItem){
+                self.albumIsOniCloud.hidden = ![[currentItem valueForProperty:MPMediaItemPropertyIsCloudItem]
+                                                boolValue];
+            }
+        }
     }
     
-    switch (self.ipod.playbackState) {
-        case MPMusicPlaybackStateStopped:
-            [self stopUpdateSongPlaybackTimeTimer];
-            break;
-            
-        case MPMusicPlaybackStatePlaying:
-            [self startUpdateSongPlaybackTimeTimer];
-            break;
-            
-        case MPMusicPlaybackStatePaused:
-            [self stopUpdateSongPlaybackTimeTimer];
-            break;
-            
-        case MPMusicPlaybackStateInterrupted:
-            [self stopUpdateSongPlaybackTimeTimer];
-            break;
-            
-        case MPMusicPlaybackStateSeekingForward:
-            [self startUpdateSongPlaybackTimeTimer];
-            break;
-            
-        case MPMusicPlaybackStateSeekingBackward:
-            [self startUpdateSongPlaybackTimeTimer];
-            break;
-            
-        default:
-            break;
-    }
-}
-
-- (void)setInfoFromMPMediaItem:(MPMediaItem *)item animated:(BOOL)animated
-{
-    if (item){
-        //[self.header setInfoFromMPMediaItem:item animated:animated];
-        
-        self.songTitle.text = [item valueForProperty:MPMediaItemPropertyTitle];
-        self.songArtist.text = [item valueForProperty:MPMediaItemPropertyArtist];
-        self.songAlbum.text = [item valueForProperty:MPMediaItemPropertyAlbumTitle];
-        
-        MPMediaItemArtwork *itemArtwork = [item valueForProperty:MPMediaItemPropertyArtwork];
-        [self setAlbumArtToNewImage:[itemArtwork imageWithSize:self.albumArt.bounds.size]
-                           animated:animated
-                     halfCompletion:nil
-                         completion:^{
-                             self.albumIsOniCloud.hidden = ![[item valueForProperty:MPMediaItemPropertyIsCloudItem] boolValue];
-                         }];
-        
+    NSData *imageData = [[mediaController _nowPlayingInfo] objectForKey:@"artworkData"];
+    
+    if (imageData){
+        UIImage *art = [[UIImage alloc] initWithData:imageData];
+        [self setAlbumArtToNewImage:art animated:YES halfCompletion:nil completion:nil];
+        [art release];
     } else {
-        
-        [self resetHeader];
-        
-        self.songTitle.text = @"";
-        self.songArtist.text = @"";
-        self.songAlbum.text = @"";
-        
-        [self setAlbumArtToNewImage:nil
-                           animated:animated
-                     halfCompletion:nil
-                         completion:nil];
+        [self setAlbumArtToNewImage:nil animated:YES halfCompletion:nil completion:nil];
     }
 }
 
@@ -316,41 +240,8 @@ typedef enum  {
                halfCompletion:(void (^)())halfCompletion
                    completion:(void (^)())completion
 {
-    UIImage *newAlbumArtImage = (image) ? image : IMAGE_DISC;
-    
-    if (animated){
-        
-        [UIView animateWithDuration:ALBUM_ART_ANIM_TIME / 2
-                              delay:0
-                            options:UIViewAnimationOptionCurveEaseIn
-                         animations:^{
-            self.albumArt.transform = CGAffineTransformMakeScale(0.8, 0.8);
-        }completion:^(BOOL finished){
-            
-            if (halfCompletion){
-                halfCompletion();
-            }
-            
-            [UIView animateWithDuration:ALBUM_ART_ANIM_TIME / 2
-                                  delay:0
-                                options:UIViewAnimationOptionCurveEaseIn
-                             animations:^{
-                self.albumArt.transform = CGAffineTransformMakeScale(1.0, 1.0);
-            }completion:^(BOOL finished){
-                if (completion){
-                    completion();
-                }
-            }];
-        }];
-        
-        [UIView transitionWithView:self.albumArt duration:ALBUM_ART_ANIM_TIME options:UIViewAnimationOptionTransitionFlipFromRight
-                        animations:^{
-                            self.albumArt.image = newAlbumArtImage;
-                            [self updateBackgroundImage:newAlbumArtImage];
-                        } completion:nil];
-    } else {
-        self.albumArt.image = newAlbumArtImage;
-    }
+    UIImage *newImage = (image) ? image : IMAGE_DISC;
+    self.albumArt.image = newImage;
 }
 
 - (void)updateBackgroundImage:(UIImage *)image
@@ -384,21 +275,20 @@ typedef enum  {
 
 - (void)onTimelineValueChange:(UISlider *)slider
 {
-    NSInteger currentItemLength = [[self.ipod.nowPlayingItem
-                                    valueForProperty:MPMediaItemPropertyPlaybackDuration] integerValue];
+    NSInteger currentItemLength = [mediaController trackDuration];
     NSInteger newPlaybackTime = currentItemLength * slider.value;
     
-    if (newPlaybackTime != self.ipod.currentPlaybackTime){
-        self.ipod.currentPlaybackTime = newPlaybackTime;
-        self.songCurrentTime.text = [StringFormatter formattedStringForDurationHMS:newPlaybackTime];
-        NSInteger songTimeLeft = currentItemLength - newPlaybackTime;
-        
-        if (songTimeLeft < 0){
-            songTimeLeft = 0;
-        }
-        
-        self.songTotalTime.text = [StringFormatter formattedStringForDurationHMS:songTimeLeft];
-    }
+    [mediaController setCurrentTrackTime:newPlaybackTime];
+    
+    double songTime = (NSInteger)[mediaController trackDuration];
+    double songElapsedTime = (NSInteger)[mediaController trackElapsedTime];
+    
+    double songTimeLeft = songTime - songElapsedTime;
+    
+    self.songTotalTime.text = [StringFormatter
+                               formattedStringForDurationHMS:(NSInteger)songTimeLeft];
+    self.songCurrentTime.text = [StringFormatter
+                                 formattedStringForDurationHMS:(NSInteger)songElapsedTime];
 }
 
 - (void)startUpdateSongPlaybackTimeTimer
@@ -423,240 +313,117 @@ typedef enum  {
 
 - (void)checkSongTime
 {
-    if (![NSThread isMainThread]){
-        [self performSelectorOnMainThread:@selector(checkSongTime) withObject:nil waitUntilDone:NO];
-        return;
-    }
-    
     if (self.timelineScrubber.isTracking){
         return;
     }
     
-    MPMediaItem *current = self.ipod.nowPlayingItem;
-    
-    if (current){
-        NSNumber *songTime = (NSNumber *)[current valueForKey:MPMediaItemPropertyPlaybackDuration];
-        NSInteger songTimeLeft = [songTime integerValue] - self.ipod.currentPlaybackTime;
+    if ([mediaController _nowPlayingInfo]){
+        double songTime = (NSInteger)[mediaController trackDuration];
+        double songElapsedTime = (NSInteger)[mediaController trackElapsedTime];
         
-        if (songTimeLeft < 0){
-            songTimeLeft = 0;
-        }
+        double songTimeLeft = songTime - songElapsedTime;
         
-        if (songTime){
-            self.songTotalTime.text = [StringFormatter
-                                       formattedStringForDurationHMS:songTimeLeft];
-        } else {
-            self.songTotalTime.text = @"0:00";
-        }
-    } else {
-        self.songTotalTime.text = @"0:00";
-    }
-    
-    if (self.ipod.playbackState == MPMusicPlaybackStatePlaying ||
-        self.ipod.playbackState == MPMusicPlaybackStateSeekingBackward ||
-        self.ipod.playbackState == MPMusicPlaybackStateSeekingForward){
+        self.songTotalTime.text = [StringFormatter
+                                   formattedStringForDurationHMS:(NSInteger)songTimeLeft];
+        self.songCurrentTime.text = [StringFormatter
+                                     formattedStringForDurationHMS:(NSInteger)songElapsedTime];
         
-        NSInteger time = self.ipod.currentPlaybackTime;
-        
-        if (time < 0){
-            time = 0;
-        }
-        
-        self.songCurrentTime.text = [StringFormatter formattedStringForDurationHMS:time];
-        
-        NSInteger currentItemLength = [[self.ipod.nowPlayingItem
-                                        valueForProperty:MPMediaItemPropertyPlaybackDuration] integerValue];
-        float currentPlaybackPercentage = self.ipod.currentPlaybackTime / currentItemLength;
+        float currentPlaybackPercentage = songElapsedTime / songTime;
         self.timelineScrubber.value = currentPlaybackPercentage;
-        
-    } else {
-        self.songCurrentTime.text = @"0:00";
-        self.timelineScrubber.value = 0.0;
     }
 }
 
-/*
 - (void)shuffleButtonClicked
 {
-    if (![NSThread isMainThread]){
-        [self performSelectorOnMainThread:@selector(shuffleButtonClicked) withObject:nil waitUntilDone:NO];
-        return;
-    }
-    
-    switch (self.ipod.shuffleMode) {
-        case MPMusicShuffleModeOff:
-            [self.ipod setShuffleMode:MPMusicShuffleModeSongs];
-            break;
-            
-        case MPMusicShuffleModeSongs:
-            [self.ipod setShuffleMode:MPMusicShuffleModeOff];
-            break;
-            
-        case MPMusicShuffleModeDefault:
-            [self.ipod setShuffleMode:MPMusicShuffleModeOff];
-            break;
-            
-        case MPMusicShuffleModeAlbums:
-            [self.ipod setShuffleMode:MPMusicShuffleModeOff];
-            break;
-            
-        default:
-            break;
-    }
-    
-    [self updateShuffleButtonToCurrentState];
+    [mediaController toggleShuffle];
 }
 
 - (void)updateShuffleButtonToCurrentState
 {
-    if (![NSThread isMainThread]){
-        [self performSelectorOnMainThread:@selector(updateShuffleButtonToCurrentState) withObject:nil waitUntilDone:NO];
-        return;
-    }
-    
-    if (!self.ipod.playbackState == MPMusicPlaybackStatePlaying){
-        switch (self.ipod.shuffleMode) {
-            case MPMusicShuffleModeOff:
-                [self.shuffleButton setImage:IMAGE_SHUFFLE_OFF forState:UIControlStateNormal];
-                break;
-                
-            case MPMusicShuffleModeSongs:
-                [self.shuffleButton setImage:IMAGE_SHUFFLE_ON forState:UIControlStateNormal];
-                break;
-                
-            default:
-                break;
-        }
-    } else {
-        [self.shuffleButton setImage:IMAGE_SHUFFLE_ON forState:UIControlStateNormal];
+    switch ([mediaController shuffleMode]) {
+        case 0:
+            [self.shuffleButton setImage:IMAGE_SHUFFLE_OFF forState:UIControlStateNormal];
+            break;
+            
+        case 2:
+             [self.shuffleButton setImage:IMAGE_SHUFFLE_ON forState:UIControlStateNormal];
+            break;
+            
+        default:
+            break;
     }
 }
 
 - (void)repeateButtonClicked
 {
-    if (![NSThread isMainThread]){
-        [self performSelectorOnMainThread:@selector(repeateButtonClicked) withObject:nil waitUntilDone:NO];
-        return;
-    }
-    
-    switch (self.ipod.repeatMode) {
-        case MPMusicRepeatModeNone:
-            [self.ipod setRepeatMode:MPMusicRepeatModeAll];
+    [mediaController toggleRepeat];
+}
+
+- (void)updateRepeatButtonToCurrentState
+{
+    switch ([mediaController repeatMode]) {
+        case 0:
+            [self.repeatButton setImage:IMAGE_REPEAT_OFF forState:UIControlStateNormal];
             break;
             
-        case MPMusicRepeatModeAll:
-            [self.ipod setRepeatMode:MPMusicRepeatModeOne];
+        case 1:
+            [self.repeatButton setImage:IMAGE_REPEAT_ONE forState:UIControlStateNormal];
             break;
             
-        case MPMusicRepeatModeOne:
-            [self.ipod setRepeatMode:MPMusicRepeatModeNone];
-            break;
-            
-        case MPMusicShuffleModeDefault:
-            [self.ipod setRepeatMode:MPMusicRepeatModeNone];
+        case 2:
+            [self.repeatButton setImage:IMAGE_REPEAT_ALL forState:UIControlStateNormal];
             break;
             
         default:
             break;
     }
-    
-    [self updateRepeatButtonToCurrentState];
 }
-
-- (void)updateRepeatButtonToCurrentState
-{
-    if (![NSThread isMainThread]){
-        [self performSelectorOnMainThread:@selector(updateRepeatButtonToCurrentState) withObject:nil waitUntilDone:NO];
-        return;
-    }
-    
-    if (!self.ipod.playbackState == MPMusicPlaybackStatePlaying){
-        switch (self.ipod.repeatMode) {
-            case MPMusicRepeatModeDefault:
-                [self.repeatButton setImage:IMAGE_REPEAT_ALL forState:UIControlStateNormal];
-                break;
-                
-            case MPMusicRepeatModeNone:
-                [self.repeatButton setImage:IMAGE_REPEAT_OFF forState:UIControlStateNormal];
-                break;
-                
-            case MPMusicRepeatModeAll:
-                [self.repeatButton setImage:IMAGE_REPEAT_ALL forState:UIControlStateNormal];
-                break;
-                
-            case MPMusicRepeatModeOne:
-                [self.repeatButton setImage:IMAGE_REPEAT_ONE forState:UIControlStateNormal];
-                break;
-                
-            default:
-                break;
-        }
-    } else {
-        [self.repeatButton setImage:IMAGE_REPEAT_ALL forState:UIControlStateNormal];
-    }
-}*/
 
 - (void)twitterButtonClicked
 {
-    [self updateTwitterButton];
     [self shareCurentSongWithServiceType:SLServiceTypeTwitter];
 }
 
 - (void)facebookButtonClicked
 {
-    [self updateFacbookButton];
     [self shareCurentSongWithServiceType:SLServiceTypeFacebook];
-}
-
-- (void)updateTwitterButton
-{
-    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]){
-        [self.twitterButton setImage:IMAGE_TWITTER_ON forState:UIControlStateNormal];
-    } else {
-        [self.twitterButton setImage:IMAGE_TWITTER_OFF forState:UIControlStateNormal];
-    }
-}
-
-- (void)updateFacbookButton
-{
-    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]){
-        [self.facebookButton setImage:IMAGE_FACEBOOK_ON forState:UIControlStateNormal];
-    } else {
-        [self.facebookButton setImage:IMAGE_FACEBOOK_OFF forState:UIControlStateNormal];
-    }
 }
 
 - (void)shareCurentSongWithServiceType:(NSString *)serviceType
 {
     if ([SLComposeViewController isAvailableForServiceType:serviceType])
     {
-        MPMediaItem *item = self.ipod.nowPlayingItem;
-        
-        if (item){
-            NSString *songTitle = [item valueForProperty:MPMediaItemPropertyTitle];
-            NSString *songArtist = [item valueForProperty:MPMediaItemPropertyArtist];
+        if ([mediaController _nowPlayingInfo]){
             
-            MPMediaItemArtwork *itemArtwork = [item valueForProperty:MPMediaItemPropertyArtwork];
-            UIImage *albumArtImage = [itemArtwork imageWithSize:itemArtwork.bounds.size];
+            NSString *songTitle = [[mediaController _nowPlayingInfo] objectForKey:@"title"];
+            NSString *songArtist = [[mediaController _nowPlayingInfo] objectForKey:@"artist"];
+            
+            UIImage *art;
+            NSData *imageData = [[mediaController _nowPlayingInfo] objectForKey:@"artworkData"];
+            
+            if (imageData){
+                art = [[UIImage alloc] initWithData:imageData];
+            }
             
             SLComposeViewController *composeVC = [SLComposeViewController
-                                                              composeViewControllerForServiceType:serviceType];
+                                                  composeViewControllerForServiceType:serviceType];
             
             NSMutableString *message = [NSMutableString stringWithFormat:@"%@%@",
-                                        @"I am listening to ", songTitle];
+                                        @"I'm listening to ", songTitle];
             
             if (songArtist){
-                [message appendFormat:@"%@%@", @" by ", songArtist];
+                [message appendFormat:@"%@%@%@", @" by ", songArtist, @" #nowplaying"];
             }
             
             [composeVC setInitialText:message];
             
-            if (albumArtImage){
-                [composeVC addImage:albumArtImage];
+            if (art){
+                [composeVC addImage:art];
+                [art release];
             }
             
             [self presentViewController:composeVC animated:YES completion:nil];
-            
+        
         } else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Item Playing"
                                                             message:@"Play a song and try again"
@@ -666,26 +433,6 @@ typedef enum  {
             [alert show];
             [alert release];
         }
-    }
-    else
-    {
-        NSMutableString *message = [[NSMutableString alloc] initWithString:@"Sharing not configured"];
-        
-        if (serviceType == SLServiceTypeTwitter){
-            [message appendString:@" for Twitter "];
-        } else if (serviceType == SLServiceTypeFacebook){
-            [message appendString:@" for Facebook "];
-        }
-        
-        [message appendString:@"\nEnable in Settings app to use this feature"];
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sharing"
-                                                        message:message
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        [alert release];
     }
 }
 
@@ -738,7 +485,7 @@ typedef enum  {
     if (!self.baseScrollView.isDecelerating){
         
         //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSInteger contentOffsetToChangeSong = 50;//[defaults integerForKey:@"contentOffsetToSwitchSong"];
+        NSInteger contentOffsetToChangeSong = 40;//[defaults integerForKey:@"contentOffsetToSwitchSong"];
         
         if (self.baseScrollView.contentOffset.x >= contentOffsetToChangeSong) { //in skip position
             self.ipodActionToPerformOnScrollViewDeceleration = SkipToNext;
@@ -760,23 +507,20 @@ typedef enum  {
     switch (self.ipodActionToPerformOnScrollViewDeceleration) {
         case SkipToNext:
             
-            if (self.ipod.playbackState == MPMusicPlaybackStatePlaying) {
-                [self.ipod skipToNextItem];
-            }
+            [mediaController changeTrack:1];
             
             break;
             
         case SkipToPrevious:
             
-            if (self.ipod.playbackState == MPMusicPlaybackStatePlaying) {
-                [self.ipod skipToPreviousItem];
-            }
+            [mediaController changeTrack:-1];
             
             break;
             
         default:
             break;
     }
+    
     self.ipodActionToPerformOnScrollViewDeceleration = None;
 }
 
@@ -1047,14 +791,14 @@ typedef enum  {
 
 - (void)setupHeaderButtons
 {
-    //[self setupShuffleButton];
-    //[self setupRepeatButton];
+    [self setupShuffleButton];
+    [self setupRepeatButton];
     [self setupTwitterButton];
     [self setupFacebookButton];
     [self setupDonateButton];
 }
 
-/*- (void)setupShuffleButton
+- (void)setupShuffleButton
 {
     if (!self.shuffleButton){
         self.shuffleButton = [self createHeaderButtonWithImage:IMAGE_SHUFFLE_ON];
@@ -1067,7 +811,7 @@ typedef enum  {
     [self.shuffleButton addTarget:self action:@selector(shuffleButtonClicked)
                  forControlEvents:UIControlEventTouchUpInside];
     
-    //[self updateShuffleButtonToCurrentState];
+    [self updateShuffleButtonToCurrentState];
 }
 
 - (void)setupRepeatButton
@@ -1083,9 +827,9 @@ typedef enum  {
     [self.repeatButton addTarget:self action:@selector(repeateButtonClicked)
                 forControlEvents:UIControlEventTouchUpInside];
     
-    //[self updateRepeatButtonToCurrentState];
+    [self updateRepeatButtonToCurrentState];
 }
-*/
+
 - (void)setupTwitterButton
 {
     if (!self.twitterButton){
@@ -1094,8 +838,8 @@ typedef enum  {
                      forControlEvents:UIControlEventTouchUpInside];
     }
     
-    CGFloat x = (self.headerScrollView.frame.size.width / 3);
-    CGFloat center = (x * 0) + (x / 2);
+    CGFloat x = (self.headerScrollView.frame.size.width / 5);
+    CGFloat center = (x * 2) + (x / 2);
     
     self.twitterButton.center = CGPointMake(center, self.headerScrollView.frame.size.height / 2);
 }
@@ -1108,8 +852,8 @@ typedef enum  {
                       forControlEvents:UIControlEventTouchUpInside];
     }
     
-    CGFloat x = (self.headerScrollView.frame.size.width / 3);
-    CGFloat center = (x * 1) + (x / 2);
+    CGFloat x = (self.headerScrollView.frame.size.width / 5);
+    CGFloat center = (x * 3) + (x / 2);
     
     self.facebookButton.center = CGPointMake(center, self.headerScrollView.frame.size.height / 2);
 }
@@ -1122,8 +866,8 @@ typedef enum  {
                     forControlEvents:UIControlEventTouchUpInside];
     }
     
-    CGFloat x = (self.headerScrollView.frame.size.width / 3);
-    CGFloat center = (x * 2) + (x / 2);
+    CGFloat x = (self.headerScrollView.frame.size.width / 5);
+    CGFloat center = (x * 4) + (x / 2);
     
     self.donateButton.center = CGPointMake(center, self.headerScrollView.frame.size.height / 2);
 }
@@ -1133,8 +877,6 @@ typedef enum  {
     if (!image){
         return nil;
     }
-    
-    //NSInteger buttonWidth = image.size.width;//(self.headerButtonView.frame.size.width / 5);
     
     UIButton *returnButton = [[UIButton alloc] init];
     [UIView setSize:returnButton newSize:CGSizeMake(image.size.width, image.size.height)];
@@ -1155,33 +897,6 @@ typedef enum  {
     return l;
 }
 
-- (void)setupiPodListeners
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(oniPodItemChanged:)
-                                                 name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(oniPodStateChanged:)
-                                                 name:MPMusicPlayerControllerPlaybackStateDidChangeNotification
-                                               object:nil];
-    
-    [self.ipod beginGeneratingPlaybackNotifications];
-}
-
-- (void)cleanupiPodListeners
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification
-                                                  object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:MPMusicPlayerControllerPlaybackStateDidChangeNotification
-                                                  object:nil];
-    
-    [self.ipod endGeneratingPlaybackNotifications];
-}
-
 #pragma mark Cleanup
 
 - (void)reset
@@ -1197,17 +912,23 @@ typedef enum  {
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"SBMediaNowPlayingChangedNotification"
+                                                  object:mediaController];
+    
     [self.baseScrollView removeGestureRecognizer:self.tapGestureRecognizer];
     [self stopUpdateSongPlaybackTimeTimer];
-    [self.timelineScrubber removeTarget:self action:@selector(onTimelineValueChange:) forControlEvents:UIControlEventValueChanged];
+    [self.timelineScrubber removeTarget:self
+                                 action:@selector(onTimelineValueChange:)
+                       forControlEvents:UIControlEventValueChanged];
     
-   /* [self.shuffleButton removeTarget:self action:@selector(shuffleButtonClicked)
+    [self.shuffleButton removeTarget:self action:@selector(shuffleButtonClicked)
                     forControlEvents:UIControlEventTouchUpInside];
     [self.shuffleButton release];
     
     [self.repeatButton removeTarget:self action:@selector(repeateButtonClicked)
                    forControlEvents:UIControlEventTouchUpInside];
-    [self.repeatButton release];*/
+    [self.repeatButton release];
     
     [self.twitterButton removeTarget:self action:@selector(twitterButtonClicked)
                     forControlEvents:UIControlEventTouchUpInside];
@@ -1216,44 +937,54 @@ typedef enum  {
     [self.donateButton removeTarget:self action:@selector(donateButtonClicked)
                    forControlEvents:UIControlEventTouchUpInside];
     
+    
     [self.background release];
+    self.background = nil;
     [self.baseScrollView release];
+    self.baseScrollView = nil;
+    
+    [self.albumArt release];
+    self.albumArt = nil;
     [self.albumIsOniCloud release];
+    self.albumIsOniCloud = nil;
     [self.songTitle release];
+    self.songTitle = nil;
     [self.songArtist release];
+    self.songArtist = nil;
     [self.songAlbum release];
+    self.songAlbum = nil;
     
     [self.tapGestureRecognizer release];
+    self.tapGestureRecognizer = nil;
     [self.longHoldGestureRecognizer release];
+    self.longHoldGestureRecognizer = nil;
     
     [self.headerScrollView release];
+    self.headerScrollView = nil;
     [self.headerScrollViewPageControl release];
+    self.headerScrollViewPageControl = nil;
     
     [self.headerSongTimelineView release];
+    self.headerSongTimelineView = nil;
     [self.songCurrentTime release];
+    self.songCurrentTime = nil;
     [self.songTotalTime release];
+    self.songTotalTime = nil;
     [self.timelineScrubber release];
+    self.timelineScrubber = nil;
     [self.updateSongPlaybackTimeTimer release];
+    self.updateSongPlaybackTimeTimer = nil;
     
     [self.headerButtonView release];
-    //[self.shuffleButton release];
-    //[self.repeatButton release];
+    self.headerButtonView = nil;
     [self.twitterButton release];
+    self.twitterButton = nil;
     [self.facebookButton release];
+    self.facebookButton = nil;
     [self.donateButton release];
-    
-    [self.ipod release];
+    self.donateButton = nil;
     
     [super dealloc];
 }
-
-/*
- // Only override drawRect: if you perform custom drawing.
- // An empty implementation adversely affects performance during animation.
- - (void)drawRect:(CGRect)rect
- {
- // Drawing code
- }
- */
 
 @end

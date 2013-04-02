@@ -16,8 +16,9 @@
 @interface NCMusicGesturesController()
 
 @property (strong, nonatomic) NCMusicGesturesView *musicGestures;
-//@property (strong, nonatomic) MPMusicPlayerController *controller;
-//@property (strong, nonatomic) UIButton *b;
+
+@property (readwrite, nonatomic) BOOL nowPlayingItem;
+
 @end
 
 @implementation NCMusicGesturesController
@@ -69,34 +70,36 @@
 		_view = [[UIView alloc] initWithFrame:CGRectMake(VIEW_X_OFFSET, 0,
                                                          _view.superview.frame.size.width,
                                                          TOTAL_VIEW_HEIGHT)];
-        
-        /*self.controller = [MPMusicPlayerController iPodMusicPlayer];
-        
-        self.b = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [_view addSubview:self.b];
-        self.b.frame = CGRectMake(0, 0, 100, 100);
-        [self.b addTarget:self action:@selector(tyt) forControlEvents:UIControlEventTouchUpInside];*/
-    if (!self.musicGestures){
-        self.musicGestures = [[NCMusicGesturesView alloc] init];
-        [_view addSubview:self.musicGestures.view];
+        if (!self.musicGestures){
+            self.musicGestures = [[NCMusicGesturesView alloc] init];
+            self.musicGestures.controller = self;
+            [_view addSubview:self.musicGestures.view];
+        }
     }
-    }
-
+    
 	return _view;
 }
-/*
-- (void)tyt
-{
-    if (self.controller.playbackState != MPMusicPlaybackStatePlaying){
-        [self.controller play];
-    } else {
-        [self.controller pause];
-    }
-}*/
 
 - (float)viewHeight
 {
-	return TOTAL_VIEW_HEIGHT;
+    //if (self.nowPlayingItem){
+        return TOTAL_VIEW_HEIGHT;
+    //} else {
+    //    return 20;
+    //}
+}
+
+- (void)updateStateToNowPlayingItemIsNull:(BOOL)exists
+{
+    /*self.nowPlayingItem = exists;
+    
+    if (!_view){
+        return;
+    }
+    
+    float height = [self viewHeight];
+    
+    [UIView setSizeY:_view newSize:height];*/
 }
 
 @end

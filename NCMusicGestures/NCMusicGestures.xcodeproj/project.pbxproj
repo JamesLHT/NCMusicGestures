@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2E22C68D16F28ABD0084D49C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E22C68C16F28ABD0084D49C /* Foundation.framework */; };
 		2E22C68F16F28ABD0084D49C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E22C68E16F28ABD0084D49C /* UIKit.framework */; };
 		2E22C69A16F28ABD0084D49C /* NCMusicGesturesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E22C69916F28ABD0084D49C /* NCMusicGesturesController.m */; };
 		2E22C6C316F28BCC0084D49C /* UIImage+UIImageExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E22C6C116F28BCC0084D49C /* UIImage+UIImageExtensions.h */; };
@@ -23,14 +22,16 @@
 		2E22C6D716F2920F0084D49C /* UIView+UIViewExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E22C6CF16F2920F0084D49C /* UIView+UIViewExtensions.h */; };
 		2E22C6D816F2920F0084D49C /* UIView+UIViewExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E22C6D016F2920F0084D49C /* UIView+UIViewExtensions.m */; };
 		2E22C6E116F292810084D49C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E22C6DF16F292680084D49C /* CoreGraphics.framework */; };
-		2E22C6E216F292860084D49C /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E22C6DD16F2925E0084D49C /* MediaPlayer.framework */; };
 		2E22C6E316F2928B0084D49C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E22C6DB16F292540084D49C /* QuartzCore.framework */; };
 		2E22C6E416F292900084D49C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E22C6D916F2924C0084D49C /* Social.framework */; };
+		2E659068170AD97000F1BDF6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E659067170AD97000F1BDF6 /* Foundation.framework */; };
+		2E65906C170AD9CF00F1BDF6 /* SBMediaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E65906B170AD9CF00F1BDF6 /* SBMediaController.h */; };
+		2E659072170ADE2A00F1BDF6 /* SBApplicationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E659071170ADE2A00F1BDF6 /* SBApplicationController.h */; };
+		2EC689D3170ABD4500B8F9EB /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EC689D1170ABD3B00B8F9EB /* MediaPlayer.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2E22C68916F28ABD0084D49C /* NCMusicGestures */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = NCMusicGestures; sourceTree = BUILT_PRODUCTS_DIR; };
-		2E22C68C16F28ABD0084D49C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2E22C68E16F28ABD0084D49C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2E22C69316F28ABD0084D49C /* control.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = control.txt; path = Package/DEBIAN/control.txt; sourceTree = "<group>"; };
 		2E22C69416F28ABD0084D49C /* control */ = {isa = PBXFileReference; lastKnownFileType = text; name = control; path = Package/DEBIAN/control; sourceTree = "<group>"; };
@@ -44,14 +45,10 @@
 		2E22C6A216F28ABD0084D49C /* WeeAppBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WeeAppBackground.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/WeeAppBackground.png; sourceTree = "<group>"; };
 		2E22C6A916F28B9F0084D49C /* cddisc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cddisc.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/cddisc.png; sourceTree = "<group>"; };
 		2E22C6AA16F28B9F0084D49C /* cddisc@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cddisc@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/cddisc@2x.png"; sourceTree = "<group>"; };
-		2E22C6AB16F28B9F0084D49C /* grey_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grey_facebook.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/grey_facebook.png; sourceTree = "<group>"; };
-		2E22C6AC16F28B9F0084D49C /* grey_facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "grey_facebook@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/grey_facebook@2x.png"; sourceTree = "<group>"; };
 		2E22C6AD16F28B9F0084D49C /* grey_repeat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grey_repeat.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/grey_repeat.png; sourceTree = "<group>"; };
 		2E22C6AE16F28B9F0084D49C /* grey_repeat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "grey_repeat@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/grey_repeat@2x.png"; sourceTree = "<group>"; };
 		2E22C6AF16F28B9F0084D49C /* grey_shuffle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grey_shuffle.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/grey_shuffle.png; sourceTree = "<group>"; };
 		2E22C6B016F28B9F0084D49C /* grey_shuffle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "grey_shuffle@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/grey_shuffle@2x.png"; sourceTree = "<group>"; };
-		2E22C6B116F28B9F0084D49C /* grey_twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grey_twitter.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/grey_twitter.png; sourceTree = "<group>"; };
-		2E22C6B216F28B9F0084D49C /* grey_twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "grey_twitter@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/grey_twitter@2x.png"; sourceTree = "<group>"; };
 		2E22C6B316F28B9F0084D49C /* white_cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = white_cloud.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/white_cloud.png; sourceTree = "<group>"; };
 		2E22C6B416F28B9F0084D49C /* white_cloud@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "white_cloud@2x.png"; path = "Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/white_cloud@2x.png"; sourceTree = "<group>"; };
 		2E22C6B516F28B9F0084D49C /* white_donate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = white_donate.png; path = Package/System/Library/WeeAppPlugins/NCMusicGestures.bundle/white_donate.png; sourceTree = "<group>"; };
@@ -80,8 +77,11 @@
 		2E22C6D016F2920F0084D49C /* UIView+UIViewExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+UIViewExtensions.m"; sourceTree = "<group>"; };
 		2E22C6D916F2924C0084D49C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		2E22C6DB16F292540084D49C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		2E22C6DD16F2925E0084D49C /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		2E22C6DF16F292680084D49C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2E659067170AD97000F1BDF6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		2E65906B170AD9CF00F1BDF6 /* SBMediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBMediaController.h; sourceTree = "<group>"; };
+		2E659071170ADE2A00F1BDF6 /* SBApplicationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBApplicationController.h; sourceTree = "<group>"; };
+		2EC689D1170ABD3B00B8F9EB /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,11 +89,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E659068170AD97000F1BDF6 /* Foundation.framework in Frameworks */,
+				2EC689D3170ABD4500B8F9EB /* MediaPlayer.framework in Frameworks */,
 				2E22C6E416F292900084D49C /* Social.framework in Frameworks */,
 				2E22C6E316F2928B0084D49C /* QuartzCore.framework in Frameworks */,
-				2E22C6E216F292860084D49C /* MediaPlayer.framework in Frameworks */,
 				2E22C6E116F292810084D49C /* CoreGraphics.framework in Frameworks */,
-				2E22C68D16F28ABD0084D49C /* Foundation.framework in Frameworks */,
 				2E22C68F16F28ABD0084D49C /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,11 +121,11 @@
 		2E22C68B16F28ABD0084D49C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2E659067170AD97000F1BDF6 /* Foundation.framework */,
+				2EC689D1170ABD3B00B8F9EB /* MediaPlayer.framework */,
 				2E22C6DF16F292680084D49C /* CoreGraphics.framework */,
-				2E22C6DD16F2925E0084D49C /* MediaPlayer.framework */,
 				2E22C6DB16F292540084D49C /* QuartzCore.framework */,
 				2E22C6D916F2924C0084D49C /* Social.framework */,
-				2E22C68C16F28ABD0084D49C /* Foundation.framework */,
 				2E22C68E16F28ABD0084D49C /* UIKit.framework */,
 			);
 			name = Frameworks;
@@ -137,6 +137,7 @@
 				2E22C69816F28ABD0084D49C /* NCMusicGesturesController.h */,
 				2E22C69916F28ABD0084D49C /* NCMusicGesturesController.m */,
 				2E22C6A816F28B4D0084D49C /* Custom */,
+				2EC689CE170A932500B8F9EB /* System Headers */,
 				2E22C69116F28ABD0084D49C /* Package */,
 				2E22C69516F28ABD0084D49C /* Supporting Files */,
 			);
@@ -199,14 +200,10 @@
 			children = (
 				2E22C6A916F28B9F0084D49C /* cddisc.png */,
 				2E22C6AA16F28B9F0084D49C /* cddisc@2x.png */,
-				2E22C6AB16F28B9F0084D49C /* grey_facebook.png */,
-				2E22C6AC16F28B9F0084D49C /* grey_facebook@2x.png */,
 				2E22C6AD16F28B9F0084D49C /* grey_repeat.png */,
 				2E22C6AE16F28B9F0084D49C /* grey_repeat@2x.png */,
 				2E22C6AF16F28B9F0084D49C /* grey_shuffle.png */,
 				2E22C6B016F28B9F0084D49C /* grey_shuffle@2x.png */,
-				2E22C6B116F28B9F0084D49C /* grey_twitter.png */,
-				2E22C6B216F28B9F0084D49C /* grey_twitter@2x.png */,
 				2E22C6B316F28B9F0084D49C /* white_cloud.png */,
 				2E22C6B416F28B9F0084D49C /* white_cloud@2x.png */,
 				2E22C6B516F28B9F0084D49C /* white_donate.png */,
@@ -248,6 +245,15 @@
 			name = Custom;
 			sourceTree = "<group>";
 		};
+		2EC689CE170A932500B8F9EB /* System Headers */ = {
+			isa = PBXGroup;
+			children = (
+				2E659071170ADE2A00F1BDF6 /* SBApplicationController.h */,
+				2E65906B170AD9CF00F1BDF6 /* SBMediaController.h */,
+			);
+			name = "System Headers";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -261,6 +267,8 @@
 				2E22C6D316F2920F0084D49C /* StringFormatter.h in Headers */,
 				2E22C6D516F2920F0084D49C /* UISliderCustom.h in Headers */,
 				2E22C6D716F2920F0084D49C /* UIView+UIViewExtensions.h in Headers */,
+				2E65906C170AD9CF00F1BDF6 /* SBMediaController.h in Headers */,
+				2E659072170ADE2A00F1BDF6 /* SBApplicationController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -398,28 +398,29 @@ typedef enum  {
             NSString *songTitle = [[mediaController _nowPlayingInfo] objectForKey:@"title"];
             NSString *songArtist = [[mediaController _nowPlayingInfo] objectForKey:@"artist"];
             
-            UIImage *art;
-            NSData *imageData = [[mediaController _nowPlayingInfo] objectForKey:@"artworkData"];
-            
-            if (imageData){
-                art = [[UIImage alloc] initWithData:imageData];
-            }
-            
             SLComposeViewController *composeVC = [SLComposeViewController
                                                   composeViewControllerForServiceType:serviceType];
             
             NSMutableString *message = [NSMutableString stringWithFormat:@"%@%@",
                                         @"I'm listening to ", songTitle];
             
-            if (songArtist){
+            if (songArtist && ![songArtist isEqualToString:@""]){
                 [message appendFormat:@"%@%@%@", @" by ", songArtist, @" #nowplaying"];
             }
             
             [composeVC setInitialText:message];
             
-            if (art){
-                [composeVC addImage:art];
-                [art release];
+            NSData *imageData = [[mediaController _nowPlayingInfo] objectForKey:@"artworkData"];
+            
+            if (imageData){
+                UIImage *art = [[UIImage alloc] initWithData:imageData];
+                if (art){
+                    [composeVC addImage:art];
+                    NSLog(@"Art is nil");
+                    [art release];
+                }
+            } else {
+                NSLog(@"Image data is nil");
             }
             
             [self presentViewController:composeVC animated:YES completion:nil];

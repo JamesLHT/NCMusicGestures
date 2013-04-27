@@ -18,8 +18,15 @@
 #import <Social/Social.h>
 
 #import "SBMediaController.h"
-#import "SBApplication.h"
 #import "SBApplicationController.h"
+#import "SBUIController.h"
+
+#import <objc/runtime.h>
+#import "CaptainHook/CaptainHook.h"
+
+#define PREFERENCES_PATH @"/User/Library/Preferences/PatSluth.NCMusicGestures.plist"
+
+//#import <Preferences/Preferences.h>
 
 #define ALBUM_ART_ANIM_TIME 0.5
 #define ALBUM_ART_PADDING 10
@@ -100,7 +107,16 @@ typedef enum  {
 @property (retain, nonatomic) UIButton *facebookButton;
 @property (retain, nonatomic) UIButton *donateButton;
 
+@property (retain, nonatomic) UIPickerView *equalizerPicker;
+@property (retain, nonatomic) UITapGestureRecognizer *equalizerPickerTap;
+
+@property (readwrite, nonatomic) BOOL showDonationButton;
+@property (readwrite, nonatomic) BOOL showiCloud;
+@property (readwrite, nonatomic) CGFloat scrollViewOffsetToChangeSong;
+
 @end
+
+static NCMusicGesturesView *staticSelf;
 
 @implementation NCMusicGesturesView
 
@@ -108,6 +124,11 @@ typedef enum  {
 {
     self = [super init];
     if (self) {
+        
+        staticSelf = self;
+        
+        [self updateToPreferences];
+        
         self.view.backgroundColor = [UIColor clearColor];
         self.view.clipsToBounds = YES;
         
@@ -136,6 +157,12 @@ typedef enum  {
 
 - (void)onViewDidAppear
 {
+    if (!staticSelf){
+        staticSelf = self;
+    }
+    
+    [self updateToPreferences];
+    
     self.background.frame = self.view.frame;
     [UIView setOrigin:self.background newOrigin:CGPointZero];
     
@@ -151,11 +178,73 @@ typedef enum  {
     
     [self updateShuffleButtonToCurrentState];
     [self updateRepeatButtonToCurrentState];
+    
+    [self oniPodItemChanged];
 }
 
 - (void)onViewDidDissappear
 {
     [self stopUpdateSongPlaybackTimeTimer];
+}
+
+#pragma mark Preferences
+
+- (void)updateToPreferences
+{
+    NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:PREFERENCES_PATH];
+    
+    if (prefs){
+        
+        if (prefs[@"showDonationButton"]){
+            self.showDonationButton = [prefs[@"showDonationButton"] boolValue];
+        } else {
+            self.showDonationButton = YES;
+        }
+        
+        if (prefs[@"showIcloudIndicator"]){
+            self.showiCloud = [prefs[@"showIcloudIndicator"] boolValue];
+        } else {
+            self.showiCloud = YES;
+        }
+        
+        if (prefs[@"showIcloudIndicator"]){
+            self.scrollViewOffsetToChangeSong = [prefs[@"scrollViewOffsetToChangeTrack"] floatValue];
+        } else {
+            self.scrollViewOffsetToChangeSong = 40;
+        }
+        
+    } else {
+        self.showiCloud = YES;
+        self.scrollViewOffsetToChangeSong = 40;
+    }
+}
+
+static void ncMusicGesturesPrefsChanged(CFNotificationCenterRef center,
+                                   void *observer,
+                                   CFStringRef name,
+                                   const void *object,
+                                   CFDictionaryRef userInfo)
+{
+    if (staticSelf){
+        [staticSelf updateToPreferences];
+    }
+}
+
+CHConstructor
+{
+    @autoreleasepool
+    {
+        CFNotificationCenterRef darwin = CFNotificationCenterGetDarwinNotifyCenter();
+         CFNotificationCenterAddObserver(darwin,
+                                         nil,
+                                         ncMusicGesturesPrefsChanged,
+                                         CFSTR("PatSluth.NCMusicGestures-preferencesChanged"),
+                                         nil,
+                                         CFNotificationSuspensionBehaviorCoalesce);
+        
+        // Load preferences
+        ncMusicGesturesPrefsChanged(nil, nil, nil, nil, nil);
+    }
 }
 
 
@@ -176,10 +265,16 @@ typedef enum  {
         SBApplication *currentApp = [mediaController nowPlayingApplication];
         
         if (currentApp){
-            [[objc_getClass("SBUIController") sharedInstance] activateApplicationFromSwitcher:currentApp];
-        } else {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"music://"]];
+            SBUIController *controller = [objc_getClass("SBUIController") sharedInstance];
+            if (controller){
+                if ([controller respondsToSelector:@selector(activateApplicationFromSwitcher:)]){
+                    [controller activateApplicationFromSwitcher:currentApp];
+                    return;
+                }
+            }
         }
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"music://"]];
     }
 }
 
@@ -211,15 +306,20 @@ typedef enum  {
 
     self.albumIsOniCloud.hidden = YES;
     
-    if ([mediaController trackIsBeingPlayedByMusicApp]){
-        MPMusicPlayerController *ipod = [MPMusicPlayerController iPodMusicPlayer];
-        
-        if (ipod){
-            MPMediaItem *currentItem = ipod.nowPlayingItem;
+    if (self.showiCloud){
+        if ([mediaController trackIsBeingPlayedByMusicApp]){
+            NSNumber *numberID = [[NSNumber alloc] initWithUnsignedLongLong:mediaController.trackUniqueIdentifier];
             
-            if (currentItem){
-                self.albumIsOniCloud.hidden = ![[currentItem valueForProperty:MPMediaItemPropertyIsCloudItem]
-                                                boolValue];
+            MPMediaPropertyPredicate *predicate = [MPMediaPropertyPredicate predicateWithValue:numberID
+                                                                                   forProperty:MPMediaItemPropertyPersistentID];
+            [numberID release];
+            
+            MPMediaQuery *query = [[MPMediaQuery alloc] init];
+            [query addFilterPredicate:predicate];
+            NSArray *items = [query items];
+            
+            for (MPMediaItem *item in items){
+                self.albumIsOniCloud.hidden = ![[item valueForProperty:MPMediaItemPropertyIsCloudItem] boolValue];
             }
         }
     }
@@ -235,6 +335,34 @@ typedef enum  {
     }
 }
 
+- (void)onSongSkipped
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSNumber *numberOfSkips = [defaults objectForKey:@"NCMusicGesturesNumberOfSkips"];
+    
+    if (numberOfSkips){
+        NSInteger newNumberOfSkips = [numberOfSkips integerValue] + 1;
+        numberOfSkips = [NSNumber numberWithInteger:newNumberOfSkips];
+    } else {
+        numberOfSkips = [NSNumber numberWithInteger:1];
+    }
+    
+    NSLog(@"%@", numberOfSkips);
+    
+    if (([numberOfSkips integerValue] % 200) == 0){
+        NSString *message = [NSString stringWithFormat:@"%@%@%@",
+                             @"You have skipped ",
+                             numberOfSkips,
+                             @" songs using NCMusicGestures. Please donate if you like this app!"];
+        
+        [self showDonateAlertWithMessage:message];
+    }
+    
+    [defaults setObject:numberOfSkips forKey:@"NCMusicGesturesNumberOfSkips"];
+    [defaults synchronize];
+}
+
 - (void)setAlbumArtToNewImage:(UIImage *)image
                      animated:(BOOL)animated
                halfCompletion:(void (^)())halfCompletion
@@ -246,8 +374,7 @@ typedef enum  {
 
 - (void)updateBackgroundImage:(UIImage *)image
 {
-    //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL useAlbumArt = NO;// [defaults boolForKey:@"useAlbumArtAsBackground"];
+    BOOL useAlbumArt = NO;
     
     if (!self.background){
         self.background = [[UIImageView alloc] initWithFrame:self.view.frame];
@@ -381,7 +508,91 @@ typedef enum  {
 
 - (void)twitterButtonClicked
 {
+    // Load VPNPreferences
+	/*CFURLRef url = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, CFSTR("/System/Library/PreferenceBundles/MusicSettings.bundle"), kCFURLPOSIXPathStyle, true);
+    NSLog(@"%@", url);
+	CFBundleRef bundle = CFBundleCreate(kCFAllocatorDefault, url);
+	CFBundleLoadExecutable(bundle);
+    
+    CFDictionaryRef xxx = CFBundleCopyInfoDictionaryInDirectory(url);
+    CFDictionaryApplyFunction(xxx, printKeys, NULL);
+	CFRelease(url);*/
+    
+    /*NSBundle *musicBundle = [NSBundle bundleWithPath:@"/System/Library/PreferenceBundles/MusicSettings.bundle"];
+    [musicBundle load];
+    
+    NSString *path= [musicBundle pathForResource:@"Music" ofType:@"plist"];
+    
+    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:path];
+    
+    if(fileExists){
+        
+        NSDictionary *pListRoot = [NSDictionary dictionaryWithContentsOfFile:path];
+        NSDictionary *pListItems = [pListRoot objectForKey:@"items"];
+        
+        NSArray *plistItemArray = [pListItems allKeys];
+        
+        NSLog(@"%@", plistItemArray);
+        
+    }
+    
+    return;
+    
+    if (!self.equalizerPicker){
+        self.equalizerPicker = [[UIPickerView alloc] init];
+        self.equalizerPicker.dataSource = self;
+        self.equalizerPicker.delegate = self;
+        self.equalizerPicker.showsSelectionIndicator = YES;
+    }
+    
+    if (!self.equalizerPickerTap){
+        self.equalizerPickerTap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(selectEqualizer)];
+        [self.equalizerPicker addGestureRecognizer:self.equalizerPickerTap];
+    }
+    
+    UIWindow *window = [[self view] window];
+    
+    self.equalizerPicker.frame = CGRectMake(0, window.bounds.size.height - 200, window.bounds.size.width, 216.0);
+    
+    [window addSubview:self.equalizerPicker];
+    [window makeKeyAndVisible];
+    
+    return;*/
     [self shareCurentSongWithServiceType:SLServiceTypeTwitter];
+}
+
+- (void)selectEqualizer
+{
+    if (self.equalizerPicker){
+        [self.equalizerPicker removeFromSuperview];
+    }
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return 10;
+}
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
+{
+    return self.view.bounds.size.width;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return @"Select Equalizer";
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    
 }
 
 - (void)facebookButtonClicked
@@ -391,19 +602,11 @@ typedef enum  {
 
 - (void)shareCurentSongWithServiceType:(NSString *)serviceType
 {
-    if ([SLComposeViewController isAvailableForServiceType:serviceType])
-    {
+    if ([SLComposeViewController isAvailableForServiceType:serviceType]){
         if ([mediaController _nowPlayingInfo]){
             
             NSString *songTitle = [[mediaController _nowPlayingInfo] objectForKey:@"title"];
             NSString *songArtist = [[mediaController _nowPlayingInfo] objectForKey:@"artist"];
-            
-            UIImage *art;
-            NSData *imageData = [[mediaController _nowPlayingInfo] objectForKey:@"artworkData"];
-            
-            if (imageData){
-                art = [[UIImage alloc] initWithData:imageData];
-            }
             
             SLComposeViewController *composeVC = [SLComposeViewController
                                                   composeViewControllerForServiceType:serviceType];
@@ -411,19 +614,27 @@ typedef enum  {
             NSMutableString *message = [NSMutableString stringWithFormat:@"%@%@",
                                         @"I'm listening to ", songTitle];
             
-            if (songArtist){
+            if (songArtist && ![songArtist isEqualToString:@""]){
                 [message appendFormat:@"%@%@%@", @" by ", songArtist, @" #nowplaying"];
             }
             
             [composeVC setInitialText:message];
             
-            if (art){
-                [composeVC addImage:art];
-                [art release];
+            NSData *imageData = [[mediaController _nowPlayingInfo] objectForKey:@"artworkData"];
+            
+            if (imageData){
+                UIImage *art = [[UIImage alloc] initWithData:imageData];
+                if (art){
+                    [composeVC addImage:art];
+                    NSLog(@"Art is nil");
+                    [art release];
+                }
+            } else {
+                NSLog(@"Image data is nil");
             }
             
             [self presentViewController:composeVC animated:YES completion:nil];
-        
+            
         } else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Item Playing"
                                                             message:@"Play a song and try again"
@@ -433,13 +644,24 @@ typedef enum  {
             [alert show];
             [alert release];
         }
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Settings Not Configured"
+                                                        message:@"Login in settings app and try again"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [alert release];
     }
 }
 
 - (void)donateButtonClicked
 {
-    NSString *message = @"Please support if you like this app!";
-    
+    [self showDonateAlertWithMessage:@"Please support if you\nlike this app!"];
+}
+
+- (void)showDonateAlertWithMessage:(NSString *)message
+{
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Donate"
                                                     message:message
                                                    delegate:self
@@ -464,18 +686,18 @@ typedef enum  {
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (scrollView == self.baseScrollView){
+    if ([scrollView isEqual:self.baseScrollView]){
         [self baseScrollViewDidScroll];
-    } else if (scrollView == self.headerScrollView) {
+    } else if ([scrollView isEqual:self.headerScrollView]) {
         [self headerScrollViewDidScroll];
     }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    if (scrollView == self.baseScrollView){
+    if ([scrollView isEqual:self.baseScrollView]){
         [self baseScrollViewDidEndDecelerating];
-    } else if (scrollView == self.headerScrollView) {
+    } else if ([scrollView isEqual:self.headerScrollView]) {
         [self headerScrollViewDidEndDecelerating];
     }
 }
@@ -484,12 +706,9 @@ typedef enum  {
 {
     if (!self.baseScrollView.isDecelerating){
         
-        //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSInteger contentOffsetToChangeSong = 40;//[defaults integerForKey:@"contentOffsetToSwitchSong"];
-        
-        if (self.baseScrollView.contentOffset.x >= contentOffsetToChangeSong) { //in skip position
+        if (self.baseScrollView.contentOffset.x >= self.scrollViewOffsetToChangeSong) { //in skip position
             self.ipodActionToPerformOnScrollViewDeceleration = SkipToNext;
-        } else if (self.baseScrollView.contentOffset.x <= -contentOffsetToChangeSong ) { //in skip position
+        } else if (self.baseScrollView.contentOffset.x <= -self.scrollViewOffsetToChangeSong ) { //in skip position
             self.ipodActionToPerformOnScrollViewDeceleration = SkipToPrevious;
         } else {
             self.ipodActionToPerformOnScrollViewDeceleration = None;
@@ -507,12 +726,14 @@ typedef enum  {
     switch (self.ipodActionToPerformOnScrollViewDeceleration) {
         case SkipToNext:
             
+            [self onSongSkipped];
             [mediaController changeTrack:1];
             
             break;
             
         case SkipToPrevious:
             
+            [self onSongSkipped];
             [mediaController changeTrack:-1];
             
             break;
@@ -601,6 +822,7 @@ typedef enum  {
     [UIView setSize:self.albumArt newSize:CGSizeMake(ALBUM_ART_SIZE, ALBUM_ART_SIZE)];
     [UIView setOriginX:self.albumArt newOrigin:ALBUM_ART_PADDING];
     
+    //icloud icon
     if (!self.albumIsOniCloud){
         self.albumIsOniCloud = [[UIImageView alloc] initWithImage:IMAGE_CLOUD];
         self.albumIsOniCloud.hidden = YES;
@@ -804,7 +1026,13 @@ typedef enum  {
         self.shuffleButton = [self createHeaderButtonWithImage:IMAGE_SHUFFLE_ON];
     }
     
-    CGFloat x = (self.headerScrollView.frame.size.width / 5);
+    NSInteger numberOfButtons = 5;
+    
+    if (!self.showDonationButton){
+        numberOfButtons = 4;
+    }
+    
+    CGFloat x = (self.headerScrollView.frame.size.width / numberOfButtons);
     CGFloat center = (x * 0) + (x / 2);
     
     self.shuffleButton.center = CGPointMake(center, self.headerScrollView.frame.size.height / 2);
@@ -820,7 +1048,13 @@ typedef enum  {
         self.repeatButton = [self createHeaderButtonWithImage:IMAGE_REPEAT_ALL];
     }
     
-    CGFloat x = (self.headerScrollView.frame.size.width / 5);
+    NSInteger numberOfButtons = 5;
+    
+    if (!self.showDonationButton){
+        numberOfButtons = 4;
+    }
+    
+    CGFloat x = (self.headerScrollView.frame.size.width / numberOfButtons);
     CGFloat center = (x * 1) + (x / 2);
     
     self.repeatButton.center = CGPointMake(center, self.headerScrollView.frame.size.height / 2);
@@ -838,7 +1072,13 @@ typedef enum  {
                      forControlEvents:UIControlEventTouchUpInside];
     }
     
-    CGFloat x = (self.headerScrollView.frame.size.width / 5);
+    NSInteger numberOfButtons = 5;
+    
+    if (!self.showDonationButton){
+        numberOfButtons = 4;
+    }
+    
+    CGFloat x = (self.headerScrollView.frame.size.width / numberOfButtons);
     CGFloat center = (x * 2) + (x / 2);
     
     self.twitterButton.center = CGPointMake(center, self.headerScrollView.frame.size.height / 2);
@@ -852,7 +1092,13 @@ typedef enum  {
                       forControlEvents:UIControlEventTouchUpInside];
     }
     
-    CGFloat x = (self.headerScrollView.frame.size.width / 5);
+    NSInteger numberOfButtons = 5;
+    
+    if (!self.showDonationButton){
+        numberOfButtons = 4;
+    }
+    
+    CGFloat x = (self.headerScrollView.frame.size.width / numberOfButtons);
     CGFloat center = (x * 3) + (x / 2);
     
     self.facebookButton.center = CGPointMake(center, self.headerScrollView.frame.size.height / 2);
@@ -860,16 +1106,26 @@ typedef enum  {
 
 - (void)setupDonateButton
 {
-    if (!self.donateButton){
-        self.donateButton = [self createHeaderButtonWithImage:IMAGE_DONATE];
-        [self.donateButton addTarget:self action:@selector(donateButtonClicked)
-                    forControlEvents:UIControlEventTouchUpInside];
+    if (self.showDonationButton){
+        if (!self.donateButton){
+            self.donateButton = [self createHeaderButtonWithImage:IMAGE_DONATE];
+            [self.donateButton addTarget:self action:@selector(donateButtonClicked)
+                        forControlEvents:UIControlEventTouchUpInside];
+        }
+        
+        NSInteger numberOfButtons = 5;
+        
+        CGFloat x = (self.headerScrollView.frame.size.width / numberOfButtons);
+        CGFloat center = (x * 4) + (x / 2);
+        
+        self.donateButton.center = CGPointMake(center, self.headerScrollView.frame.size.height / 2);
+    } else {
+        if (self.donateButton){
+            [self.donateButton removeFromSuperview];
+            [self.donateButton release];
+            self.donateButton = nil;
+        }
     }
-    
-    CGFloat x = (self.headerScrollView.frame.size.width / 5);
-    CGFloat center = (x * 4) + (x / 2);
-    
-    self.donateButton.center = CGPointMake(center, self.headerScrollView.frame.size.height / 2);
 }
 
 - (UIButton *)createHeaderButtonWithImage:(UIImage *)image
@@ -912,6 +1168,9 @@ typedef enum  {
 
 - (void)dealloc
 {
+    [staticSelf release];
+    staticSelf = nil;
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:@"SBMediaNowPlayingChangedNotification"
                                                   object:mediaController];

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>entry</key>
+	<dict>
+		<key>cell</key>
+		<string>PSLinkCell</string>
+		<key>icon</key>
+		<string>NCMusicGesturesIcon.png</string>
+		<key>label</key>
+		<string>NCMusicGestures</string>
+	</dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>PatSluth.NCMusicGestures</string>
+			<key>key</key>
+			<string>showDonationButton</string>
+			<key>label</key>
+			<string>Show Donation Button</string>
+			<key>PostNotification</key>
+			<string>PatSluth.NCMusicGestures-preferencesChanged</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>PatSluth.NCMusicGestures</string>
+			<key>key</key>
+			<string>showIcloudIndicator</string>
+			<key>label</key>
+			<string>iCloud Indicator</string>
+			<key>PostNotification</key>
+			<string>PatSluth.NCMusicGestures-preferencesChanged</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>isStaticText</key>
+			<true/>
+			<key>label</key>
+			<string>Scroll Sensitivity To Change Track</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<integer>40</integer>
+			<key>defaults</key>
+			<string>PatSluth.NCMusicGestures</string>
+			<key>key</key>
+			<string>scrollViewOffsetToChangeTrack</string>
+			<key>min</key>
+			<integer>20</integer>
+			<key>max</key>
+			<integer>100</integer>
+			<key>showValue</key>
+			<false/>
+			<key>PostNotification</key>
+			<string>PatSluth.NCMusicGestures-preferencesChanged</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>When slider is all the way to the left, it is super sensitive, and all the way to the right is not sensitive</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>© 2013 Pat Sluth</string>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>NCMusicGestures</string>
+</dict>
+</plist>

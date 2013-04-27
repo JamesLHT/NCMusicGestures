@@ -14,7 +14,7 @@
 		2E22C6C716F292080084D49C /* MarqueeLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E22C6C516F292080084D49C /* MarqueeLabel.h */; };
 		2E22C6C816F292080084D49C /* MarqueeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E22C6C616F292080084D49C /* MarqueeLabel.m */; };
 		2E22C6D116F2920F0084D49C /* NCMusicGesturesView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E22C6C916F2920F0084D49C /* NCMusicGesturesView.h */; };
-		2E22C6D216F2920F0084D49C /* NCMusicGesturesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E22C6CA16F2920F0084D49C /* NCMusicGesturesView.m */; };
+		2E22C6D216F2920F0084D49C /* NCMusicGesturesView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2E22C6CA16F2920F0084D49C /* NCMusicGesturesView.mm */; };
 		2E22C6D316F2920F0084D49C /* StringFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E22C6CB16F2920F0084D49C /* StringFormatter.h */; };
 		2E22C6D416F2920F0084D49C /* StringFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E22C6CC16F2920F0084D49C /* StringFormatter.m */; };
 		2E22C6D516F2920F0084D49C /* UISliderCustom.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E22C6CD16F2920F0084D49C /* UISliderCustom.h */; };
@@ -22,12 +22,12 @@
 		2E22C6D716F2920F0084D49C /* UIView+UIViewExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E22C6CF16F2920F0084D49C /* UIView+UIViewExtensions.h */; };
 		2E22C6D816F2920F0084D49C /* UIView+UIViewExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E22C6D016F2920F0084D49C /* UIView+UIViewExtensions.m */; };
 		2E22C6E116F292810084D49C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E22C6DF16F292680084D49C /* CoreGraphics.framework */; };
-		2E22C6E316F2928B0084D49C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E22C6DB16F292540084D49C /* QuartzCore.framework */; };
 		2E22C6E416F292900084D49C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E22C6D916F2924C0084D49C /* Social.framework */; };
 		2E659068170AD97000F1BDF6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E659067170AD97000F1BDF6 /* Foundation.framework */; };
-		2E65906C170AD9CF00F1BDF6 /* SBMediaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E65906B170AD9CF00F1BDF6 /* SBMediaController.h */; };
-		2E659072170ADE2A00F1BDF6 /* SBApplicationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E659071170ADE2A00F1BDF6 /* SBApplicationController.h */; };
 		2EC689D3170ABD4500B8F9EB /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EC689D1170ABD3B00B8F9EB /* MediaPlayer.framework */; };
+		2EFF4AEE172C507800A3F8FA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EFF4AEC172C506200A3F8FA /* QuartzCore.framework */; };
+		2EFF4AF3172C516700A3F8FA /* SBMediaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EFF4AF2172C516700A3F8FA /* SBMediaController.h */; };
+		2EFF4B35172C5C3000A3F8FA /* SBApplicationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EFF4B34172C5C3000A3F8FA /* SBApplicationController.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,7 +68,7 @@
 		2E22C6C516F292080084D49C /* MarqueeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarqueeLabel.h; sourceTree = "<group>"; };
 		2E22C6C616F292080084D49C /* MarqueeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarqueeLabel.m; sourceTree = "<group>"; };
 		2E22C6C916F2920F0084D49C /* NCMusicGesturesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NCMusicGesturesView.h; sourceTree = "<group>"; };
-		2E22C6CA16F2920F0084D49C /* NCMusicGesturesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCMusicGesturesView.m; sourceTree = "<group>"; };
+		2E22C6CA16F2920F0084D49C /* NCMusicGesturesView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NCMusicGesturesView.mm; sourceTree = "<group>"; };
 		2E22C6CB16F2920F0084D49C /* StringFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringFormatter.h; sourceTree = "<group>"; };
 		2E22C6CC16F2920F0084D49C /* StringFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringFormatter.m; sourceTree = "<group>"; };
 		2E22C6CD16F2920F0084D49C /* UISliderCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISliderCustom.h; sourceTree = "<group>"; };
@@ -76,12 +76,15 @@
 		2E22C6CF16F2920F0084D49C /* UIView+UIViewExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+UIViewExtensions.h"; sourceTree = "<group>"; };
 		2E22C6D016F2920F0084D49C /* UIView+UIViewExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+UIViewExtensions.m"; sourceTree = "<group>"; };
 		2E22C6D916F2924C0084D49C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		2E22C6DB16F292540084D49C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2E22C6DF16F292680084D49C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2E39F67E1727476C005B9959 /* NCMusicGestures.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NCMusicGestures.plist; sourceTree = "<group>"; };
+		2E39F67F1727476C005B9959 /* NCMusicGesturesIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NCMusicGesturesIcon.png; sourceTree = "<group>"; };
+		2E39F6801727476C005B9959 /* NCMusicGesturesIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NCMusicGesturesIcon@2x.png"; sourceTree = "<group>"; };
 		2E659067170AD97000F1BDF6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		2E65906B170AD9CF00F1BDF6 /* SBMediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBMediaController.h; sourceTree = "<group>"; };
-		2E659071170ADE2A00F1BDF6 /* SBApplicationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBApplicationController.h; sourceTree = "<group>"; };
 		2EC689D1170ABD3B00B8F9EB /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		2EFF4AEC172C506200A3F8FA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		2EFF4AF2172C516700A3F8FA /* SBMediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBMediaController.h; sourceTree = "<group>"; };
+		2EFF4B34172C5C3000A3F8FA /* SBApplicationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBApplicationController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,10 +92,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EFF4AEE172C507800A3F8FA /* QuartzCore.framework in Frameworks */,
 				2E659068170AD97000F1BDF6 /* Foundation.framework in Frameworks */,
 				2EC689D3170ABD4500B8F9EB /* MediaPlayer.framework in Frameworks */,
 				2E22C6E416F292900084D49C /* Social.framework in Frameworks */,
-				2E22C6E316F2928B0084D49C /* QuartzCore.framework in Frameworks */,
 				2E22C6E116F292810084D49C /* CoreGraphics.framework in Frameworks */,
 				2E22C68F16F28ABD0084D49C /* UIKit.framework in Frameworks */,
 			);
@@ -121,12 +124,12 @@
 		2E22C68B16F28ABD0084D49C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2E22C68E16F28ABD0084D49C /* UIKit.framework */,
+				2EFF4AEC172C506200A3F8FA /* QuartzCore.framework */,
 				2E659067170AD97000F1BDF6 /* Foundation.framework */,
 				2EC689D1170ABD3B00B8F9EB /* MediaPlayer.framework */,
 				2E22C6DF16F292680084D49C /* CoreGraphics.framework */,
-				2E22C6DB16F292540084D49C /* QuartzCore.framework */,
 				2E22C6D916F2924C0084D49C /* Social.framework */,
-				2E22C68E16F28ABD0084D49C /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -137,7 +140,7 @@
 				2E22C69816F28ABD0084D49C /* NCMusicGesturesController.h */,
 				2E22C69916F28ABD0084D49C /* NCMusicGesturesController.m */,
 				2E22C6A816F28B4D0084D49C /* Custom */,
-				2EC689CE170A932500B8F9EB /* System Headers */,
+				2EFF4AF1172C50E300A3F8FA /* Headers */,
 				2E22C69116F28ABD0084D49C /* Package */,
 				2E22C69516F28ABD0084D49C /* Supporting Files */,
 			);
@@ -148,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				2E22C69216F28ABD0084D49C /* DEBIAN */,
+				2E39F67B1727476C005B9959 /* Library */,
 				2E22C69B16F28ABD0084D49C /* System */,
 			);
 			name = Package;
@@ -230,7 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				2E22C6C916F2920F0084D49C /* NCMusicGesturesView.h */,
-				2E22C6CA16F2920F0084D49C /* NCMusicGesturesView.m */,
+				2E22C6CA16F2920F0084D49C /* NCMusicGesturesView.mm */,
 				2E22C6CB16F2920F0084D49C /* StringFormatter.h */,
 				2E22C6CC16F2920F0084D49C /* StringFormatter.m */,
 				2E22C6CD16F2920F0084D49C /* UISliderCustom.h */,
@@ -245,13 +249,40 @@
 			name = Custom;
 			sourceTree = "<group>";
 		};
-		2EC689CE170A932500B8F9EB /* System Headers */ = {
+		2E39F67B1727476C005B9959 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				2E659071170ADE2A00F1BDF6 /* SBApplicationController.h */,
-				2E65906B170AD9CF00F1BDF6 /* SBMediaController.h */,
+				2E39F67C1727476C005B9959 /* PreferenceLoader */,
 			);
-			name = "System Headers";
+			name = Library;
+			path = Package/Library;
+			sourceTree = "<group>";
+		};
+		2E39F67C1727476C005B9959 /* PreferenceLoader */ = {
+			isa = PBXGroup;
+			children = (
+				2E39F67D1727476C005B9959 /* Preferences */,
+			);
+			path = PreferenceLoader;
+			sourceTree = "<group>";
+		};
+		2E39F67D1727476C005B9959 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				2E39F67E1727476C005B9959 /* NCMusicGestures.plist */,
+				2E39F67F1727476C005B9959 /* NCMusicGesturesIcon.png */,
+				2E39F6801727476C005B9959 /* NCMusicGesturesIcon@2x.png */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
+		2EFF4AF1172C50E300A3F8FA /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				2EFF4B34172C5C3000A3F8FA /* SBApplicationController.h */,
+				2EFF4AF2172C516700A3F8FA /* SBMediaController.h */,
+			);
+			name = Headers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,8 +298,8 @@
 				2E22C6D316F2920F0084D49C /* StringFormatter.h in Headers */,
 				2E22C6D516F2920F0084D49C /* UISliderCustom.h in Headers */,
 				2E22C6D716F2920F0084D49C /* UIView+UIViewExtensions.h in Headers */,
-				2E65906C170AD9CF00F1BDF6 /* SBMediaController.h in Headers */,
-				2E659072170ADE2A00F1BDF6 /* SBApplicationController.h in Headers */,
+				2EFF4AF3172C516700A3F8FA /* SBMediaController.h in Headers */,
+				2EFF4B35172C5C3000A3F8FA /* SBApplicationController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,7 +373,7 @@
 				2E22C69A16F28ABD0084D49C /* NCMusicGesturesController.m in Sources */,
 				2E22C6C416F28BCC0084D49C /* UIImage+UIImageExtensions.m in Sources */,
 				2E22C6C816F292080084D49C /* MarqueeLabel.m in Sources */,
-				2E22C6D216F2920F0084D49C /* NCMusicGesturesView.m in Sources */,
+				2E22C6D216F2920F0084D49C /* NCMusicGesturesView.mm in Sources */,
 				2E22C6D416F2920F0084D49C /* StringFormatter.m in Sources */,
 				2E22C6D616F2920F0084D49C /* UISliderCustom.m in Sources */,
 				2E22C6D816F2920F0084D49C /* UIView+UIViewExtensions.m in Sources */,
@@ -414,13 +445,19 @@
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_EXTENSION = "";
 				EXECUTABLE_NAME = NCMusicGestures;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/NCMusicGestures\"",
+					"\"$(SRCROOT)\"",
+					/opt/iOSOpenDev/frameworks,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NCMusicGestures/NCMusicGestures-Prefix.pch";
 				INSTALL_PATH = /System/Library/WeeAppPlugins/NCMusicGestures.bundle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				iOSOpenDevBuildPackageOnAnyBuild = NO;
 				iOSOpenDevCopyOnBuild = NO;
-				iOSOpenDevDevice = 192.168.0.14;
+				iOSOpenDevDevice = 192.168.0.16;
 				iOSOpenDevInstallOnAnyBuild = NO;
 				iOSOpenDevInstallOnProfiling = YES;
 				iOSOpenDevRespringOnInstall = YES;
@@ -436,13 +473,19 @@
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_EXTENSION = "";
 				EXECUTABLE_NAME = NCMusicGestures;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/NCMusicGestures\"",
+					"\"$(SRCROOT)\"",
+					/opt/iOSOpenDev/frameworks,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NCMusicGestures/NCMusicGestures-Prefix.pch";
 				INSTALL_PATH = /System/Library/WeeAppPlugins/NCMusicGestures.bundle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				iOSOpenDevBuildPackageOnAnyBuild = NO;
 				iOSOpenDevCopyOnBuild = NO;
-				iOSOpenDevDevice = 192.168.0.14;
+				iOSOpenDevDevice = 192.168.0.16;
 				iOSOpenDevInstallOnAnyBuild = NO;
 				iOSOpenDevInstallOnProfiling = YES;
 				iOSOpenDevRespringOnInstall = YES;

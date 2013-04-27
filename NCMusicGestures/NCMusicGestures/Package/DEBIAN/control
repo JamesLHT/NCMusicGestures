@@ -3,7 +3,7 @@ Name: NCMusicGestures
 Version: 1.0-1
 Description: 
 Section: Addons (NotificationCenter)
-Depends: firmware (>= 5.0)
+Depends: firmware (>= 6.1)
 Conflicts: 
 Replaces: 
 Priority: optional

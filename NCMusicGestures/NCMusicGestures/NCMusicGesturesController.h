@@ -25,6 +25,4 @@
 
 - (UIView *)view;
 
-- (void)updateStateToNowPlayingItemIsNull:(BOOL)exists;
-
 @end

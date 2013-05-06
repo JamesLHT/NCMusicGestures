@@ -46,7 +46,6 @@
     CGSize mainSize = self.view.superview.frame.size;
     _view.frame = CGRectMake(0, 0, mainSize.width, TOTAL_VIEW_HEIGHT);
     
-    
     if (!self.musicGestures){
         self.musicGestures = [[NCMusicGesturesView alloc] init];
         [_view addSubview:self.musicGestures.view];
@@ -87,19 +86,6 @@
     //} else {
     //    return 20;
     //}
-}
-
-- (void)updateStateToNowPlayingItemIsNull:(BOOL)exists
-{
-    /*self.nowPlayingItem = exists;
-    
-    if (!_view){
-        return;
-    }
-    
-    float height = [self viewHeight];
-    
-    [UIView setSizeY:_view newSize:height];*/
 }
 
 @end

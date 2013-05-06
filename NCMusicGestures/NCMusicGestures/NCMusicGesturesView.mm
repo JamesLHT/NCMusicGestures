@@ -16,6 +16,8 @@
 #import "MarqueeLabel.h"
 
 #import <Social/Social.h>
+#import <MediaPlayer/MediaPlayer.h>
+#import "Flurry.h"
 
 #import "SBMediaController.h"
 #import "SBApplicationController.h"
@@ -59,7 +61,6 @@
 #define IMAGE_DONATE [UIImage imageFromBundleWithName:@"white_donate.png"]
 
 @interface NCMusicGesturesView(){
-    MPMusicPlayerController* _ipod;
     SBMediaController *mediaController;
 }
 
@@ -73,7 +74,6 @@ typedef enum  {
     SeekForward,
     SeekBackwards
 } IPOD_ACTION_TO_PERFORM;
-
 
 //base
 @property (readwrite, nonatomic) IPOD_ACTION_TO_PERFORM ipodActionToPerformOnScrollViewDeceleration;
@@ -113,6 +113,7 @@ typedef enum  {
 @property (readwrite, nonatomic) BOOL showDonationButton;
 @property (readwrite, nonatomic) BOOL showiCloud;
 @property (readwrite, nonatomic) CGFloat scrollViewOffsetToChangeSong;
+@property (retain, nonatomic) NSString *sharingHashtag;
 
 @end
 
@@ -151,6 +152,9 @@ static NCMusicGesturesView *staticSelf;
         [self setupBase];
         //header
         [self setupHeader];
+        
+        NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+        [Flurry startSession:@"896HXTFN3VJF62RDPQ92"];
     }
     return self;
 }
@@ -180,11 +184,18 @@ static NCMusicGesturesView *staticSelf;
     [self updateRepeatButtonToCurrentState];
     
     [self oniPodItemChanged];
+    
+    //[Flurry logEvent:@"Did Appear"];
 }
 
 - (void)onViewDidDissappear
 {
     [self stopUpdateSongPlaybackTimeTimer];
+}
+
+static void uncaughtExceptionHandler(NSException *exception)
+{
+    [Flurry logError:@"Uncaught" message:@"Crash!" exception:exception];
 }
 
 #pragma mark Preferences
@@ -193,8 +204,9 @@ static NCMusicGesturesView *staticSelf;
 {
     NSDictionary *prefs = [[NSDictionary alloc] initWithContentsOfFile:PREFERENCES_PATH];
     
+    //NSLog(@"%@", prefs);
+    
     if (prefs){
-        
         if (prefs[@"showDonationButton"]){
             self.showDonationButton = [prefs[@"showDonationButton"] boolValue];
         } else {
@@ -213,9 +225,16 @@ static NCMusicGesturesView *staticSelf;
             self.scrollViewOffsetToChangeSong = 40;
         }
         
+        if (prefs[@"sharingHashtag"]){
+            self.sharingHashtag = prefs[@"sharingHashtag"];
+        } else {
+            self.sharingHashtag = @"NowPlaying";
+        }
     } else {
+        self.showDonationButton = YES;
         self.showiCloud = YES;
         self.scrollViewOffsetToChangeSong = 40;
+        self.sharingHashtag = @"NowPlaying";
     }
 }
 
@@ -347,8 +366,6 @@ CHConstructor
     } else {
         numberOfSkips = [NSNumber numberWithInteger:1];
     }
-    
-    NSLog(@"%@", numberOfSkips);
     
     if (([numberOfSkips integerValue] % 200) == 0){
         NSString *message = [NSString stringWithFormat:@"%@%@%@",
@@ -614,8 +631,14 @@ CHConstructor
             NSMutableString *message = [NSMutableString stringWithFormat:@"%@%@",
                                         @"I'm listening to ", songTitle];
             
+            NSString *shareString = @"";
+            
+            if (self.sharingHashtag && ![self.sharingHashtag isEqualToString:@""]){
+                shareString = [NSString stringWithFormat:@"%@%@", @" #", self.sharingHashtag];
+            }
+            
             if (songArtist && ![songArtist isEqualToString:@""]){
-                [message appendFormat:@"%@%@%@", @" by ", songArtist, @" #nowplaying"];
+                [message appendFormat:@"%@%@%@", @" by ", songArtist, shareString];
             }
             
             [composeVC setInitialText:message];
@@ -718,7 +741,7 @@ CHConstructor
 
 - (void)headerScrollViewDidScroll
 {
-    
+    [self updateHeaderPageControl];
 }
 
 - (void)baseScrollViewDidEndDecelerating
@@ -726,15 +749,17 @@ CHConstructor
     switch (self.ipodActionToPerformOnScrollViewDeceleration) {
         case SkipToNext:
             
-            [self onSongSkipped];
             [mediaController changeTrack:1];
+            [self onSongSkipped];
+            //[Flurry logEvent:@"Skipped To Next Song"];
             
             break;
             
         case SkipToPrevious:
             
-            [self onSongSkipped];
             [mediaController changeTrack:-1];
+            [self onSongSkipped];
+            //[Flurry logEvent:@"Skipped To Previous Song"];
             
             break;
             
@@ -747,17 +772,25 @@ CHConstructor
 
 - (void)headerScrollViewDidEndDecelerating
 {
+    [self updateHeaderPageControl];
+}
+
+- (void)updateHeaderPageControl
+{
     CGFloat pageWidth = self.headerScrollView.frame.size.width;
     float fractionalPage = self.headerScrollView.contentOffset.x / pageWidth;
     NSInteger page = lround(fractionalPage);
     
-    self.headerScrollViewPageControl.currentPage = page;
-    [self.headerScrollViewPageControl updateCurrentPageDisplay];
-    
-    if (page == 0){
-        self.headerScrollView.delaysContentTouches = NO;
-    } else {
-        self.headerScrollView.delaysContentTouches = YES;
+    if (self.headerScrollViewPageControl.currentPage != page){
+        
+        self.headerScrollViewPageControl.currentPage = page;
+        [self.headerScrollViewPageControl updateCurrentPageDisplay];
+        
+        if (page == 0){
+            self.headerScrollView.delaysContentTouches = NO;
+        } else {
+            self.headerScrollView.delaysContentTouches = YES;
+        }
     }
 }
 

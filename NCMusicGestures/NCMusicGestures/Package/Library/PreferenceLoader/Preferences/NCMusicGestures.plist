@@ -76,6 +76,30 @@
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
+			<key>isStaticText</key>
+			<string>YES</string>
+			<key>label</key>
+			<string>Sharing Hashtag</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>default</key>
+			<string>NowPlaying</string>
+			<key>defaults</key>
+			<string>PatSluth.NCMusicGestures</string>
+			<key>key</key>
+			<string>sharingHashtag</string>
+			<key>label</key>
+			<string>#</string>
+			<key>placeholder</key>
+			<string>Leave Empty For None</string>
+			<key>PostNotification</key>
+			<string>PatSluth.NCMusicGestures-preferencesChanged</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
 			<key>footerText</key>
 			<string>© 2013 Pat Sluth</string>
 		</dict>

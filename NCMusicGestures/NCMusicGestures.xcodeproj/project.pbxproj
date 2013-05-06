@@ -25,6 +25,12 @@
 		2E22C6E416F292900084D49C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E22C6D916F2924C0084D49C /* Social.framework */; };
 		2E659068170AD97000F1BDF6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E659067170AD97000F1BDF6 /* Foundation.framework */; };
 		2EC689D3170ABD4500B8F9EB /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EC689D1170ABD3B00B8F9EB /* MediaPlayer.framework */; };
+		2EFC63A51737617900E11DCD /* Flurry.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EFC631F1737617900E11DCD /* Flurry.h */; };
+		2EFC63A61737617900E11DCD /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EFC63201737617900E11DCD /* libFlurry.a */; };
+		2EFC63C71737617900E11DCD /* FlurryAdDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EFC63991737617900E11DCD /* FlurryAdDelegate.h */; };
+		2EFC63C81737617900E11DCD /* FlurryAds.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EFC639A1737617900E11DCD /* FlurryAds.h */; };
+		2EFC63C91737617900E11DCD /* libFlurryAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EFC639B1737617900E11DCD /* libFlurryAds.a */; };
+		2EFC63CC173761A600E11DCD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EFC63CA1737619000E11DCD /* SystemConfiguration.framework */; };
 		2EFF4AEE172C507800A3F8FA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EFF4AEC172C506200A3F8FA /* QuartzCore.framework */; };
 		2EFF4AF3172C516700A3F8FA /* SBMediaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EFF4AF2172C516700A3F8FA /* SBMediaController.h */; };
 		2EFF4B35172C5C3000A3F8FA /* SBApplicationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EFF4B34172C5C3000A3F8FA /* SBApplicationController.h */; };
@@ -33,7 +39,6 @@
 /* Begin PBXFileReference section */
 		2E22C68916F28ABD0084D49C /* NCMusicGestures */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = NCMusicGestures; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E22C68E16F28ABD0084D49C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		2E22C69316F28ABD0084D49C /* control.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = control.txt; path = Package/DEBIAN/control.txt; sourceTree = "<group>"; };
 		2E22C69416F28ABD0084D49C /* control */ = {isa = PBXFileReference; lastKnownFileType = text; name = control; path = Package/DEBIAN/control; sourceTree = "<group>"; };
 		2E22C69616F28ABD0084D49C /* PackageVersion.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PackageVersion.plist; sourceTree = "<group>"; };
 		2E22C69716F28ABD0084D49C /* NCMusicGestures-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NCMusicGestures-Prefix.pch"; sourceTree = "<group>"; };
@@ -82,6 +87,20 @@
 		2E39F6801727476C005B9959 /* NCMusicGesturesIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NCMusicGesturesIcon@2x.png"; sourceTree = "<group>"; };
 		2E659067170AD97000F1BDF6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2EC689D1170ABD3B00B8F9EB /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		2EFC631F1737617900E11DCD /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		2EFC63201737617900E11DCD /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry.a; sourceTree = "<group>"; };
+		2EFC63991737617900E11DCD /* FlurryAdDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAdDelegate.h; sourceTree = "<group>"; };
+		2EFC639A1737617900E11DCD /* FlurryAds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAds.h; sourceTree = "<group>"; };
+		2EFC639B1737617900E11DCD /* libFlurryAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAds.a; sourceTree = "<group>"; };
+		2EFC639D1737617900E11DCD /* Avro-LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Avro-LICENSE.txt"; sourceTree = "<group>"; };
+		2EFC639E1737617900E11DCD /* Flurry AppCircle Advertiser TOS FINAL August 1, 2012.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Flurry AppCircle Advertiser TOS FINAL August 1, 2012.pdf"; sourceTree = "<group>"; };
+		2EFC639F1737617900E11DCD /* Flurry AppSpot Publisher Platform TOS FINAL August 1, 2012.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Flurry AppSpot Publisher Platform TOS FINAL August 1, 2012.pdf"; sourceTree = "<group>"; };
+		2EFC63A01737617900E11DCD /* Flurry-LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Flurry-LICENSE.txt"; sourceTree = "<group>"; };
+		2EFC63A11737617900E11DCD /* Flurry_AppCircle_Advertiser_TOS.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Flurry_AppCircle_Advertiser_TOS.pdf; sourceTree = "<group>"; };
+		2EFC63A21737617900E11DCD /* Flurry_AppSpot_Publisher_Platform_TOS.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Flurry_AppSpot_Publisher_Platform_TOS.pdf; sourceTree = "<group>"; };
+		2EFC63A31737617900E11DCD /* Jansson-LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Jansson-LICENSE.txt"; sourceTree = "<group>"; };
+		2EFC63A41737617900E11DCD /* ProjectApiKey.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ProjectApiKey.txt; sourceTree = "<group>"; };
+		2EFC63CA1737619000E11DCD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2EFF4AEC172C506200A3F8FA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2EFF4AF2172C516700A3F8FA /* SBMediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBMediaController.h; sourceTree = "<group>"; };
 		2EFF4B34172C5C3000A3F8FA /* SBApplicationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBApplicationController.h; sourceTree = "<group>"; };
@@ -92,12 +111,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EFC63CC173761A600E11DCD /* SystemConfiguration.framework in Frameworks */,
 				2EFF4AEE172C507800A3F8FA /* QuartzCore.framework in Frameworks */,
 				2E659068170AD97000F1BDF6 /* Foundation.framework in Frameworks */,
 				2EC689D3170ABD4500B8F9EB /* MediaPlayer.framework in Frameworks */,
 				2E22C6E416F292900084D49C /* Social.framework in Frameworks */,
 				2E22C6E116F292810084D49C /* CoreGraphics.framework in Frameworks */,
 				2E22C68F16F28ABD0084D49C /* UIKit.framework in Frameworks */,
+				2EFC63A61737617900E11DCD /* libFlurry.a in Frameworks */,
+				2EFC63C91737617900E11DCD /* libFlurryAds.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,10 +146,12 @@
 		2E22C68B16F28ABD0084D49C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2EFC631C1737617900E11DCD /* Flurry iPhone SDK viPhone 4 */,
 				2E22C68E16F28ABD0084D49C /* UIKit.framework */,
 				2EFF4AEC172C506200A3F8FA /* QuartzCore.framework */,
 				2E659067170AD97000F1BDF6 /* Foundation.framework */,
 				2EC689D1170ABD3B00B8F9EB /* MediaPlayer.framework */,
+				2EFC63CA1737619000E11DCD /* SystemConfiguration.framework */,
 				2E22C6DF16F292680084D49C /* CoreGraphics.framework */,
 				2E22C6D916F2924C0084D49C /* Social.framework */,
 			);
@@ -160,7 +184,6 @@
 		2E22C69216F28ABD0084D49C /* DEBIAN */ = {
 			isa = PBXGroup;
 			children = (
-				2E22C69316F28ABD0084D49C /* control.txt */,
 				2E22C69416F28ABD0084D49C /* control */,
 			);
 			name = DEBIAN;
@@ -276,6 +299,58 @@
 			path = Preferences;
 			sourceTree = "<group>";
 		};
+		2EFC631C1737617900E11DCD /* Flurry iPhone SDK viPhone 4 */ = {
+			isa = PBXGroup;
+			children = (
+				2EFC631D1737617900E11DCD /* Flurry-iOS-4.2.1 */,
+				2EFC63A41737617900E11DCD /* ProjectApiKey.txt */,
+			);
+			path = "Flurry iPhone SDK viPhone 4";
+			sourceTree = "<group>";
+		};
+		2EFC631D1737617900E11DCD /* Flurry-iOS-4.2.1 */ = {
+			isa = PBXGroup;
+			children = (
+				2EFC631E1737617900E11DCD /* Flurry */,
+				2EFC63981737617900E11DCD /* FlurryAds */,
+				2EFC639C1737617900E11DCD /* Licenses */,
+			);
+			path = "Flurry-iOS-4.2.1";
+			sourceTree = "<group>";
+		};
+		2EFC631E1737617900E11DCD /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				2EFC631F1737617900E11DCD /* Flurry.h */,
+				2EFC63201737617900E11DCD /* libFlurry.a */,
+			);
+			path = Flurry;
+			sourceTree = "<group>";
+		};
+		2EFC63981737617900E11DCD /* FlurryAds */ = {
+			isa = PBXGroup;
+			children = (
+				2EFC63991737617900E11DCD /* FlurryAdDelegate.h */,
+				2EFC639A1737617900E11DCD /* FlurryAds.h */,
+				2EFC639B1737617900E11DCD /* libFlurryAds.a */,
+			);
+			path = FlurryAds;
+			sourceTree = "<group>";
+		};
+		2EFC639C1737617900E11DCD /* Licenses */ = {
+			isa = PBXGroup;
+			children = (
+				2EFC639D1737617900E11DCD /* Avro-LICENSE.txt */,
+				2EFC639E1737617900E11DCD /* Flurry AppCircle Advertiser TOS FINAL August 1, 2012.pdf */,
+				2EFC639F1737617900E11DCD /* Flurry AppSpot Publisher Platform TOS FINAL August 1, 2012.pdf */,
+				2EFC63A01737617900E11DCD /* Flurry-LICENSE.txt */,
+				2EFC63A11737617900E11DCD /* Flurry_AppCircle_Advertiser_TOS.pdf */,
+				2EFC63A21737617900E11DCD /* Flurry_AppSpot_Publisher_Platform_TOS.pdf */,
+				2EFC63A31737617900E11DCD /* Jansson-LICENSE.txt */,
+			);
+			path = Licenses;
+			sourceTree = "<group>";
+		};
 		2EFF4AF1172C50E300A3F8FA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
@@ -300,6 +375,9 @@
 				2E22C6D716F2920F0084D49C /* UIView+UIViewExtensions.h in Headers */,
 				2EFF4AF3172C516700A3F8FA /* SBMediaController.h in Headers */,
 				2EFF4B35172C5C3000A3F8FA /* SBApplicationController.h in Headers */,
+				2EFC63A51737617900E11DCD /* Flurry.h in Headers */,
+				2EFC63C71737617900E11DCD /* FlurryAdDelegate.h in Headers */,
+				2EFC63C81737617900E11DCD /* FlurryAds.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,6 +532,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NCMusicGestures/NCMusicGestures-Prefix.pch";
 				INSTALL_PATH = /System/Library/WeeAppPlugins/NCMusicGestures.bundle;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Flurry iPhone SDK viPhone 4/Flurry-iOS-4.2.1/Flurry\"",
+					"\"$(SRCROOT)/Flurry iPhone SDK viPhone 4/Flurry-iOS-4.2.1/FlurryAds\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				iOSOpenDevBuildPackageOnAnyBuild = NO;
 				iOSOpenDevCopyOnBuild = NO;
@@ -482,6 +565,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NCMusicGestures/NCMusicGestures-Prefix.pch";
 				INSTALL_PATH = /System/Library/WeeAppPlugins/NCMusicGestures.bundle;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Flurry iPhone SDK viPhone 4/Flurry-iOS-4.2.1/Flurry\"",
+					"\"$(SRCROOT)/Flurry iPhone SDK viPhone 4/Flurry-iOS-4.2.1/FlurryAds\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				iOSOpenDevBuildPackageOnAnyBuild = NO;
 				iOSOpenDevCopyOnBuild = NO;
